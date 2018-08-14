@@ -1,0 +1,18 @@
+{
+  "name": "emybot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "github:discordjs/discord.js",
+    "graphql": "^0.13.2",
+    "klasa": "github:dirigeants/klasa",
+    "node-fetch": "^2.2.0"
+  }
+}
