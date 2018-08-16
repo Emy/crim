@@ -183,6 +183,3 @@ exports.config = {
 
 // The token for this bot to login with
 exports.token = config.discordToken;
-
-// main
-//exports.token = 'NDc1NzA4NzM2OTA4ODIwNDgy.DkjDzg.I7tsJ292YMy516mU3UWKYVoMr_c';
