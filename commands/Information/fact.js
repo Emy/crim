@@ -17,7 +17,7 @@ module.exports = class extends Command {
             aliases: [],
             autoAliases: true,
             bucket: 1,
-            cooldown: 0,
+            cooldown: 5,
             promptLimit: 0,
             promptTime: 30000,
             deletable: false,
