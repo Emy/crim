@@ -33,6 +33,7 @@ module.exports = class extends Command {
             let data = await fetch(`https://nekos.life/api/v2/owoify?text=${encodeURIComponent(message.args[0])}`);
             let response = JSON.parse(await data.text());
             message.send(response.owo);
+            if (message.deletable) await message.delete();
         } catch (error) {
             console.log(error);
             let embed = new MessageEmbed();

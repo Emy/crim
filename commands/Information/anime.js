@@ -26,14 +26,14 @@ module.exports = class extends Command {
             permissionLevel: 0,
             description: 'Get anime information from anilist.co',
             extendedHelp: 'No extended help available.',
-            usage: '',
+            usage: '<anime:string>',
             usageDelim: undefined,
             quotedStringSupport: false,
             subcommands: false
         });
     }
 
-    async run(message, [...params]) {
+    async run(message, [anime]) {
         var query = `
         query ($name: String) {
         Media (search: $name, type: ANIME) {
@@ -62,7 +62,7 @@ module.exports = class extends Command {
             }
         }`;
         let variables = {
-            name: message.args.join(' ')
+            name: anime
         };
             
         let options = {
@@ -105,7 +105,7 @@ module.exports = class extends Command {
         let embed = new MessageEmbed()
             .setThumbnail()
             .setColor('#dd67ff')
-            .addField('No Anime found', 'No animes found for: "' + message.args.join(' ') + '" on Anilist.co')
+            .addField('No Anime found', 'No animes found for: "' + anime + '" on Anilist.co')
             .setFooter(`Requested by: ${message.author.tag} | Provided by Anilist.co`)
             .setTimestamp()
             ;
