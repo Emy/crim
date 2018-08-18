@@ -30,8 +30,9 @@ module.exports = class extends Command {
     }
 
     async run(message, [...params]) {
+        if (!message.args.split) return;
         const args = message.args[0].split(' ');
-        if (args.length != 1) return message.send('wrong!');
+        if (args.length != 1) return;
         try {
             let data = await fetch('https://nekos.life/api/v2/img/hug');
             let response = JSON.parse(await data.text());
