@@ -22,20 +22,19 @@ module.exports = class extends Command {
             permissionLevel: 0,
             description: 'Hug people.',
             extendedHelp: 'No extended help available.',
-            usage: '<member:user>',
+            usage: '<member:member>',
             usageDelim: undefined,
             quotedStringSupport: false,
             subcommands: false
         });
     }
 
-    async run(message, [...params]) {
+    async run(message, [member]) {
         try {
             let data = await fetch('https://nekos.life/api/v2/img/hug');
             let response = JSON.parse(await data.text());
-            let hugged = message.mentions.members.first().user.username;
             let embed = new MessageEmbed()
-            .setTitle(`**${message.author.username}** is hugging **${hugged}** OwO`)
+            .setTitle(`**${message.author.username}** is hugging **${member.user.username}** OwO`)
             .setColor('#dd67ff')
             .setFooter(`Requested by ${message.author.tag} | Provided by nekos.life`)
             .setTimestamp()
