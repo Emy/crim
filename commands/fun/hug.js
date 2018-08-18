@@ -30,7 +30,7 @@ module.exports = class extends Command {
     }
 
     async run(message, [...params]) {
-        if (!message.args.split) return;
+        if (message.args[0] == undefined) return;
         const args = message.args[0].split(' ');
         if (args.length != 1) return;
         try {
