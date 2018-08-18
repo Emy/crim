@@ -81,7 +81,6 @@ module.exports = class extends Command {
             let response = await fetch('https://graphql.anilist.co', options);
             let data = JSON.parse(await response.text());
             let media = data.data.Media;
-            console.log(media);
             if(media === null) return this.sendNotFoundEmbed(message);
             let startDate = new Date(media.startDate.year, media.startDate.month, media.startDate.day);
             let endDate = new Date(media.endDate.year, media.endDate.month, media.endDate.day);
@@ -98,7 +97,7 @@ module.exports = class extends Command {
             ;
             message.sendEmbed(embed);
         } catch(error) {
-            console.error(error);
+            this.client.console.error(error);
         }
     }
 
@@ -114,10 +113,6 @@ module.exports = class extends Command {
     }
 
     async init() {
-        /*
-         * You can optionally define this method which will be run when the bot starts
-         * (after login, so discord data is available via this.client)
-         */
     }
 
 };

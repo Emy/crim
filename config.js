@@ -1,11 +1,5 @@
 const config = require('./config.json')
 
-/**
- * The following are all client options for Klasa/Discord.js.
- * Any option that you wish to use the default value can be removed from this file.
- * This file is init with defaults from both Klasa and Discord.js.
- */
-
 exports.config = {
     /**
      * General Options
@@ -31,6 +25,12 @@ exports.config = {
     presence: {},
     // A once ready message for your console
     readyMessage: (client) => `Successfully initialized. Ready to serve ${client.guilds.size} guild${client.guilds.size === 1 ? '' : 's'}.`,
+    
+    /**
+     * MongoDB Settings
+     */
+    mongodbLocation: 'mongodb://localhost:27017',
+    mongodbName: 'emybot',
 
     /**
      * Caching Options
