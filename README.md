@@ -6,28 +6,24 @@
 
 ### Prerequisites
 
-  - node.js
+  - node.js\
+        Dependencies can be installed by running `npm i` in the root of the project
 
-  - discord.js: `npm install discord.js`
+        * discord.js
+        * klasa
+        * node-fetch
 
-  - klasa: `npm install klasa`
-
-  - node-fetch: `npm install node-fetch`
-
-  - git
-
+  - git (Optional)
   - Discord account.
 
 ### Installation
 
-  - Clone the github repo of Emybot: `git clone https://github.com/Emxix/emybot`
-
+  - Download the files
+        * Option 1: Clone the github repo of Emybot: `git clone https://github.com/Emxix/emybot`
+        * Option 2: Download the master branch from [here](https://github.com/Emdix/emybot/archive/master.zip).
   - Create a new application at [Discord Developers](https://discordapp.com/developers/).
-
   - Create a new bot inside that application and copy its bot token
-
   - Add that bot token into the "config.json" file in the field "discordToken".
-
   - Add your username to the "config.json" file in the field "ownerID".
 
 
@@ -68,6 +64,7 @@
 ### Utility Command
 
   - !avatar\
+    Posting your avatar in chat as an embedded message
 
 ### Information Commands
 
@@ -83,18 +80,15 @@
   - !lmgtfy\
     For the times where someone needs to learn how to use google.
 
-  - !whois [TEXT]\
-    Writes out Text.
-
 ### Fun Commands
 
-  - !hug\
+  - !hug [@USER]\
     Hug people
 
-  - !kiss\
+  - !kiss [@USER]\
     Kiss people
 
-  - !pat\
+  - !pat [@USER]\
     Pat people
 
   - !owoify [TEXT]\
