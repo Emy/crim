@@ -4,6 +4,10 @@ const { MessageEmbed } = require('discord.js');
 module.exports = class extends Command {
 
     constructor(...args) {
+        /**
+         * Any default options can be omitted completely.
+         * if all options are default, you can omit the constructor completely
+         */
         super(...args, {
             enabled: true,
             runIn: ['text', 'dm', 'group'],
@@ -12,7 +16,7 @@ module.exports = class extends Command {
             aliases: [],
             autoAliases: true,
             bucket: 1,
-            cooldown: 5,
+            cooldown: 0,
             promptLimit: 0,
             promptTime: 30000,
             deletable: false,
@@ -21,25 +25,29 @@ module.exports = class extends Command {
             permissionLevel: 0,
             description: '',
             extendedHelp: 'No extended help available.',
-            usage: '<member:user>',
+            usage: '',
             usageDelim: undefined,
             quotedStringSupport: false,
             subcommands: false
         });
     }
 
-    async run(message, [user]) {
-        const embed = new MessageEmbed()
-            .setThumbnail(user.avatarURL())
-            .setColor('DARK_GREEN')
-            .addField('Name:', user.tag)
-            .addField('UserID:', user.id)
-            .addField('Created at:', user.createdAt)
-            .setFooter(`Requested by: ${message.author.tag}`)
-            .setTimestamp()
-            ;
+    async run(message, [...params]) {
+        let embed = new MessageEmbed()
+        .setColor('RED')
+        .addField('Rev', '❤❤❤')
+        .setImage(this.client.users.get('209156432602464257').avatarURL)
+        .setFooter(`Requested by: ${message.author.tag}`)
+        .setTimestamp()
+        ;
         message.send(embed);
     }
 
-    async init() {}
+    async init() {
+        /*
+         * You can optionally define this method which will be run when the bot starts
+         * (after login, so discord data is available via this.client)
+         */
+    }
+
 };
