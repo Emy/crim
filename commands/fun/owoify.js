@@ -1,4 +1,5 @@
 const { Command } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = class extends Command {
@@ -21,18 +22,25 @@ module.exports = class extends Command {
             permissionLevel: 0,
             description: '',
             extendedHelp: 'No extended help available.',
-            usage: '',
+            usage: '<text:string>',
             usageDelim: undefined,
             quotedStringSupport: false,
             subcommands: false
         });
     }
 
-    async run(message, [...params]) {
+    async run(message, [text]) {
         try {
-            let data = await fetch(`https://nekos.life/api/v2/owoify?text=${encodeURIComponent(message.args[0])}`);
+            let data = await fetch(`https://nekos.life/api/v2/owoify?text=${encodeURIComponent(text)}`);
             let response = JSON.parse(await data.text());
-            message.send(response.owo);
+            let embed = new MessageEmbed()
+            .setColor('#dd67ff')
+            .addField('OwOified', response.owo)
+            .addField('Original', text)
+            .setFooter(`Requested by: ${message.author.tag}`)
+            .setTimestamp()
+            ;
+            message.send(embed);
             if (message.deletable) await message.delete();
         } catch (error) {
             console.log(error);
