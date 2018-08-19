@@ -1,12 +1,9 @@
 const { Command } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
 
     constructor(...args) {
-        /**
-         * Any default options can be omitted completely.
-         * if all options are default, you can omit the constructor completely
-         */
         super(...args, {
             enabled: true,
             runIn: ['text', 'dm', 'group'],
@@ -24,23 +21,26 @@ module.exports = class extends Command {
             permissionLevel: 0,
             description: '',
             extendedHelp: 'No extended help available.',
-            usage: '',
+            usage: '<member:user>',
             usageDelim: undefined,
             quotedStringSupport: false,
             subcommands: false
         });
     }
 
-    async run(message, [...params]) {
-        message.sendCode('js', message.args[0].split(' '));
-        ;
+    async run(message, [user]) {
+        const embed = new MessageEmbed()
+            .setTitle('Whoami command:')
+            .setThumbnail(user.avatarURL())
+            .setColor('DARK_GREEN')
+            .addField('Name:', user.tag)
+            .addField('UserID:', user.id)
+            .addField('Created at:', user.createdAt)
+            .setFooter(`Requested by: ${message.author.tag}`)
+            .setTimestamp()
+            ;
+        message.send(embed);
     }
 
-    async init() {
-        /*
-         * You can optionally define this method which will be run when the bot starts
-         * (after login, so discord data is available via this.client)
-         */
-    }
-
+    async init() {}
 };
