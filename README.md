@@ -48,3 +48,54 @@
   `https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0` 
 
   You can now choose which server you want your bot to be on.
+
+## Supported Commands
+
+### General Commands
+
+  - !help / !help [COMMAND]\
+    Displays help / Displays help for a command
+
+  - !info\
+    Shows some information about Klasa
+
+  - !ping\
+    Runs a connection test to Discord
+
+  - !stats\
+    Displays statistics about the bot
+
+### Utility Command
+
+  - !avatar\
+
+### Information Commands
+
+  - !anime\
+    Gets anime informations from anilist.co 
+
+  - !fact\
+    Shows you a random fact. Powered by nekos.life
+
+  - !chucknorris\
+    Shows you a random chuck norris fact. Powered by api.chucknorris.io
+
+  - !lmgtfy\
+    For the times where someone needs to learn how to use google.
+
+  - !whois [TEXT]\
+    Writes out Text.
+
+### Fun Commands
+
+  - !hug\
+    Hug people
+
+  - !kiss\
+    Kiss people
+
+  - !pat\
+    Pat people
+
+  - !owoify [TEXT]\
+    OwOifys your text
