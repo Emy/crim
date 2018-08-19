@@ -24,7 +24,6 @@
   - Add that bot token into the "config.json" file in the field "discordToken"
   - Add your username to the "config.json" file in the field "ownerID"
 
-
 ### Running the Bot
 
   Run `node index.js` in the root of the project
