@@ -13,6 +13,7 @@
     "discord.js": "github:discordjs/discord.js",
     "graphql": "^0.13.2",
     "klasa": "github:dirigeants/klasa",
+    "klasa-stats-plugin": "github:1Conan/klasa-stats-plugin",
     "mongodb": "^3.1.3",
     "node-fetch": "^2.2.0"
   }

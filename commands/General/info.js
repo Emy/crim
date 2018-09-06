@@ -1,5 +1,4 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
 
@@ -29,13 +28,7 @@ module.exports = class extends Command {
     }
 
     async run(message, [...params]) {
-        let embed = new MessageEmbed()
-        .setColor('RED')
-        .addField('Rev', '❤❤❤')
-        .setFooter(`Requested by: ${message.author.tag}`)
-        .setTimestamp()
-        ;
-        message.send(embed);
+       
     }
 
     async init() {}
