@@ -38,6 +38,7 @@ module.exports = class extends Command {
         query ($name: String) {
         Media (search: $name, type: ANIME) {
             id
+            status
             title {
                 romaji
                 english
@@ -81,7 +82,7 @@ module.exports = class extends Command {
             let response = await fetch('https://graphql.anilist.co', options);
             let data = JSON.parse(await response.text());
             let media = data.data.Media;
-            if(media === null) return this.sendNotFoundEmbed(message);
+            if(media === null) return this.sendNotFoundEmbed(message, anime);
             let startDate = new Date(media.startDate.year, media.startDate.month, media.startDate.day);
             let endDate = new Date(media.endDate.year, media.endDate.month, media.endDate.day);
             let embed = new MessageEmbed()
@@ -89,8 +90,9 @@ module.exports = class extends Command {
             .setColor('#dd67ff')
             .addField('Name', (media.title.english ? `[${media.title.english}]` : `[${media.title.romaji}]`) + `(https://anilist.co/anime/${media.id})`)
             .addField('Score', `${(media.meanScore/10).toFixed(1)} / 10`, true)
+            .addField('Status', media.status, true)
             .addField('Start date', startDate.toDateString(), true)
-            .addField('End date', endDate.toDateString(), true)
+            .addField('End date', media.status != 'RELEASING' ? endDate.toDateString() : 'Not finished yet.', true)
             .addField('Genres', media.genres.join(', '))
             .setFooter(`Requested by: ${message.author.tag} | Provided by Anilist.co`)
             .setTimestamp()
@@ -101,7 +103,7 @@ module.exports = class extends Command {
         }
     }
 
-    sendNotFoundEmbed(message) {
+    sendNotFoundEmbed(message, anime) {
         let embed = new MessageEmbed()
             .setThumbnail()
             .setColor('#dd67ff')

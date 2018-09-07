@@ -25,12 +25,6 @@ exports.config = {
     presence: {},
     // A once ready message for your console
     readyMessage: (client) => `Successfully initialized. Ready to serve ${client.guilds.size} guild${client.guilds.size === 1 ? '' : 's'}.`,
-    
-    /**
-     * MongoDB Settings
-     */
-    mongodbLocation: 'mongodb://localhost:27017',
-    mongodbName: 'emybot',
 
     /**
      * Caching Options
@@ -62,15 +56,12 @@ exports.config = {
         /*
         // Provider Connection object for process based databases:
         // rethinkdb, mongodb, mssql, mysql, postgresql
-        mysql: {
-            host: 'localhost',
-            db: 'klasa',
-            user: 'database-user',
-            password: 'database-password',
-            options: {}
-        },
         */
-        default: 'json'
+       rethinkdb: {
+           db: 'emybot',
+           silent: false
+       },
+        default: 'rethinkdb'
     },
 
     /**
@@ -172,7 +163,7 @@ exports.config = {
     gateways: {
         guilds: {},
         users: {},
-        clientStorage: {}
+        clientStorage: {},
     },
 
     /**
