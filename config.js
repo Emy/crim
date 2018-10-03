@@ -57,11 +57,11 @@ exports.config = {
         // Provider Connection object for process based databases:
         // rethinkdb, mongodb, mssql, mysql, postgresql
         */
-       rethinkdb: {
-           db: 'emybot',
-           silent: false
-       },
-        default: 'rethinkdb'
+    //    rethinkdb: {
+    //        db: 'emybot',
+    //        silent: false
+    //    },
+        default: 'json'
     },
 
     /**
