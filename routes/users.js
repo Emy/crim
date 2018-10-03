@@ -7,7 +7,6 @@ module.exports = class extends Route {
 	}
 
 	get(request, response) {
-		const { userID } = request.params;
 		const users = this.client.users;
 		if (!users) response.end('{}');
 		return response.end(JSON.stringify(users));
