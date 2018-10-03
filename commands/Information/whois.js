@@ -1,6 +1,8 @@
 const { Command } = require('klasa');
 const { MessageEmbed } = require('discord.js');
 
+const baseAvatarURL = 'https://cdn.discordapp.com/avatars';
+
 module.exports = class extends Command {
 
     constructor(...args) {
@@ -29,8 +31,8 @@ module.exports = class extends Command {
     }
 
     async run(message, [user]) {
+        
         const embed = new MessageEmbed()
-            .setThumbnail(user.avatarURL())
             .setColor('DARK_GREEN')
             .addField('Name:', user.tag)
             .addField('UserID:', user.id)
@@ -38,6 +40,14 @@ module.exports = class extends Command {
             .setFooter(`Requested by: ${message.author.tag}`)
             .setTimestamp()
             ;
+        
+        if(user.avatar !== undefined) {
+            const avatarID = user.avatar;
+            const extension = avatarID.startsWith('a_') ? 'gif' : 'png';
+            const avatarURL = `${baseAvatarURL}/${user.id}/${avatarID}.${extension}`;
+            embed.setThumbnail(avatarURL);
+        }
+        
         message.send(embed);
     }
 
