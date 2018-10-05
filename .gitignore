@@ -6,3 +6,5 @@ config.json
 package-lock.json
 bwd
 yarn.lock
+./idea
+*.iml
