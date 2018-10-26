@@ -8,7 +8,7 @@ module.exports = class extends Route {
 
 	get(request, response) {
 		const guilds = this.client.guilds;
-        if (!guilds) response.end('[]');
+        	if (!guilds) response.end('[]');
 		return response.end(JSON.stringify(guilds));
 	}
 
