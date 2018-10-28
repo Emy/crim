@@ -6,31 +6,28 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
+            enabled: true,
             name: "define",
             runIn: ['text', 'dm', 'group'],
+            requiredPermissions: [],
+            requiredSettings: [],
             aliases: ["urbandictionary"],
+            autoAliases: true,
+            bucket: 1,
             cooldown: 5,
+            promptLimit: 0,
+            promptTime: 30000,
+            deletable: false,
+            guarded: false,
+            nsfw: false,
+            permissionLevel: 0,
             description: 'Looks up facts on Urban Dictonary.',
             extendedHelp: '',
-            usage: '<searchterm:string>'
+            usage: '<searchterm:string>',
+            usageDelim: undefined,
+            quotedStringSupport: false,
+            subcommands: false
         });
-    }
-
-    /* Creates the corresponding Embed for the page Number
-    *  For the description and the example, remove all the square brackets, as they
-    *  were used for links before, and those no longer exist.
-    *  Also cut them all down to fit into the maximum size of an Embed Field. 
-    */
-    createPage(pageNr) {
-        let info = response.list[pageNr];
-        return new MessageEmbed()
-        .setTimestamp()
-        .setColor('#dd67ff')
-        .setTitle(`__**${info.word}**__`.substr(0, 255))
-        .setURL(info.permalink)
-        .addField("*Description:*", info.definition.replace('[','').replace(']','').substr(0, 1023))
-        .addField("*Example:*", info.example.replace('[','').replace(']','').substr(0, 1023))
-        ;
     }
 
     async run(message, [searchterm]) {
@@ -52,9 +49,21 @@ module.exports = class extends Command {
         ;
 
         // Add all the pages to the display
-        for (let i = 0; i < response.list.length; i++) {
-            display.addPage(createPage(i));
-        }
+        response.list.forEach(function(page) {
+            /* For the description and the example, remove all the square brackets, as they
+              * were used for links before, and those no longer exist.
+              * Also cut them all down to fit into the maximum size of an Embed Field. 
+              */
+            let embed = new MessageEmbed()
+            .setTimestamp()
+            .setColor('#dd67ff')
+            .setTitle(`__**${page.word}**__`.substr(0, 255))
+            .setURL(page.permalink)
+            .addField("*Description:*", page.definition.replace(/[\[\]]/g,'').substr(0, 1023))
+            .addField("*Example:*", page.example.replace(/[\[\]]/g ,'').substr(0, 1023))
+            ;
+            display.addPage(embed);
+        });
 
         // Send the RichDisplay with 15 Reactions max and 30 seconds timeout
         return display.run(await message.send('Loading...'), {
