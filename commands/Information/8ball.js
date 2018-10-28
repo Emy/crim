@@ -26,7 +26,7 @@ module.exports = class extends Command {
             permissionLevel: 0,
             description: 'The magic 8ball answers any of your questions. Provided by 8ball.delegator.com',
             extendedHelp: 'The magic 8ball answers any of your questions. Provided by 8ball.delegator.com',
-            usage: '',
+            usage: '<question:string>',
             usageDelim: undefined,
             quotedStringSupport: false,
             subcommands: false
@@ -38,12 +38,12 @@ module.exports = class extends Command {
             let params = encodeURIComponent(question);
             let uri = 'https://8ball.delegator.com/magic/JSON/' + params;
             let response = await fetch(uri);
-            let answer = response.json();
+            let answer = await response.json();
             let embed = new MessageEmbed()
             .setTimestamp()
             .setColor('#dd67ff')
             .addField('Question:', question)
-            .addField('Answer:', answer)
+            .addField('Answer:', answer.magic.answer)
             .setFooter(`Requested by: ${message.author.tag} | Provided by 8ball.delegator.com`)
             ;
             message.send(embed);
