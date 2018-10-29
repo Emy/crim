@@ -24,8 +24,8 @@ module.exports = class extends Command {
             guarded: false,
             nsfw: false,
             permissionLevel: 0,
-            description: 'The magic 8ball answers any of your questions. Provided by 8ball.delegator.com',
-            extendedHelp: 'The magic 8ball answers any of your questions. Provided by 8ball.delegator.com',
+            description: 'The magic 8ball answers any of your questions.',
+            extendedHelp: 'The magic 8ball answers any of your questions.',
             usage: '<question:string>',
             usageDelim: undefined,
             quotedStringSupport: false,
@@ -34,17 +34,20 @@ module.exports = class extends Command {
     }
 
     async run(message, [question]) {
+        const answers = ['It is certain', 'As I see it, yes', 'Reply hazy try again', 'Don\'t count on it',
+            'It is decidedly so', 'Most likely', 'Ask again later', 'My reply is no',
+            'Without a doubt', 'Outlook good', 'Better not tell you now', 'My sources say no',
+            'Yes definitely', 'Yes', 'Cannot predict now', 'Outlook not so good', 'You may rely on it',
+            'Signs point to yes', 'Concentrate and ask again', 'Very doubtful'];
+        const index = Math.floor(Math.random() * answers.length);
         try {
-            let params = encodeURIComponent(question);
-            let uri = 'https://8ball.delegator.com/magic/JSON/' + params;
-            let response = await fetch(uri);
-            let answer = await response.json();
+            let answer = answers[index];
             let embed = new MessageEmbed()
             .setTimestamp()
             .setColor('#dd67ff')
             .addField('Question:', question)
-            .addField('Answer:', answer.magic.answer)
-            .setFooter(`Requested by: ${message.author.tag} | Provided by 8ball.delegator.com`)
+            .addField('Answer:', answer)
+            .setFooter(`Requested by: ${message.author.tag} | Provided by Emybot`)
             ;
             message.send(embed);
         } catch (error) {
