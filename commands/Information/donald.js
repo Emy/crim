@@ -30,7 +30,7 @@ module.exports = class extends Command {
     }
 
     async run(message, [...params]) {
-        let data = await fetch(`https://api.tronalddump.io/random/quote`);
+        let data = await fetch('https://api.tronalddump.io/random/quote');
         let response = JSON.parse(await data.text());
 
         let subject;
