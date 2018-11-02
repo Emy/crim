@@ -1,20 +1,14 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Collection } = require('discord.js');
 const { PlayerManager } = require("discord.js-lavalink");
 const fetch = require('node-fetch');
 
-const nodes = [
-];
 
 let playerManager;
 
 module.exports = class extends Command {
 
     constructor(...args) {
-        /**
-         * Any default options can be omitted completely.
-         * if all options are default, you can omit the constructor completely
-         */
         super(...args, {
             name: 'play',
             enabled: true,
@@ -41,46 +35,70 @@ module.exports = class extends Command {
     }
 
     async run (message, [song]) {
-        console.log(song)
+        if (!message.member.voice.channel) throw "You must be in a voice chat to do that";
 
         let data = await fetch(`http://${nodes[0].host}:${nodes[0].port}/loadtracks?identifier=ytsearch:${song}`, {
             headers: {
                 authorization: nodes[0].password
             }});
-
-        let response = JSON.parse(await data.text());
-
         if (!data) throw "There was an error, try again";
-
+        let response = JSON.parse(await data.text());
         // { playlistInfo: {}, loadType: 'NO_MATCHES', tracks: [] }
         if (response.loadType == "NO_MATCHES") throw "No tracks found";
 
-        // TODO: Make this pretty.
-        message.send(`Playing: ${response.tracks[0].track}`);
-
         console.log(JSON.stringify(response, null, 4));
 
-        if (!message.member.voice.channel) throw "You must be in a voice chat to do that";
-
-        // Join
-        let player = await playerManager.join({
-            guild: message.guild.id, // Guild id
-            channel: message.member.voice.channel.id, // Channel id
-            host: nodes[0].host // lavalink host
-        });
-
-        player.play(response.tracks[0].track); // Track is a base64 string we get from Lavalink REST API
-
-        player.once("error", error => console.error(error));
-
-        // Leave voice channel and destory Player
-        //playerManager.leave(message.guildID); // Player ID aka guild id
+        console.log(this.client.music.get(message.guild.id));
+        let player;
+        if(this.client.music.get(message.guild.id) === undefined) {
+            // Join
+            player = await playerManager.join({
+                guild: message.guild.id, // Guild id
+                channel: message.member.voice.channel.id, // Channel id
+                host: nodes[0].host // lavalink host
+            });
+            player.songs = [];
+            player.songs.push(response.tracks[0]);
+            player.on("end", data => {
+                console.log('//////////');
+                console.log(player);
+                if (player.songs[0] === undefined) {
+                    console.log(player);
+                    playerManager.leave(player.id);
+                    this.client.music.delete(player.id);
+                } else {
+                    player.play(player.songs[0].track);
+                    this.sendNowPlayingEmbed(message, player.songs[0]);
+                    player.songs.shift();
+                }
+            });
+            player.once("error", error => console.error(error));
+            this.client.music.set(message.guild.id, player);
+            this.sendNowPlayingEmbed(message, player.songs[0]);
+            player.play(player.songs[0].track);
+        } else {
+            player = this.client.music.get(message.guild.id);
+            player.songs.push(response.tracks[0]);
+        }
     }
 
     async init() {
+        this.client.music = new Collection();
         playerManager = new PlayerManager(this.client, nodes, {
             user: this.client.user.id,
             shards: 1
         });
+        this.client.music.set('pm', playerManager);
+    }
+
+    sendNowPlayingEmbed(message, song) {
+        console.log(`https://img.youtube.com/vi/${song.info.identifier}/default.jpg`);
+        let embed = new MessageEmbed()
+        .setTitle(song.info.title)
+        .setImage(`https://img.youtube.com/vi/${song.info.identifier}/default.jpg`)
+        .setTimestamp()
+        .setFooter(`Uploaded by: ${song.info.author}`)
+        ;
+        message.send(embed);
     }
 };
