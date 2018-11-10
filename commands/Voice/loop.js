@@ -8,7 +8,7 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            name: 'stop',
+            name: 'loop',
             enabled: true,
             runIn: ['text'],
             requiredPermissions: [],
@@ -34,14 +34,8 @@ module.exports = class extends Command {
 
     async run (message, [...paran]) {
         if(this.client.music.get(message.guild.id) == undefined) throw "No music running!";
-        this.client.music.get('pm').leave(message.guild.id);
-        this.client.music.delete(message.guild.id);
-        let embed = new MessageEmbed()
-        .setTitle('Stop')
-        .setColor('#dd67ff')
-        .setTimestamp()
-        .setFooter(`Requested by: ${message.author.tag}`)
-        ;
-        message.send(embed);
+        const player = this.client.music.get(message.guild.id);
+        player.loop = !player.loop;
+        message.send(`Loop: ${player.loop}`);
     }
 };
