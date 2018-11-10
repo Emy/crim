@@ -54,14 +54,24 @@ module.exports = class extends Command {
               * were used for links before, and those no longer exist.
               * Also cut them all down to fit into the maximum size of an Embed Field. 
               */
+            let description = page.definition.replace(/[\[\]]/g,'').substr(0, 1022)
+            let example = page.example.replace(/[\[\]]/g ,'').substr(0, 1022)
+
             let embed = new MessageEmbed()
             .setTimestamp()
             .setColor('#dd67ff')
             .setTitle(`__**${page.word}**__`.substr(0, 255))
             .setURL(page.permalink)
-            .addField("*Description:*", page.definition.replace(/[\[\]]/g,'').substr(0, 1023))
-            .addField("*Example:*", page.example.replace(/[\[\]]/g ,'').substr(0, 1023))
             ;
+
+            if (description) {
+                embed.addField("*Description:*", description);
+            }
+
+            if (example) {
+                embed.addField("*Example:*", example);
+            }
+
             display.addPage(embed);
         });
 

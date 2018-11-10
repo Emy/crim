@@ -41,7 +41,7 @@ exports.config = {
      */
     shardId: 0,
     shardCount: 0,
-
+    
     /**
      * Command Handler Options
      */
@@ -171,6 +171,11 @@ exports.config = {
      */
     schedule: { interval: 60000 }
 };
+
+    /**
+     * Lavalink Nodes
+     */
+    exports.nodes = config.nodes;
 
 // The token for this bot to login with
 exports.token = config.discordToken;
