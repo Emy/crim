@@ -15,7 +15,7 @@ module.exports = class extends Command {
             runIn: ['text', 'dm', 'group'],
             requiredPermissions: [],
             requiredSettings: [],
-            aliases: ['yt'],
+            aliases: [],
             autoAliases: true,
             bucket: 1,
             cooldown: 5,
@@ -89,6 +89,7 @@ module.exports = class extends Command {
         .setColor('#dd67ff')
         .addField('Length', `${moment(song.info.length).format('mm:ss')}min`, true)
         .setThumbnail(`https://img.youtube.com/vi/${song.info.identifier}/default.jpg`)
+        .setURL(`https://youtu.be/${song.info.identifier}`)
         .setTimestamp()
         .setFooter(`Uploaded by: ${song.info.author}`)
         ;

@@ -13,7 +13,7 @@ module.exports = class extends Command {
             runIn: ['text'],
             requiredPermissions: [],
             requiredSettings: [],
-            aliases: ['yt'],
+            aliases: [],
             autoAliases: true,
             bucket: 1,
             cooldown: 5,
@@ -33,7 +33,29 @@ module.exports = class extends Command {
     }
 
     async run (message, [...paran]) {
-        if(this.client.music.get(message.guild.id) == undefined) throw "No music running!";
-        this.client.music.get(message.guild.id).stop();
+
+        let embed = new MessageEmbed()
+        .setColor('#dd67ff')
+        .setTimestamp()
+        .setFooter(`Requested by: ${message.author.tag}`)
+        ;
+
+        if (this.client.music.get(message.guild.id) == undefined) {
+            embed.setTitle(':interrobang: No music playing');
+            embed.setColor('#ff0000');
+
+        } else if (this.client.music.get(message.guild.id).paused) {
+            clearTimeout(this.client.music.get(`${message.guild.id}_pause_timer`));
+            this.client.music.delete(`${message.guild.id}_pause_timer`);
+
+            this.client.music.get(message.guild.id).stop();
+            embed.setTitle(':track_next: Skipping and resuming playback');
+
+        } else {
+            this.client.music.get(message.guild.id).stop();
+            embed.setTitle(':track_next: Skipping track');
+        }
+
+        message.send(embed);
     }
 };
