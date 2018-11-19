@@ -47,6 +47,8 @@ module.exports = class extends Command {
         } else if (this.client.music.get(message.guild.id).paused) {
             clearTimeout(this.client.music.get(`${message.guild.id}_pause_timer`));
             this.client.music.delete(`${message.guild.id}_pause_timer`);
+
+            this.client.music.get(message.guild.id).stop();
             embed.setTitle(':track_next: Skipping and resuming playback');
 
         } else {
