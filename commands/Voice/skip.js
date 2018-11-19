@@ -13,7 +13,7 @@ module.exports = class extends Command {
             runIn: ['text'],
             requiredPermissions: [],
             requiredSettings: [],
-            aliases: ['yt'],
+            aliases: [],
             autoAliases: true,
             bucket: 1,
             cooldown: 5,
