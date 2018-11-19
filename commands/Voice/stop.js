@@ -33,15 +33,27 @@ module.exports = class extends Command {
     }
 
     async run (message, [...paran]) {
-        if(this.client.music.get(message.guild.id) == undefined) throw "No music running!";
-        this.client.music.get('pm').leave(message.guild.id);
-        this.client.music.delete(message.guild.id);
+
         let embed = new MessageEmbed()
-        .setTitle('Stop')
         .setColor('#dd67ff')
         .setTimestamp()
         .setFooter(`Requested by: ${message.author.tag}`)
         ;
+
+        if (this.client.music.get(message.guild.id) == undefined) {
+            embed.setTitle(':interrobang: No music playing');
+            embed.setColor('#ff0000');
+
+        } else if (this.client.music.get(message.guild.id).paused) {
+            clearTimeout(this.client.music.get(`${message.guild.id}_pause_timer`));
+            this.client.music.delete(`${message.guild.id}_pause_timer`);
+            embed.setTitle(':stop_button: Stopped Playback');
+
+        } else {
+            this.client.music.get(message.guild.id).stop();
+            embed.setTitle(':stop_button: Stopped Playback');
+        }
+
         message.send(embed);
     }
 };

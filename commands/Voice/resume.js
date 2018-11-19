@@ -8,12 +8,12 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            name: 'skip',
+            name: 'resume',
             enabled: true,
             runIn: ['text'],
             requiredPermissions: [],
             requiredSettings: [],
-            aliases: ['yt'],
+            aliases: [],
             autoAliases: true,
             bucket: 1,
             cooldown: 5,
@@ -23,8 +23,8 @@ module.exports = class extends Command {
             guarded: false,
             nsfw: false,
             permissionLevel: 0,
-            description: 'skip music',
-            extendedHelp: 'skip music',
+            description: 'Resumes music playback',
+            extendedHelp: 'Resumes music playback',
             usage: '',
             usageDelim: undefined,
             quotedStringSupport: false,
@@ -32,7 +32,7 @@ module.exports = class extends Command {
         });
     }
 
-    async run (message, [...paran]) {
+    async run (message, [...param]) {
 
         let embed = new MessageEmbed()
         .setColor('#dd67ff')
@@ -45,15 +45,16 @@ module.exports = class extends Command {
             embed.setColor('#ff0000');
 
         } else if (this.client.music.get(message.guild.id).paused) {
+            this.client.music.get(message.guild.id).resume();
+            embed.setTitle(':arrow_forward: Resuming playback');
+
             clearTimeout(this.client.music.get(`${message.guild.id}_pause_timer`));
             this.client.music.delete(`${message.guild.id}_pause_timer`);
-            embed.setTitle(':track_next: Skipping and resuming playback');
 
         } else {
-            this.client.music.get(message.guild.id).stop();
-            embed.setTitle(':track_next: Skipping track');
+            embed.setTitle(':arrow_forward: Music is already playing');
         }
-
+        
         message.send(embed);
     }
 };
