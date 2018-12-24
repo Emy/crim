@@ -1,0 +1,11 @@
+{
+    "discordToken": "YOUR_DISCORD_TOKEN",
+    "ownerID": "YOUR_OWNER_ID",
+    "nodes": [
+        {
+            "host" : "LAVALINK_IP",
+            "port" : "LAVALINK_PORT",
+            "password" : "LAVALINK_PASSWORD"
+        }
+    ]
+  }
