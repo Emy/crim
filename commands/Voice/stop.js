@@ -34,6 +34,7 @@ module.exports = class extends Command {
 
     async run (message, [...paran]) {
         if(this.client.music.get(message.guild.id) == undefined) throw "No music running!";
+        if(!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
         this.client.music.get('pm').leave(message.guild.id);
         this.client.music.delete(message.guild.id);
         let embed = new MessageEmbed()

@@ -1,8 +1,4 @@
 const { Command } = require('klasa');
-const { MessageEmbed, Collection } = require('discord.js');
-const { PlayerManager } = require("discord.js-lavalink");
-
-let playerManager;
 
 module.exports = class extends Command {
 
@@ -34,7 +30,9 @@ module.exports = class extends Command {
 
     async run (message, [volume]) {
         if(this.client.music.get(message.guild.id) == undefined) throw "No music running!";
+        if(!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
         if(volume === undefined) message.send(`Volume is at: ${this.client.music.get(message.guild.id).state.volume}%`)
+        if(volume <= 0 || volume > 200) throw "Volume restriction! (1-200%)";
         this.client.music.get(message.guild.id).volume(volume);
     }
 };
