@@ -34,6 +34,7 @@ module.exports = class extends Command {
 
     async run (message, [...paran]) {
         if(this.client.music.get(message.guild.id) == undefined) throw "No music running!";
+        if(!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
         const player = this.client.music.get(message.guild.id);
         player.loop = !player.loop;
         message.send(`Loop: ${player.loop}`);

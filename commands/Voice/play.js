@@ -15,7 +15,7 @@ module.exports = class extends Command {
             runIn: ['text', 'dm', 'group'],
             requiredPermissions: [],
             requiredSettings: [],
-            aliases: ['yt'],
+            aliases: [],
             autoAliases: true,
             bucket: 1,
             cooldown: 5,
@@ -68,6 +68,7 @@ module.exports = class extends Command {
             this.sendNowPlayingEmbed(message, player.songs[0]);
             player.play(player.songs[0].track);
         } else {
+            if(!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
             player = this.client.music.get(message.guild.id);
             player.songs.push(response.tracks[0]);
             message.send(`Added ${response.tracks[0].info.title} to the queue!`)
@@ -89,6 +90,7 @@ module.exports = class extends Command {
         .setColor('#dd67ff')
         .addField('Length', `${moment(song.info.length).format('mm:ss')}min`, true)
         .setThumbnail(`https://img.youtube.com/vi/${song.info.identifier}/default.jpg`)
+        .setURL(`https://youtu.be/${song.info.identifier}`)
         .setTimestamp()
         .setFooter(`Uploaded by: ${song.info.author}`)
         ;

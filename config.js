@@ -23,7 +23,7 @@ exports.config = {
     disabledEvents: [],
     // A presence to login with
     presence: {},
-    // A once ready message for your console
+    // A once ready message for your console    
     readyMessage: (client) => `Successfully initialized. Ready to serve ${client.guilds.size} guild${client.guilds.size === 1 ? '' : 's'}.`,
 
     /**
