@@ -83,8 +83,8 @@ module.exports = class extends Command {
             let data = JSON.parse(await response.text());
             let media = data.data.Media;
             if(media === null) return this.sendNotFoundEmbed(message, anime);
-            let startDate = new Date(media.startDate.year, media.startDate.month, media.startDate.day);
-            let endDate = new Date(media.endDate.year, media.endDate.month, media.endDate.day);
+            let startDate = new Date(media.startDate.year, media.startDate.month-1, media.startDate.day);
+            let endDate = new Date(media.endDate.year, media.endDate.month-1, media.endDate.day);
             let embed = new MessageEmbed()
             .setThumbnail(media.coverImage.large)
             .setColor('#dd67ff')
