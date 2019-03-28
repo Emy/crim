@@ -7,3 +7,4 @@ package-lock.json
 bwd
 yarn.lock
 .vscode
+.idea
