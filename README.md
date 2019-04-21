@@ -1,6 +1,7 @@
 # Emybot
 
   A cute discord bot for all your nekomimi needs.
+  [fork me daddy](https://www.amazon.com/Hiware-12-piece-Extra-Fine-Stainless-Restaurant/dp/B01KEV935W)
 
 ## Getting started
 
