@@ -1,6 +1,6 @@
-# Emybot
+# Filo
 
-  A cute discord bot for all your nekomimi needs.
+THE cute multi purpose bot for discord!
 
 ## Getting started
 
@@ -17,8 +17,8 @@
 ### Installation
 
   - Download the files
-     - Option 1: Clone the github repo of Emybot: `git clone https://github.com/Emy/emybot`
-     - Option 2: Download the master branch from [here](https://github.com/Emy/emybot/archive/master.zip)
+     - Option 1: Clone the github repo of Emybot: `git clone https://github.com/Emy/filo`
+     - Option 2: Download the master branch from [here](https://github.com/Emy/filo/archive/master.zip)
   - Create a new application at [Discord Developers](https://discordapp.com/developers/)
   - Create a new bot inside that application and copy its bot token
   - Add that bot token into the "config.json" file in the field "discordToken"
