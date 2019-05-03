@@ -1,69 +1,23 @@
-const { Command } = require('klasa');
+const { Command, RichDisplay } = require('klasa');
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
+const anilistQuery = require('../../../util/anilistQuery');
 
 module.exports = class extends Command {
 
     constructor(...args) {
-        /**
-         * Any default options can be omitted completely.
-         * if all options are default, you can omit the constructor completely
-         */
         super(...args, {
-            enabled: true,
-            runIn: ['text', 'dm', 'group'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: [],
-            autoAliases: true,
-            bucket: 1,
+            requiredPermissions: ['EMBED_LINKS'],
             cooldown: 10,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: 'Get anime information from anilist.co',
-            extendedHelp: 'No extended help available.',
-            usage: '<anime:string>',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
+            description: language => language.get('COMMAND_ANIME_DESCRIPTION'),
+            usage: '<title:string>',
         });
     }
 
-    async run(message, [anime]) {
-        var query = `
-        query ($name: String) {
-        Media (search: $name, type: ANIME) {
-            id
-            status
-            title {
-                romaji
-                english
-                native
-            }
-            coverImage {
-                large
-            }
-            meanScore
-            startDate {
-                year
-                month
-                day
-            }
-            endDate {
-                year
-                month
-                day
-            }
-            episodes
-            genres
-            }
-        }`;
+    async run(message, [title]) {
+        var query = anilistQuery.query;
         let variables = {
-            name: anime
+            title: title
         };
             
         let options = {
@@ -80,11 +34,16 @@ module.exports = class extends Command {
 
         try {
             let response = await fetch('https://graphql.anilist.co', options);
-            let data = JSON.parse(await response.text());
+            let data = await response.json();
             let media = data.data.Media;
             if(media === null) return this.sendNotFoundEmbed(message, anime);
+
             let startDate = new Date(media.startDate.year, media.startDate.month-1, media.startDate.day);
             let endDate = new Date(media.endDate.year, media.endDate.month-1, media.endDate.day);
+
+            let display = new RichDisplay()
+            .setFooterSuffix(` | Requested by ${message.author.tag} | Provided by Anilist.co`)
+
             let embed = new MessageEmbed()
             .setThumbnail(media.coverImage.large)
             .setColor('#dd67ff')
@@ -94,10 +53,23 @@ module.exports = class extends Command {
             .addField('Start date', startDate.toDateString(), true)
             .addField('End date', media.status != 'RELEASING' ? endDate.toDateString() : 'Not finished yet.', true)
             .addField('Genres', media.genres.join(', '))
-            .setFooter(`Requested by: ${message.author.tag} | Provided by Anilist.co`)
             .setTimestamp()
-            ;
-            message.sendEmbed(embed);
+            display.addPage(embed)
+
+            media.characters.edges.forEach(character => {
+                let embed = new MessageEmbed()
+                .setThumbnail(character.node.image.large)
+                .setTitle(media.title.english ? media.title.english : media.title.romaji)
+                .setURL(`https://anilist.co/anime/${media.id}`)
+                .addField('Name', `${character.node.name.first ? character.node.name.first : ''} ${character.node.name.last ? character.node.name.last : ''} (${character.node.name.native ? character.node.name.native : ''})`, true)
+                .addField('Role', character.role, true)
+                .addField('Description', character.node.description ? character.node.description : 'No description available.')
+                display.addPage(embed)
+            });
+
+            return display.run(message, {
+                'jump': true,'stop': false, 'firstLast': false, 'max' : 15, 'time': 120000});
+
         } catch(error) {
             this.client.console.error(error);
         }
@@ -107,14 +79,11 @@ module.exports = class extends Command {
         let embed = new MessageEmbed()
             .setThumbnail()
             .setColor('#dd67ff')
-            .addField('No Anime found', 'No animes found for: "' + anime + '" on Anilist.co')
+            .addField('No Anime found', 'No anime found for: "' + anime + '" on Anilist.co')
             .setFooter(`Requested by: ${message.author.tag} | Provided by Anilist.co`)
             .setTimestamp()
             ;
         message.sendEmbed(embed);
-    }
-
-    async init() {
     }
 
 };
