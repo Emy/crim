@@ -11,7 +11,7 @@ module.exports = class extends Command {
 	}
 
 	async run(message) {
-		return message.sendLocale('COMMAND_INVITE', '<http://github.com/Emy/filo>');
+		return message.sendLocale('COMMAND_INVITE', ['<http://github.com/Emy/filo>']);
 	}
 
 	async init() {
