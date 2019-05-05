@@ -4,43 +4,28 @@ const { PlayerManager } = require("discord.js-lavalink");
 const fetch = require('node-fetch');
 const moment = require('moment');
 let playerManager;
-const { nodes } = require('../../config');
+const { nodes } = require('../../../config');
 
 module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            name: 'play',
-            enabled: true,
-            runIn: ['text', 'dm', 'group'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: [],
-            autoAliases: true,
-            bucket: 1,
+            runIn: ['text'],
+            requiredPermissions: ['EMBED_LINKS'],
+            aliases: ['p'],
             cooldown: 5,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: 'Play sound via Lavalink',
-            extendedHelp: 'Play sound via Lavalink',
-            usage: '[song:string]',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
+            description: language => language.get('COMMAND_PLAY_DESCRIPTION'),
+            usage: '<song:string>',
         });
     }
 
     async run (message, [song]) {
-        if (!message.member.voice.channel) throw "You must be in a voice chat to do that";
+        if (!message.member.voice.channel) return message.sendLocale('ERROR_NOT_IN_VC');
         let data = await fetch(`http://${nodes[0].host}:${nodes[0].port}/loadtracks?identifier=ytsearch:${song}`, {
             headers: {
                 authorization: nodes[0].password
             }});
-        if (!data) throw "There was an error, try again";
+        if (!data) return message.sendLocale('ERROR_LAVALINK_NO_DATA');
         let response = JSON.parse(await data.text());
         if (response.loadType == "NO_MATCHES") throw "No tracks found";
         let player;

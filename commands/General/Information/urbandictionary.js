@@ -6,27 +6,11 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            enabled: true,
-            name: "define",
-            runIn: ['text', 'dm', 'group'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: ["urbandictionary"],
-            autoAliases: true,
-            bucket: 1,
+            requiredPermissions: ['EMBED_LINKS'],
+            aliases: ['define', 'ud'],
             cooldown: 5,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: 'Looks up facts on Urban Dictonary.',
-            extendedHelp: '',
+            description: language => language.get('COMMAND_URBANDICTIONARY_DESCRIPTION'),
             usage: '<searchterm:string>',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
         });
     }
 

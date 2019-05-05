@@ -1,35 +1,14 @@
 const { Command } = require('klasa');
 const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
 
 module.exports = class extends Command {
 
     constructor(...args) {
-        /**
-         * Any default options can be omitted completely.
-         * if all options are default, you can omit the constructor completely
-         */
         super(...args, {
-            enabled: true,
-            runIn: ['text', 'dm', 'group'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: [],
-            autoAliases: true,
-            bucket: 1,
+            requiredPermissions: ['EMBED_LINKS'],
             cooldown: 5,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: 'The magic 8ball answers any of your questions.',
-            extendedHelp: 'The magic 8ball answers any of your questions.',
+            description: language => language.get('COMMAND_8BALL_DESCRIPTION'),
             usage: '<question:string>',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
         });
     }
 
@@ -47,7 +26,7 @@ module.exports = class extends Command {
             .setColor('#dd67ff')
             .addField('Question:', question)
             .addField('Answer:', answer)
-            .setFooter(`Requested by: ${message.author.tag} | Provided by Emybot`)
+            .setFooter(`Requested by: ${message.author.tag}`)
             ;
             message.send(embed);
         } catch (error) {
@@ -57,13 +36,6 @@ module.exports = class extends Command {
             embed.setColor('red');
             message.send(embed);
         }
-    }
-
-    async init() {
-        /*
-         * You can optionally define this method which will be run when the bot starts
-         * (after login, so discord data is available via this.client)
-         */
     }
 
 };

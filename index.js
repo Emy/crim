@@ -6,6 +6,6 @@ class MyKlasaClient extends Client {
         super(...args);
     }
 }
-Client.use(require('klasa-stats-plugin'));
+//Client.use(require('klasa-stats-plugin'));
 Client.use(require('klasa-dashboard-hooks'));
 new MyKlasaClient(config).login(token);

@@ -15,7 +15,6 @@
     "graphql": "^0.13.2",
     "klasa": "github:dirigeants/klasa",
     "klasa-dashboard-hooks": "dirigeants/klasa-dashboard-hooks",
-    "klasa-stats-plugin": "github:1Conan/klasa-stats-plugin",
     "moment": "^2.22.2",
     "mongodb": "^3.1.3",
     "node-fetch": "^2.2.0",

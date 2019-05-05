@@ -6,26 +6,10 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            enabled: true,
-            runIn: ['text', 'dm', 'group'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: ["trump"],
-            autoAliases: true,
-            bucket: 1,
+            requiredPermissions: ['EMBED_LINKS'],
+            aliases: ['trump'],
             cooldown: 5,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: 'Intellectual Quotes from Tronalddrump.io',
-            extendedHelp: '',
-            usage: '',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
+            description: language => language.get('COMMAND_DONALD_DESCRIPTION'),
         });
     }
 
@@ -33,12 +17,7 @@ module.exports = class extends Command {
         let data = await fetch('https://api.tronalddump.io/random/quote');
         let response = JSON.parse(await data.text());
 
-        let subject;
-        if (response.tags[0]) {
-            subject = `about ${response.tags[0]}`;
-        } else {
-            subject = '';
-        }
+        let subject = response.tags[0] ? `about ${response.tags[0]}` : '';
 
         let embed = new MessageEmbed()
         .setTimestamp()

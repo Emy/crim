@@ -6,25 +6,11 @@ module.exports = class extends Command {
     constructor(...args) {
         super(...args, {
             enabled: true,
-            runIn: ['text', 'dm', 'group'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: [],
-            autoAliases: true,
-            bucket: 1,
+            runIn: ['text', 'group'],
+            requiredPermissions: ['EMBED_LINKS'],
             cooldown: 5,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: '',
-            extendedHelp: 'No extended help available.',
+            description: language => language.get('COMMAND_WHOIS_DESCRIPTION'),
             usage: '<member:user>',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
         });
     }
 
@@ -40,6 +26,5 @@ module.exports = class extends Command {
             ;
         message.send(embed);
     }
-
-    async init() {}
+    
 };

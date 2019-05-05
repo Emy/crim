@@ -1,34 +1,14 @@
 const { Command } = require('klasa');
-const { MessageEmbed, Collection } = require('discord.js');
-const { PlayerManager } = require("discord.js-lavalink");
-
-let playerManager;
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            name: 'resume',
-            enabled: true,
             runIn: ['text'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: [],
-            autoAliases: true,
-            bucket: 1,
+            requiredPermissions: ['EMBED_LINKS'],
             cooldown: 5,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: 'Resumes music playback',
-            extendedHelp: 'Resumes music playback',
-            usage: '',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
+            description: language => language.get('COMMAND_PAUSE_DESCRIPTION'),
         });
     }
 
@@ -46,15 +26,24 @@ module.exports = class extends Command {
 
         } else if (this.client.music.get(message.guild.id).paused) {
             this.client.music.get(message.guild.id).resume();
-            embed.setTitle(':arrow_forward: Resuming playback');
+            embed.setTitle(':arrow_forward: Resuming playback...');
 
             clearTimeout(this.client.music.get(`${message.guild.id}_pause_timer`));
             this.client.music.delete(`${message.guild.id}_pause_timer`);
 
         } else {
-            embed.setTitle(':arrow_forward: Music is already playing');
+            this.client.music.get(message.guild.id).pause();
+            embed.setTitle(':pause_button: Pausing playback');
+
+            let timer = setTimeout(() => {
+                this.client.music.get('pm').leave(message.guild.id);
+                this.client.music.delete(message.guild.id);
+            }, 120000);
+
+            this.client.music.set(`${message.guild.id}_pause_timer`, timer);
         }
         
         message.send(embed);
     }
+    
 };

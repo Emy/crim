@@ -29,7 +29,7 @@ exports.config = {
     /**
      * Caching Options
      */
-    fetchAllMembers: false,
+    fetchAllMembers: true,
     messageCacheMaxSize: 200,
     messageCacheLifetime: 0,
     commandMessageLifetime: 1800,

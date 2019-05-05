@@ -8,35 +8,17 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            name: 'stop',
-            enabled: true,
             runIn: ['text'],
-            requiredPermissions: [],
-            requiredSettings: [],
-            aliases: [],
-            autoAliases: true,
-            bucket: 1,
+            requiredPermissions: ['EMBED_LINKS'],
             cooldown: 5,
-            promptLimit: 0,
-            promptTime: 30000,
-            deletable: false,
-            guarded: false,
-            nsfw: false,
-            permissionLevel: 0,
-            description: 'Stop music playback',
-            extendedHelp: 'Stop music playback',
-            usage: '',
-            usageDelim: undefined,
-            quotedStringSupport: false,
-            subcommands: false
+            description: language => language.get('COMMAND_SKIP_DESCRIPTION'),
         });
     }
 
     async run (message, [...paran]) {
-        if(this.client.music.get(message.guild.id) == undefined) throw "No music running!";
+        if(this.client.music.get(message.guild.id) == undefined) return message.sendLocale('ERROR_LAVALINK_NO_MUSIC_RUNNING');
         if(!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
-        this.client.music.get('pm').leave(message.guild.id);
-        this.client.music.delete(message.guild.id);
+        this.client.music.get(message.guild.id).stop();
 
         let embed = new MessageEmbed()
         .setColor('#dd67ff')
@@ -53,11 +35,11 @@ module.exports = class extends Command {
             this.client.music.delete(`${message.guild.id}_pause_timer`);
 
             this.client.music.get(message.guild.id).stop();
-            embed.setTitle(':stop_button: Stopped Playback');
+            embed.setTitle(':track_next: Skipping and resuming playback');
 
         } else {
             this.client.music.get(message.guild.id).stop();
-            embed.setTitle(':stop_button: Stopped Playback');
+            embed.setTitle(':track_next: Skipping track');
         }
 
         message.send(embed);

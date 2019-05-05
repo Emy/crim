@@ -4,7 +4,12 @@ module.exports = class extends Language {
     constructor(...args) {
         super(...args, { enabled: true });
 
-        
+        Array.prototype.random = function () {
+            return this[Math.floor((Math.random()*this.length))];
+        }
+
+        let cuteReaction = ['OwO', 'UwU', 'awoo', ':3', '^~^'];
+        let angryReaction = ['>.>', '>.<', '>:(', 'baka!']
 
         this.language = {
             DEFAULT: (key) => ` has not been localized for en-US yet.`,
@@ -33,8 +38,19 @@ module.exports = class extends Language {
             FIELD_SOURCECODE: 'Source code',
             FIELD_CLICK_HERE: 'Click here!',
 
+            EMOTE_CUDDLE: 'cuddling',
+            EMOTE_HUG: 'hugging',
+            EMOTE_KISS: 'kissing',
+            EMOTE_PAT: 'patting',
+            EMOTE_SLAP: 'slapping',
+
+            FIELD_EMOTE_CUTE: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${cuteReaction.random()}`,
+            FIELD_EMOTE_ANGRY: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${angryReaction.random()}`,
+
+
             FOOTER_REQUESTED_BY: (name) => `Requested by ${name}`,
             FOOTER_PROVIDED_BY: (service) => `Provided by ${service}`,
+            FOOTER_REQUESTED_PROVIDED_BY: (name, service) => `Requested by ${name} | Provided by ${service}`,
 
             // Errors
             ERROR_NOT_IN_VC: `🛑 You aren't in a voice channel right now!`,
