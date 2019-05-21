@@ -8,7 +8,7 @@ module.exports = class extends Command {
         super(...args, {
             requiredPermissions: ['EMBED_LINKS'],
             aliases: ['define', 'ud'],
-            cooldown: 5,
+            cooldown: 60,
             description: language => language.get('COMMAND_URBANDICTIONARY_DESCRIPTION'),
             usage: '<searchterm:string>',
         });
@@ -27,17 +27,14 @@ module.exports = class extends Command {
             return message.send(embed);
         }
 
-        // Create the rich display
         let display = new RichDisplay()
-        .setFooterSuffix(` | Requested by ${message.author.tag} | Provided by Urban Dictionary`)
-        ;
+        .setFooterSuffix(` | Requested by ${message.author.tag} | Provided by Urban Dictionary`);
 
-        // Add all the pages to the display
         response.list.forEach(function(page) {
             /* For the description and the example, remove all the square brackets, as they
-              * were used for links before, and those no longer exist.
-              * Also cut them all down to fit into the maximum size of an Embed Field. 
-              */
+             * were used for links before, and those no longer exist.
+             * Also cut them all down to fit into the maximum size of an Embed Field. 
+             */
             let description = page.definition.replace(/[\[\]]/g,'').substr(0, 1022)
             let example = page.example.replace(/[\[\]]/g ,'').substr(0, 1022)
 
@@ -46,21 +43,12 @@ module.exports = class extends Command {
             .setColor('#dd67ff')
             .setTitle(`__**${page.word}**__`.substr(0, 255))
             .setURL(page.permalink)
-            ;
-
-            if (description) {
-                embed.addField("*Description:*", description);
-            }
-
-            if (example) {
-                embed.addField("*Example:*", example);
-            }
-
+            .addField("*Description:*", description ? description : 'None available.')
+            .addField("*Example:*", example ? example : 'None available.');
             display.addPage(embed);
         });
 
-        // Send the RichDisplay with 15 Reactions max and 30 seconds timeout
-        return display.run(await message.send('Loading...'), {
+        return display.run(message, {
             'jump': false,'stop': false, 'firstLast': false, 'max' : 15, 'time': 30000});
     }
 };
