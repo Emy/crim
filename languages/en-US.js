@@ -47,6 +47,14 @@ module.exports = class extends Language {
             FIELD_EMOTE_CUTE: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${cuteReaction.random()}`,
             FIELD_EMOTE_ANGRY: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${angryReaction.random()}`,
 
+            // SAUCE COMMAND
+            TITLE_SAUCE_EMBED: 'Source search',
+            FIELD_SAUCE: 'Source',
+            FIELD_SIMILARITY: 'Similarity',
+            FIELD_PART: 'Part',
+            FIELD_YEAR: 'Year',
+            FIELD_ESTIMATED_TIMESTAMP: 'Estimated timestamp',
+            FIELD_EXTERMAL_LINKS: 'Links',
 
             FOOTER_REQUESTED_BY: (name) => `Requested by ${name}`,
             FOOTER_PROVIDED_BY: (service) => `Provided by ${service}`,
@@ -76,6 +84,7 @@ module.exports = class extends Language {
             COMMAND_EMOJI_DESCRIPTION: 'Display a custom emoji in full size.',
             COMMAND_FOXGIRL_DESCRIPTION: 'Display a cute fox girl (NSFW channel only).',
             COMMAND_NEKO_DESCRIPTION: 'Display a cute and lewd cat girl (NSFW channel only).',
+            COMMAND_SAUCE_DESCRIPTION: 'Trying to find the source of an anime, manga or hentai image link.',
 
             // Sub category Information
             COMMAND_8BALL_DESCRIPTION: 'Get wise answers for yes or no questions.',
