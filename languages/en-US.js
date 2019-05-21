@@ -84,6 +84,7 @@ module.exports = class extends Language {
             COMMAND_EMOJI_DESCRIPTION: 'Display a custom emoji in full size.',
             COMMAND_FOXGIRL_DESCRIPTION: 'Display a cute fox girl (NSFW channel only).',
             COMMAND_NEKO_DESCRIPTION: 'Display a cute and lewd cat girl (NSFW channel only).',
+            COMMAND_SAUCE_DESCRIPTION: 'Trying to find the source of an anime, manga or hentai image link.',
 
             // Sub category Information
             COMMAND_8BALL_DESCRIPTION: 'Get wise answers for yes or no questions.',
