@@ -47,6 +47,14 @@ module.exports = class extends Language {
             FIELD_EMOTE_CUTE: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${cuteReaction.random()}`,
             FIELD_EMOTE_ANGRY: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${angryReaction.random()}`,
 
+            // SAUCE COMMAND
+            TITLE_SAUCE_EMBED: 'Source search',
+            FIELD_SAUCE: 'Source',
+            FIELD_SIMILARITY: 'Similarity',
+            FIELD_PART: 'Part',
+            FIELD_YEAR: 'Year',
+            FIELD_ESTIMATED_TIMESTAMP: 'Estimated timestamp',
+            FIELD_EXTERMAL_LINKS: 'Links',
 
             FOOTER_REQUESTED_BY: (name) => `Requested by ${name}`,
             FOOTER_PROVIDED_BY: (service) => `Provided by ${service}`,
