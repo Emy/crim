@@ -47,6 +47,8 @@ module.exports = class extends Language {
             FIELD_EMOTE_CUTE: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${cuteReaction.random()}`,
             FIELD_EMOTE_ANGRY: (sender, activity, receiver) => `**${sender}** is ${activity} **${receiver}** ${angryReaction.random()}`,
 
+            TITLE_KIDOL: (group, idol) => `**${idol}** from **${group}**`,
+
             // SAUCE COMMAND
             TITLE_SAUCE_EMBED: 'Source search',
             FIELD_SAUCE: 'Source',
@@ -83,6 +85,7 @@ module.exports = class extends Language {
             COMMAND_BOOBS_DESCRIPTION: 'Anime boobs (NSFW channel only).',
             COMMAND_EMOJI_DESCRIPTION: 'Display a custom emoji in full size.',
             COMMAND_FOXGIRL_DESCRIPTION: 'Display a cute fox girl (NSFW channel only).',
+            COMMAND_KIDOL_DESCRIPTION: 'Display an idol from a random K-Pop group.',
             COMMAND_NEKO_DESCRIPTION: 'Display a cute and lewd cat girl (NSFW channel only).',
             COMMAND_SAUCE_DESCRIPTION: 'Trying to find the source of an anime, manga or hentai image link.',
 
