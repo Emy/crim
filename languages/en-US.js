@@ -81,8 +81,10 @@ module.exports = class extends Language {
             COMMAND_PAT_DESCRIPTION: 'Pat people (with a cute anime gif).',
             COMMAND_SLAP_DESCRIPTION: 'Slap people (with a cute anime gif).',
 
-            // Sub category Image
+            // Sub category Image'
+            COMMAND_ANIMEME_DESCRIPTION: 'Get a random animeme.',
             COMMAND_BOOBS_DESCRIPTION: 'Anime boobs (NSFW channel only).',
+            COMMAND_DANKMEME_DESCRIPTION: 'Get a random dank meme.',
             COMMAND_EMOJI_DESCRIPTION: 'Display a custom emoji in full size.',
             COMMAND_FOXGIRL_DESCRIPTION: 'Display a cute fox girl (NSFW channel only).',
             COMMAND_KIDOL_DESCRIPTION: 'Display an idol from a random K-Pop group.',
