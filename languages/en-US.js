@@ -26,6 +26,13 @@ module.exports = class extends Language {
 				`Please file an issue at ${repo} if you find any bugs.`
             ],
 
+            ERROR_TITLE: 'Error',
+            ERROR_REASON: 'Reason',
+            ERROR_KICK_YOURSELF: 'You cannot kick yourself!',
+            ERROR_KICK_ME: 'I cannot kick myself!',
+            ERROR_KICK_HIGHER_ROLE: 'The user you tried to kick has a higher ranked role than you!',
+            ERROR_KICK_UNKICKABLE: 'The user is not kickable!',
+
             FIELD_STATISTICS: 'Statistics',
             FIELD_MEMORY: 'Memory',
             FIELD_UPTIME: 'Uptime',
@@ -71,6 +78,9 @@ module.exports = class extends Language {
             // Category Admin command descriptions
             // Sub category General
             COMMAND_SERVERLIST_DESCRIPTION: 'Display the list of servers the bot has joined.',
+
+            // Sub category Moderation
+            COMMAND_KICK_DESCRIPTION: 'Kick a user from the server.',
 
             // Category General command descriptions
             // Sub category Fun
