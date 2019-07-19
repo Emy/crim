@@ -1,90 +1,66 @@
-# Filo
+# Filo 
+A cute, multipurpose Discord bot for all your kawaii needs. 
 
-THE cute multi purpose bot for discord!
+### Contributions
+Filo is an amazing bot, but just like all things in life, she can be improved! 
 
-## Getting started
+As long as they follow [Linter](https://en.wikipedia.org/wiki/Lint_(software)) rules, pull requests that add new features, fix insanely bad written code, or make things look fancier are very appreciated and I'm more than welcome to help you merge your pull request into Filo.
 
-### Prerequisites
-
-  - node.js\
-    The following three dependencies can be installed by running `npm i` in the root of the project:
-    - discord.js
-    - klasa
-    - node-fetch
-  - git (Optional)
-  - Discord account
-
-### Installation
-
-  - Download the files
-     - Option 1: Clone the github repo of Emybot: `git clone https://github.com/Emy/filo`
-     - Option 2: Download the master branch from [here](https://github.com/Emy/filo/archive/master.zip)
-  - Create a new application at [Discord Developers](https://discordapp.com/developers/)
-  - Create a new bot inside that application and copy its bot token
-  - Add that bot token into the "config.json" file in the field "discordToken"
-  - Add your username to the "config.json" file in the field "ownerID"
-
-### Running the Bot
-
-  Run `node index.js` in the root of the project
-
-### Adding the bot to a server
-<!---
-  TODO: Describe a better option
-  There has to be a better/easier/normal way to do this than this.
--->
-
-  Copy the client ID of your application on [Discord Developers](https://discordapp.com/developers/)\
-  Open the following URL in your browser, and replace CLIENTID with your client ID:\
-  `https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0` 
-
-  You can now choose which server you want your bot to be on
+If you have questions about Filo or encounter any issues with her, you can join [Filo's Discord Server](https://discord.gg/jmt2fTp) for support.  
 
 ## Supported Commands
+Filo's commands are separated by 3 categories, which are __General Commands, Information Commands, and User Commands.__ 
+The default prefix for Filo is `!`. This can be changed to anything else by the user if nessesary.  
 
 ### General Commands
-
-  - !help / !help [COMMAND]\
-    Displays help / Displays help for a command
-
-  - !info\
-    Shows some information about Klasa
-
-  - !ping\
-    Runs a connection test to Discord
-
-  - !stats\
-    Displays statistics about the bot
-
-### Utility Command
-
-  - !avatar\
-    Posting your avatar in chat as an embedded message
+- `help/help [Command]`: Display a messages with all the available commands. It can also provide help by displaying options for a certain command.
+- `info`: Provides useful information to the user about Klasa. 
+- `ping`: Runs a connection test on Discord. 
+- `stats`: Provides information about the server and/or the bot.
 
 ### Information Commands
+- `avatar`: Obtains your profile picture and posts it on whichever chat the user is in. 
+- `anime [Anime name]` : Provides usful information about recent anime release. It can also provide information about a specified anime. (Powered by [AniList](https://anilist.co)) 
+- `fact`: Shows the user a random fact about anything. (Powered by [nekos.life](https://nekos.life))
+- `chucknorris`: Shows the user a random fact about Chuck Norris (Powered by [api.chucknorris.io](https://api.chucknorris.io))
+- `google`: Provides useful information on how easy it is to ufse Google (Powered by [lmgtfy](https://lmgtfy.com))
+- `donald`: Provides intellectual quotes from the POTUS. (Powered by [tronalddump.io](https://www.tronalddump.io))
+- `define [word]`: Provides useful information about the specified word (Powered by [Urban Dictionary](https://www.urbandictionary.com))
 
-  - !anime\
-    Gets anime informations from anilist.co 
+### User Commands
+- `hug [user]`: Allows users to vitually hug the specified user.
+- `kiss [user]`: Allows users to virtually kiss the specified ulser. 
+- `pat [user]`: Allows users to vitually pat the specified user. 
+- `cuddle [user]`: Allows users to virtually cuddle the specified user. 
+- `slap [user]`: Allows users to virtually slap the specfied user. 
+- `owify [text]`: Provides the user with an specified text having "owo's" throughout phrases.
+- `8ball`: Provides the user answers for yes/no questions. 
 
-  - !fact\
-    Shows you a random fact. Powered by nekos.life
+## Implementation
+Implementing Filo into your Discord server is easy to do. Before you start, here are things you will need: 
 
-  - !chucknorris\
-    Shows you a random chuck norris fact. Powered by api.chucknorris.io
+- node.js
+  - discord.js
+  - klasa
+  - node.fetch
+- git (Optional) 
+- A Discord account (of course!)
 
-  - !lmgtfy\
-    For the times where someone needs to learn how to use google
+discord.js, klasa, and node.fetch can easily be downloaded and installed by running `npm i` on the root of the project. 
 
-### Fun Commands
+### Installation
+1. Download Filo by cloning this repository or by downloading the [master branch](https://github.com/Emy/filo/archive/master.zip)
+```
+git clone https://github.com/Emy/filo
+```
+2. Create a new application at [Discord Developers](https://discordapp.com/developers/)
+3. Create a bot inside said application and copy your bot token
+4. Add your given bot token to the `config.json` file in the "discordToken" field and your Discord tag on the "ownerID" field
+5. Run `node index.js` in the root of the project to start Filo
 
-  - !hug [@USER]\
-    Hug people
+### Adding the bot to your Discord Server
+Now that you have set up Filo, you can add her to your Discord server in 2 steps
 
-  - !kiss [@USER]\
-    Kiss people
-
-  - !pat [@USER]\
-    Pat people
-
-  - !owoify [TEXT]\
-    OwOifys your text
+1. Find the client ID of your app from [Discord Developers](https://discordapp.com/developers/)
+2. Open the following URL in your browser, and replace CLIENTID with your client ID:\
+`https://discordapp.com/oauth2/authorize?client_id=CLIENTID&scope=bot&permissions=0`
