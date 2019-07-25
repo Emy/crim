@@ -1,13 +1,12 @@
 const { Route } = require('klasa-dashboard-hooks');
 
-module.exports = 
+module.exports =
 class extends Route {
+  constructor(...args) {
+    super(...args, { route: '/' });
+  }
 
-	constructor(...args) {
-		super(...args, { route: '/' });
-	}
-
-	get(request, response) {
-		return response.end(JSON.stringify(this.client.routes));
-	}
+  get(request, response) {
+    return response.end(JSON.stringify(this.client.routes));
+  }
 };
