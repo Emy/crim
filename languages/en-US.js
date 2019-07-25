@@ -8,7 +8,6 @@ module.exports = class extends Language {
     this.language = {
       DEFAULT: (key) => ` has not been localized for en-US yet.`,
       DEFAULT_LANGUAGE: 'Default Language',
-
       COMMAND_INVITE: (repo) => [
         `To add ${this.client.user.username} to your discord guild:`,
         `<${this.client.invite}>`,
