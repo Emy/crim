@@ -9,8 +9,8 @@ As long as they follow [Linter](https://en.wikipedia.org/wiki/Lint_(software)) r
 If you have questions about Filo or encounter any issues with her, you can join [Filo's Discord Server](https://discord.gg/jmt2fTp) for support.  
 
 ## Supported Commands
-Filo's commands are separated by 3 categories, which are __General Commands, Information Commands, and User Commands.__ 
-The default prefix for Filo is `!`. This can be changed to anything else by the user if nessesary.  
+Filo's commands are separated by 4 categories, which are __General Commands, Information Commands, User Command, and Music Commands.__ 
+In order to use these commands, you must first type Filo's prefix, which by default is `!`. This can be changed to anything else by the user if nessesary.  
 
 ### General Commands
 - `help/help [Command]`: Display a messages with all the available commands. It can also provide help by displaying options for a certain command.
@@ -36,6 +36,17 @@ The default prefix for Filo is `!`. This can be changed to anything else by the 
 - `owify [text]`: Provides the user with an specified text having "owo's" throughout phrases.
 - `8ball`: Provides the user answers for yes/no questions. 
 
+### Music Commands
+- `loop`: Turn on/off the loop of the currently playing track.
+- `nowplaying`: Show information about the currently playing track.
+- `pause`: Pause / resume the song playback.
+- `play`: Play a song from youtube.
+- `queue`: Show the current queue of the current session.
+- `resume`: Resume the song playback.
+- `skip`: Skip the currently playing track.
+- `stop`: Stop the current session and flush the queue.
+- `volume`: Adjust the playback volume. (Limit: 1% - 200%)
+
 ## Implementation
 Implementing Filo into your Discord server is easy to do. Before you start, here are things you will need: 
 
@@ -49,9 +60,9 @@ Implementing Filo into your Discord server is easy to do. Before you start, here
 discord.js, klasa, and node.fetch can easily be downloaded and installed by running `npm i` on the root of the project. 
 
 ### Installation
-1. Download Filo by cloning this repository or by downloading the [master branch](https://github.com/Emy/filo/archive/master.zip)
+1. Download the master branch of Filo from [here](https://github.com/Emy/filo/archive/master.zip), or use Git in order to clone this repository
 ```
-git clone https://github.com/Emy/filo
+git clone https://github.com/Emy/filo.git
 ```
 2. Create a new application at [Discord Developers](https://discordapp.com/developers/)
 3. Create a bot inside said application and copy your bot token
