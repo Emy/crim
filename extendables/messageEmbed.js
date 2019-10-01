@@ -11,7 +11,10 @@ module.exports = class extends Extendable {
 
   setProvidedBy(provider) {
     const providedBy = this.lang.get('FOOTER_PROVIDED_BY');
-    this.setFooter(this.getFooter() + `| ${providedBy} ${provider}`);
+    this.setFooter(
+        this.footer.text + ` | ${providedBy} ${provider}`,
+        this.footer.iconURL
+    );
     return this;
   };
 
