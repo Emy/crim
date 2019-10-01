@@ -1,35 +1,30 @@
-const { Command, RichDisplay } = require('klasa');
+const { Command } = require('klasa');
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      requiredPermissions: ['EMBED_LINKS'],
+      aliases: ['trump'],
+      cooldown: 5,
+      description: (language) => language.get('COMMAND_DONALD_DESCRIPTION'),
+    });
+  }
 
-    constructor(...args) {
-        super(...args, {
-            requiredPermissions: ['EMBED_LINKS'],
-            aliases: ['trump'],
-            cooldown: 5,
-            description: language => language.get('COMMAND_DONALD_DESCRIPTION'),
-        });
-    }
+  async run(message, [...params]) {
+    const response = await fetch('https://api.tronalddump.io/random/quote');
+    const data = await response.json();
 
-    async run(message, [...params]) {
-        let data = await fetch('https://api.tronalddump.io/random/quote');
-        let response = JSON.parse(await data.text());
+    const subject = data.tags[0] ? `about ${data.tags[0]}` : '';
 
-        let subject = response.tags[0] ? `about ${response.tags[0]}` : '';
-
-        let embed = new MessageEmbed()
-        .setTimestamp()
-        .setColor('#dd67ff')
-        .setTitle(`**${response._embedded.author[0].name}** tweeted ${subject}`)
-        .setURL(response._embedded.source[0].url)
-        .setDescription(response.value)
-        // TODO: Find out if avatars.io is reliable, or follow the twitter link manually
-        .setThumbnail("http://avatars.io/twitter/realDonaldTrump")
-        .setFooter(`Requested by: ${message.author.tag} | Provided by tronalddump.io`)
-        ;
-
-        message.send(embed);
-    }
+    new MessageEmbed()
+        .init(message)
+        .setTitle(`**${data._embedded.author[0].name}** tweeted ${subject}`)
+        .setURL(data._embedded.source[0].url)
+        .setDescription(data.value)
+        .setThumbnail('http://avatars.io/twitter/realDonaldTrump')
+        .setProvidedBy('tronalddump.io')
+        .send();
+  }
 };

@@ -3,27 +3,26 @@ const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
 
 module.exports = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      runIn: ['text'],
+      requiredPermissions: ['EMBED_LINKS'],
+      aliases: ['np'],
+      cooldown: 5,
+      description: (language) => language.get('COMMAND_NOWPLAYING_DESCRIPTION'),
+    });
+  }
 
-    constructor(...args) {
-        super(...args, {
-            runIn: ['text'],
-            requiredPermissions: ['EMBED_LINKS'],
-            aliases: ['np'],
-            cooldown: 5,
-            description: language => language.get('COMMAND_NOWPLAYING_DESCRIPTION'),
-        });
-    }
+  async run(message, [...params]) {
+    const player = this.client.music.get(message.guild.id);
+    const voiceChannel = message.member.voice.channel;
+    if (!player) return message.sendLocale('ERROR_LAVALINK_NO_MUSIC_RUNNING');
+    if (!voiceChannel || (player.channel !== voiceChannel.id)) throw 'You need to be in the Voice channel where the bot is in.';
+    this.sendNowPlayingEmbed(message, player.songs[0]);
+  }
 
-    async run(message, [...params]) {
-        if(this.client.music.get(message.guild.id) == undefined) return message.sendLocale('ERROR_LAVALINK_NO_MUSIC_RUNNING');
-        if(!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
-        const player = this.client.music.get(message.guild.id);
-        this.sendNowPlayingEmbed(message, player.songs[0]);
-    }
-
-    sendNowPlayingEmbed(message, song) {
-        console.log(song);
-        let embed = new MessageEmbed()
+  sendNowPlayingEmbed(message, song) {
+    const embed = new MessageEmbed()
         .setTitle(song.info.title)
         .setColor('#dd67ff')
         .addField('Length', `${moment(song.info.length).format('mm:ss')}min`, true)
@@ -32,7 +31,6 @@ module.exports = class extends Command {
         .setTimestamp()
         .setFooter(`Uploaded by: ${song.info.author}`)
         ;
-        message.send(embed);
-    }
-
+    message.send(embed);
+  }
 };
