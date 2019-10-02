@@ -1,5 +1,4 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = class extends Command {
@@ -8,26 +7,24 @@ module.exports = class extends Command {
       runIn: ['text', 'group'],
       requiredPermissions: ['EMBED_LINKS'],
       cooldown: 5,
-      description: (language) => language.get('COMMAND_PAT_DESCRIPTION'),
+      description: (lang) => lang.get('PAT_DESCRIPTION'),
       usage: '<member:member>',
     });
   }
 
-  async run(message, [member]) {
-    let data;
+  async run(msg, [member]) {
     try {
-      const response = await fetch('https://nekos.life/api/v2/img/pat');
-      data = await response.json();
+      const author = msg.author;
+      const user = member.user;
+      const data = await (await fetch('https://nekos.life/api/v2/img/pat')).json();
+      if (!(data || data.url)) return msg.sendError('NO_DATA');
+      msg.genEmbed()
+          .setEmoteTitle(author.username, user.username, 'PATTING', true)
+          .setProvidedBy('nekos.life')
+          .setImage(data.url)
+          .send();
     } catch (error) {
-      return message.sendError('ERROR_REST_REQUEST_FAILED');
+      return msg.sendError('REQUEST_FAILED');
     }
-
-    if (!(data || data.url)) return message.sendError('ERROR_REST_NO_DATA');
-    new MessageEmbed()
-        .init(message)
-        .setEmoteTitle(author.username, user.username, 'EMOTE_PAT', true)
-        .setProvidedBy('nekos.life')
-        .setImage(data.url)
-        .send();
   }
 };

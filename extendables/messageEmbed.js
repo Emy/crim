@@ -23,15 +23,16 @@ module.exports = class extends Extendable {
     const angryReaction = ['>.>', '>.<', '>:(', 'baka!'];
     let suffix;
     if (isFriendly) {
-      suffix = friendlyReaction[Math.floor((Math.random()*this.length))];
+      suffix = friendlyReaction[Math.floor((Math.random()*friendlyReaction.length))];
     } else {
-      suffix = angryReaction[Math.floor((Math.random()*this.length))];
+      suffix = angryReaction[Math.floor((Math.random()*angryReaction.length))];
     }
-    this.setEmoteTitle(this.lang.get('EMOTE_TITLE',
+    this.setTitle(this.lang.get('EMOTE_TITLE',
         sender,
-        type,
+        this.lang.get(type),
         receiver,
-        suffix));
+        suffix,
+    ));
     return this;
   };
 

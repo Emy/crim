@@ -7,27 +7,24 @@ module.exports = class extends Command {
       runIn: ['text', 'group'],
       requiredPermissions: ['EMBED_LINKS'],
       cooldown: 5,
-      description: (language) => language.get('COMMAND_CUDDLE_DESCRIPTION'),
+      description: (lang) => lang.get('CUDDLE_DESCRIPTION'),
       usage: '<member:member>',
     });
   }
 
-  async run(message, [member]) {
-    let data;
-    const author = message.author;
-    const user = member.user;
+  async run(msg, [member]) {
     try {
-      const response = await fetch('https://nekos.life/api/v2/img/cuddle');
-      data = await response.json();
+      const author = msg.author;
+      const user = member.user;
+      const data = await (await fetch('https://nekos.life/api/v2/img/cuddle')).json();
+      if (!(data || data.url)) return msg.sendError('NO_DATA');
+      msg.genEmbed()
+          .setEmoteTitle(author.username, user.username, 'CUDDLING', true)
+          .setProvidedBy('nekos.life')
+          .setImage(data.url)
+          .send();
     } catch (error) {
-      return message.sendError('ERROR_REST_REQUEST_FAILED');
+      return msg.sendError('REQUEST_FAILED');
     }
-
-    if (!(data || data.url)) return message.sendError('ERROR_REST_NO_DATA');
-    message.genEmbed()
-        .setEmoteTitle(author.username, user.username, 'EMOTE_CUDDLE', true)
-        .setProvidedBy('nekos.life')
-        .setImage(data.url)
-        .send();
   }
 };
