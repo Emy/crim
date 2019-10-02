@@ -1,5 +1,4 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = class extends Command {
@@ -8,24 +7,20 @@ module.exports = class extends Command {
       requiredPermissions: ['EMBED_LINKS'],
       cooldown: 5,
       nsfw: true,
-      description: (language) => language.get('COMMAND_BOOBS_DESCRIPTION'),
+      description: (lang) => lang.get('BOOBS_DESCRIPTION'),
     });
   }
 
-  async run(message, [...params]) {
-    let data;
+  async run(msg, [...params]) {
     try {
-      const response = await fetch('https://nekos.life/api/v2/img/boobs');
-      data = await response.json();
+      const data = await (await fetch('https://nekos.life/api/v2/img/boobs')).json();
+      if (!(data || data.url)) return msg.sendError('NO_DATA');
+      msg.genEmbed()
+          .setProvidedBy('nekos.life')
+          .setImage(data.url)
+          .send();
     } catch (error) {
-      return message.sendError('ERROR_REST_REQUEST_FAILED');
+      return msg.sendError('REQUEST_FAILED');
     }
-
-    if (!(data || data.url)) return message.sendError('ERROR_REST_NO_DATA');
-    new MessageEmbed()
-        .init(message)
-        .setProvidedBy('nekos.life')
-        .setImage(data.url)
-        .send();
   }
 };

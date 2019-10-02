@@ -1,5 +1,4 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = class extends Command {
@@ -7,25 +6,23 @@ module.exports = class extends Command {
     super(...args, {
       requiredPermissions: [],
       cooldown: 0,
-      description: (language) => language.get('COMMAND_ANIMEME_DESCRIPTION'),
+      description: (lang) => lang.get('ANIMEME_DESCRIPTION'),
     });
   }
 
-  async run(message, [...params]) {
-    let data;
+  async run(msg, [...params]) {
     try {
-      const response = await fetch(`https://www.reddit.com/user/emdix/m/animemes/top/.json?sort=top&t=day&limit=500`);
-      data = JSON.parse(await response.text());
+      let data = await (await fetch(`https://www.reddit.com/user/emdix/m/animemes/top/.json?sort=top&t=day&limit=500`)).json();
+      if (!(data || data.data)) return msg.sendError('NO_DATA');
+      data = data.data.children;
+      const animeme = data[Math.floor(Math.random() * data.length)].data;
+      msg.genEmbed()
+          .setTitle(animeme.title)
+          .setImage(animeme.url)
+          .setProvidedBy('reddit.com')
+          .send();
     } catch (error) {
-      return message.sendError('ERROR_REST_REQUEST_FAILED');
+      return msg.sendError('REQUEST_FAILED');
     }
-
-    if (!(data || data.data)) return message.sendError('ERROR_REST_NO_DATA');
-    const index = Math.floor(Math.random() * data.data.children.length);
-    new MessageEmbed()
-        .init(message)
-        .setImage(data.data.children[index].data.url)
-        .setProvidedBy('reddit.com')
-        .send();
   }
 };
