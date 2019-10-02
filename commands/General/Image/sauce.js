@@ -1,44 +1,59 @@
 const { Command, RichDisplay } = require('klasa');
-const { MessageEmbed } = require('discord.js');
 const SauceNAO = require('saucenao');
+const emoji = require('../../../util/emoji');
 
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
+      enabled: false,
       requiredPermissions: ['EMBED_LINKS'],
       aliases: ['source'],
       cooldown: 30,
-      description: (language) => language.get('COMMAND_SAUCE_DESCRIPTION'),
+      description: (language) => language.get('SAUCE_DESCRIPTION'),
       usage: '<image:string>',
     });
   }
 
-  async run(message, [image]) {
-    const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-    if (!image.match(expression)) throw 'No valid URL...';
-    const response = (await SauceNAO(image)).json;
-    if (!response || !response.results) throw 'No source found...';
-    const results = response.results.slice(0, 10);
-
-    const display = new RichDisplay()
-        .setFooterSuffix(` | Requested by ${message.author.tag} | Provided by Urban Dictionary`)
-        ;
+  async run(msg, [img]) {
+    const lang = msg.language;
+    // eslint-disable-next-line max-len
+    const expr = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    if (!img.match(expr)) return msg.sendError(lang.get('NO_VALID_URL'));
+    const data = (await new SauceNAO(img)).json;
+    if (!data || !data.results) return msg.sendError(lang.get('NO_SOURCE'));
+    const results = data.results.slice(0, 10);
+    const display = new RichDisplay();
+    const noInfo = lang.get('NO_INFORMATION');
 
     results.forEach((sauce) => {
-      const embed = new MessageEmbed()
-          .setTitle(message.language.get('TITLE_SAUCE_EMBED'))
+      const similarity = sauce.header.similarity || noInfo;
+      const source = sauce.data.source || noInfo;
+      const part = sauce.data.part || noInfo;
+      const year = sauce.data.year || noInfo;
+      const estTime = sauce.data.est_time || noInfo;
+
+      const embed = msg.genEmbed()
+          .setTitle(lang.get('SOURCE_SEARCH'))
           .setThumbnail(sauce.header.thumbnail)
-          .addField(message.language.get('FIELD_SIMILARITY'), sauce.header.similarity ? sauce.header.similarity : 'Nothing found.')
-          .addField(message.language.get('FIELD_SAUCE'), sauce.data.source ? sauce.data.source : 'Nothing found.', true)
-          .addField(message.language.get('FIELD_PART'), sauce.data.part ? sauce.data.part : 'Nothing found.', true)
-          .addField(message.language.get('FIELD_YEAR'), sauce.data.year ? sauce.data.year : 'Nothing found.', true)
-          .addField(message.language.get('FIELD_ESTIMATED_TIMESTAMP'), sauce.data.est_time ? sauce.data.est_time : 'Nothing found.', true)
-          .setTimestamp()
-          .setFooter(message.language.get('FOOTER_REQUESTED_PROVIDED_BY', message.author.tag, 'saucenao.com'));
+          .addField(lang.get('SIMILARITY'), similarity, true)
+          .addField(lang.get('SOURCE'), source, true)
+          .addField(lang.get('PART'), part, true)
+          .addField(lang.get('YEAR'), year, true)
+          .addField(lang.get('ESTIMATED_TIMESTAMP'), estTime, true)
+          .setProvidedBy('saucenao.com');
       display.addPage(embed);
     });
 
-    return display.run(message, {
-      'jump': false, 'stop': false, 'firstLast': false, 'max': 15, 'time': 30000});
+    display.setEmojis({
+      first: emoji.previous,
+      back: emoji.back,
+      forward: emoji.forward,
+      last: emoji.next,
+      jump: emoji.page,
+      stop: emoji.stop,
+    });
+
+    return display.run(msg, {
+      'jump': false, 'stop': false, 'firstLast': false, 'time': 30000});
   }
 };
