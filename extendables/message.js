@@ -53,7 +53,8 @@ module.exports = class extends Extendable {
     return true;
   }
 
-  genHMDTime(totalSeconds) {
+  genHMDTime(millis) {
+    let totalSeconds = millis/ 1000;
     const hours = Math.floor(totalSeconds / 3600);
     totalSeconds %= 3600;
     const minutes = Math.floor(totalSeconds / 60);

@@ -79,6 +79,7 @@ module.exports = class extends Language {
       LOOPED_DESCRIPTION: `I'll play this song over and over until I die!`,
       UNLOOPED_DESCRIPTION: `I'll stop playing the same song over and over again!`,
       NOW_PLAYING: `Now playing`,
+      LENGTH: `Length`,
 
       FOOTER_REQUESTED_BY: 'Requested by',
       FOOTER_PROVIDED_BY: 'Provided by',
@@ -90,10 +91,14 @@ module.exports = class extends Language {
       NO_VALID_URL: `I couldn't parse your input into a URL!`,
       NO_SOURCE: `I couldn't find any source for that on saucenao!`,
       NO_ANIME_FOUND: (anime) => `I could not find *${anime}* on anilist.`,
+      NOT_IN_VC: `You aren't in a voice channel right now!`,
+      LAVALINK_NO_DATA: `I haven't received any data from the music server! Try again later.`,
+
+
+
+
       
 
-
-      ERROR_NOT_IN_VC: `You aren't in a voice channel right now!`,
       ERROR_LAVALINK_NO_DATA: `I haven't received any data from the music server! Try again later.`,
       ERROR_LAVALINK_NO_MUSIC_RUNNING: `There is no music playing right now.`,
       ERROR_TITLE: 'Error',

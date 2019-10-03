@@ -1,5 +1,4 @@
 const { Command, RichDisplay } = require('klasa');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = class extends Command {
@@ -8,46 +7,42 @@ module.exports = class extends Command {
       requiredPermissions: ['EMBED_LINKS'],
       aliases: ['define', 'ud'],
       cooldown: 60,
-      description: (language) => language.get('COMMAND_URBANDICTIONARY_DESCRIPTION'),
+      description: (lang) => lang.get('URBANDICTIONARY_DESCRIPTION'),
       usage: '<searchterm:string>',
     });
   }
 
-  async run(message, [searchterm]) {
-    const data = await fetch(`http://api.urbandictionary.com/v0/define?term=${encodeURIComponent(searchterm)}`);
-    const response = JSON.parse(await data.text());
+  async run(msg, [searchterm]) {
+    const lang = msg.language;
+    const data = await (await fetch(`http://api.urbandictionary.com/v0/define?term=${encodeURIComponent(searchterm)}`)).json();
 
-    if (response.list.length == 0) {
-      const embed = new MessageEmbed()
-          .setTitle('Oopsie')
-          .setDescription(`Could not find *${searchterm}* on Urban Dictionary.`)
-          .setColor('#ff0000')
-            ;
-      return message.send(embed);
-    }
+    if (data.list.length == 0) return msg.sendError('NO_UD_FOUND', searchterm);
 
     const display = new RichDisplay()
-        .setFooterSuffix(` | Requested by ${message.author.tag} | Provided by Urban Dictionary`);
+        .setFooterSuffix(` | Requested by ${msg.author.tag} | Provided by Urban Dictionary`);
 
-    response.list.forEach(function(page) {
-      /* For the description and the example, remove all the square brackets, as they
-             * were used for links before, and those no longer exist.
-             * Also cut them all down to fit into the maximum size of an Embed Field.
-             */
+    data.list.forEach(function(page) {
+      /* For the description and the example,
+       * remove all the square brackets, as they
+       * were used for links before, and those no longer exist.
+       * Also cut them all down to fit into the maximum size of an Embed Field.
+       */
       const description = page.definition.replace(/[\[\]]/g, '').substr(0, 1022);
-      const example = page.example.replace(/[\[\]]/g,'').substr(0, 1022);
+      const example = page.example.replace(/[\[\]]/g, '').substr(0, 1022);
 
-      const embed = new MessageEmbed()
-          .setTimestamp()
-          .setColor('#dd67ff')
+      const embed = msg.genEmbed()
           .setTitle(`__**${page.word}**__`.substr(0, 255))
           .setURL(page.permalink)
-          .addField('*Description:*', description ? description : 'None available.')
-          .addField('*Example:*', example ? example : 'None available.');
+          .addField(lang.get('DEFINITION'), description ? description : lang.get('NO_INFORMATION'))
+          .addField(lang.get('EXAMPLE'), example ? example : lang.get('NO_INFORMATION'));
       display.addPage(embed);
     });
 
-    return display.run(message, {
-      'jump': false, 'stop': false, 'firstLast': false, 'max': 15, 'time': 30000});
+    return display.run(msg, {
+      'jump': false,
+      'stop': false,
+      'firstLast': false,
+      'time': 30000,
+    });
   }
 };
