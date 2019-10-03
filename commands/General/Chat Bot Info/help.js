@@ -11,7 +11,7 @@ module.exports = class extends Command {
     super(...args, {
       aliases: ['commands', 'cmd', 'cmds'],
       guarded: true,
-      description: (language) => language.get('COMMAND_HELP_DESCRIPTION'),
+      description: (language) => language.get('HELP_DESCRIPTION'),
       usage: '(Command:command)',
     });
 

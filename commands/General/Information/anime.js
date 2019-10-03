@@ -1,22 +1,23 @@
 const { Command, RichDisplay } = require('klasa');
 const fetch = require('node-fetch');
-const { MessageEmbed } = require('discord.js');
 const anilistQuery = require('../../../util/anilistQuery');
+const emoji = require('../../../util/emoji');
 
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
-      requiredPermissions: ['EMBED_LINKS'],
+      requiredPermissions: ['EMBED_LINKS', 'ADD_REACTIONS', 'USE_EXTERNAL_EMOJIS', 'MANAGE_MESSAGES'],
       cooldown: 10,
-      description: (language) => language.get('COMMAND_ANIME_DESCRIPTION'),
-      usage: '<title:string>',
+      description: (lang) => lang.get('ANIME_DESCRIPTION'),
+      usage: '<anime:string>',
     });
   }
 
-  async run(message, [title]) {
-    let query = anilistQuery.query;
+  async run(msg, [anime]) {
+    const lang = msg.language;
+    const query = anilistQuery.query;
     const variables = {
-      title: title,
+      title: anime,
     };
 
     const options = {
@@ -32,55 +33,65 @@ module.exports = class extends Command {
     };
 
     try {
-      const response = await fetch('https://graphql.anilist.co', options);
-      const data = await response.json();
+      const data = await (await fetch('https://graphql.anilist.co', options)).json();
       const media = data.data.Media;
-      if (media === null) return this.sendNotFoundEmbed(message, anime);
+      if (!media) return msg.sendError('NO_ANIME_FOUND', anime);
 
       const startDate = new Date(media.startDate.year, media.startDate.month-1, media.startDate.day);
       const endDate = new Date(media.endDate.year, media.endDate.month-1, media.endDate.day);
+      const title = media.title.english || media.title.romaji;
 
-      const display = new RichDisplay()
-          .setFooterSuffix(` | Requested by ${message.author.tag} | Provided by Anilist.co`);
+      const display = new RichDisplay();
 
-      const embed = new MessageEmbed()
+      const score = `${(media.meanScore/10).toFixed(1)} / 10`;
+      const status = media.status;
+      const genres = media.genres.join(', ');
+
+      const embed = msg.genEmbed()
           .setThumbnail(media.coverImage.large)
-          .setColor('#dd67ff')
-          .addField('Name', (media.title.english ? `[${media.title.english}]` : `[${media.title.romaji}]`) + `(https://anilist.co/anime/${media.id})`)
-          .addField('Score', `${(media.meanScore/10).toFixed(1)} / 10`, true)
-          .addField('Status', media.status, true)
-          .addField('Start date', startDate.toDateString(), true)
-          .addField('End date', media.status != 'RELEASING' ? endDate.toDateString() : 'Not finished yet.', true)
-          .addField('Genres', media.genres.join(', '))
+          .setTitle(title)
+          .setURL(`https://anilist.co/anime/${media.id}`)
+          .addField(lang.get('SCORE'), score, true)
+          .addField(lang.get('STATUS'), status, true)
+          .addField(lang.get('START_DATE'), startDate.toDateString(), true)
+          .addField(lang.get('END_DATE'), media.status != 'RELEASING' ? endDate.toDateString() : 'Not finished yet.', true)
+          .addField(lang.get('GENRES'), genres)
           .setTimestamp();
       display.addPage(embed);
 
-      media.characters.edges.forEach((character) => {
-        const embed = new MessageEmbed()
-            .setThumbnail(character.node.image.large)
-            .setTitle(media.title.english ? media.title.english : media.title.romaji)
+      media.characters.edges.forEach((chara) => {
+        const role = chara.role || lang.get('NO_INFORMATION');
+        const description = chara.node.description || lang.get('NO_INFORMATION');
+        const firstName = chara.node.name.first || '';
+        const lastName = chara.node.name.last || '';
+        const nativeName = chara.node.name.native || '';
+        const fullName = `${firstName} ${lastName} (${nativeName})`.trim();
+        const embed = msg.genEmbed()
+            .setThumbnail(chara.node.image.large)
+            .setTitle(title)
             .setURL(`https://anilist.co/anime/${media.id}`)
-            .addField('Name', `${character.node.name.first ? character.node.name.first : ''} ${character.node.name.last ? character.node.name.last : ''} (${character.node.name.native ? character.node.name.native : ''})`, true)
-            .addField('Role', character.role, true)
-            .addField('Description', character.node.description ? character.node.description : 'No description available.');
+            .addField(lang.get('NAME'), fullName, true)
+            .addField(lang.get('ROLE'), role, true)
+            .addField(lang.get('DESCRIPTION'), description);
         display.addPage(embed);
       });
 
-      return display.run(message, {
-        'jump': true, 'stop': false, 'firstLast': false, 'max': 15, 'time': 120000});
+      display.setEmojis({
+        first: emoji.previous,
+        back: emoji.back,
+        forward: emoji.forward,
+        last: emoji.next,
+        jump: emoji.page,
+        stop: emoji.stop,
+      });
+
+      return display.run(msg, {
+        'jump': true,
+        'stop': false,
+        'firstLast': false,
+        'time': 120000});
     } catch (error) {
       this.client.console.error(error);
     }
-  }
-
-  sendNotFoundEmbed(message, anime) {
-    const embed = new MessageEmbed()
-        .setThumbnail()
-        .setColor('#dd67ff')
-        .addField('No Anime found', 'No anime found for: "' + anime + '" on Anilist.co')
-        .setFooter(`Requested by: ${message.author.tag} | Provided by Anilist.co`)
-        .setTimestamp()
-            ;
-    message.sendEmbed(embed);
   }
 };

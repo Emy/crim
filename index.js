@@ -1,11 +1,18 @@
-const { Client } = require('klasa');
-const { config, token } = require('./config');
-
-class MyKlasaClient extends Client {
-    constructor(...args) {
-        super(...args);
-    }
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+} else {
+  const Sentry = require('@sentry/node');
+  Sentry.init({ dsn: process.env.SENTRY_DSN });
 }
-//Client.use(require('klasa-stats-plugin'));
+
+const { Client } = require('klasa');
+const { config } = require('./config');
+
+class Filo extends Client {
+  constructor(...args) {
+    super(...args);
+  }
+}
+
 Client.use(require('klasa-dashboard-hooks'));
-new MyKlasaClient(config).login(token);
+new Filo(config).login(process.env.DISCORD_ACCESS_TOKEN);

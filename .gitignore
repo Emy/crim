@@ -9,3 +9,4 @@ yarn.lock
 .vscode
 .idea
 yarn-error.log
+.env
