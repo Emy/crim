@@ -1,6 +1,6 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
-const moment = require('moment');
+const { Util } = require('discord.js');
+const emoji = require('../../../util/emoji');
 
 module.exports = class extends Command {
   constructor(...args) {
@@ -9,28 +9,25 @@ module.exports = class extends Command {
       requiredPermissions: ['EMBED_LINKS'],
       aliases: ['np'],
       cooldown: 5,
-      description: (language) => language.get('COMMAND_NOWPLAYING_DESCRIPTION'),
+      description: (lang) => lang.get('NOWPLAYING_DESCRIPTION'),
     });
   }
 
-  async run(message, [...params]) {
-    const player = this.client.music.get(message.guild.id);
-    const voiceChannel = message.member.voice.channel;
-    if (!player) return message.sendLocale('ERROR_LAVALINK_NO_MUSIC_RUNNING');
-    if (!voiceChannel || (player.channel !== voiceChannel.id)) throw 'You need to be in the Voice channel where the bot is in.';
-    this.sendNowPlayingEmbed(message, player.songs[0]);
-  }
-
-  sendNowPlayingEmbed(message, song) {
-    const embed = new MessageEmbed()
-        .setTitle(song.info.title)
-        .setColor('#dd67ff')
-        .addField('Length', `${moment(song.info.length).format('mm:ss')}min`, true)
+  async run(msg, [...params]) {
+    if (!msg.checkVoicePermission()) return;
+    const lang = msg.language;
+    const player = this.client.music.get(msg.guild.id);
+    const song = player.songs[0];
+    const emojis = this.client.emojis;
+    msg.genEmbed()
+        .setTitle(`${emojis.get(emoji.play)} ${lang.get('NOW_PLAYING')}`)
+        .setDescription(Util.escapeMarkdown(song.info.title))
         .setThumbnail(`https://img.youtube.com/vi/${song.info.identifier}/default.jpg`)
-        .setURL(`https://youtu.be/${song.info.identifier}`)
-        .setTimestamp()
-        .setFooter(`Uploaded by: ${song.info.author}`)
-        ;
-    message.send(embed);
+        .addField(
+            `${emojis.get(emoji.time)} ${lang.get('LENGTH')}`,
+            msg.genHMDTime(song.info.length),
+            true
+        )
+        .send();
   }
 };

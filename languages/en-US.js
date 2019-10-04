@@ -80,11 +80,29 @@ module.exports = class extends Language {
       UNLOOPED_DESCRIPTION: `I'll stop playing the same song over and over again!`,
       NOW_PLAYING: `Now playing`,
       LENGTH: `Length`,
+      PAUSED: `Paused`,
+      UNPAUSED: `Unpaused`,
+      UPLOADED_BY: `Uploaded by`,
+      CHOOSE_NUMBER: `Choose a number!`,
+      PLAY: `Play`,
+      ADDED_TRACK: (track) => `Added **${track}** to the queue!`,
+      ADDED_PLAYLIST: (playlist) => `Added playlist **${playlist}** to the queue!`,
+      QUEUE: `Queue`,
+      SKIP: `Skip`,
+      SKIPPING_TRACK: `Skipping current track.`,
+      STOP: `Stop`,
+      STOPPING: `Stopping the music and leaving the channel!`,
+      VOLUME: `Volume`,
+      CURRENT_VOLUME: (volume) => `Current volume is: **${volume}%**`,
+      SETTING_VOLUME: (volume) => `Setting volume to: **${volume}%**`,
+      VOLUME_RESTRICTION: `Volume is restricted. You can only set between 1 and 200!`,
 
+      // Generic
       FOOTER_REQUESTED_BY: 'Requested by',
       FOOTER_PROVIDED_BY: 'Provided by',
 
       // Errors
+      ERROR: `Error`,
       NO_DATA: `I haven't received any data from the API! Try again later.`,
       REQUEST_FAILED: `There has been an error while sending a request to the API! Try again later!`,
       NO_CUSTOM_EMOJI_DETECTED: 'No custom emoji detected!',
@@ -93,27 +111,12 @@ module.exports = class extends Language {
       NO_ANIME_FOUND: (anime) => `I could not find *${anime}* on anilist.`,
       NOT_IN_VC: `You aren't in a voice channel right now!`,
       LAVALINK_NO_DATA: `I haven't received any data from the music server! Try again later.`,
-
-
-
-
-      
-
-      ERROR_LAVALINK_NO_DATA: `I haven't received any data from the music server! Try again later.`,
-      ERROR_LAVALINK_NO_MUSIC_RUNNING: `There is no music playing right now.`,
-      ERROR_TITLE: 'Error',
-      ERROR_KICK_YOURSELF: 'You cannot kick yourself!',
-      ERROR_KICK_ME: 'I cannot kick myself!',
-      ERROR_KICK_HIGHER_ROLE: 'The user you tried to kick has a higher role than you!',
-      ERROR_KICK_UNKICKABLE: 'The user is not kickable!',
-      ERROR_VOLUME_RESTRICTION: 'Volume is restricted! Only volumes from 1-200 are accepted.',
+      SELECTION_NAN: `Your response isn't a valid number`,
+      SELECTION_INVALID: `There was an error selecting the right option!`,
+      NO_MATCHES: 'No matches were found on youtube!',
+      LOAD_FAILED: `Loading the track failed!`,
       UNKNOWN_ERROR: 'An unknown error occured! If this issue persists contact my Master!',
-
-
-      ERROR_VOICE_NO_MATCHES: 'No matches were found on youtube!',
-      ERROR_VOICE_LOAD_FAILED: 'Loading the track failed. If this issue persists contact my Master!',
-      ERROR_VOICE_NOT_SAME_CHANNEL: 'You need to be in the same voice channel as me!',
-      ERROR_VOICE_SELECTION_NAN: `Your response isn't a valid number`,
+      NOT_SAME_CHANNEL: 'You need to be in the same voice channel as me!',
 
       // Category Admin command descriptions
       // Sub category Moderation

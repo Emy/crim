@@ -1,4 +1,5 @@
 const { Command } = require('klasa');
+const emoji = require('../../../util/emoji');
 
 module.exports = class extends Command {
   constructor(...args) {
@@ -6,16 +7,29 @@ module.exports = class extends Command {
       runIn: ['text'],
       requiredPermissions: [],
       cooldown: 5,
-      description: (language) => language.get('COMMAND_VOLUME_DESCRIPTION'),
+      description: (lang) => lang.get('VOLUME_DESCRIPTION'),
       usage: '[volume:int]',
     });
   }
 
-  async run(message, [volume]) {
-    if (this.client.music.get(message.guild.id) == undefined) return message.sendLocale('ERROR_LAVALINK_NO_MUSIC_RUNNING');
-    if (!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
-    if (volume === undefined) message.send(`Volume is at: ${this.client.music.get(message.guild.id).state.volume}%`);
-    if (volume <= 0 || volume > 200) throw 'Volume restriction! (1-200%)';
-    this.client.music.get(message.guild.id).volume(volume);
+  async run(msg, [volume]) {
+    if (!msg.checkVoicePermission()) return;
+    const player = this.client.music.get(msg.guild.id);
+    const emojis = this.client.emojis;
+    const lang = msg.language;
+    if (!volume) {
+      return msg.genEmbed()
+          .setTitle(`${emojis.get(emoji.volume)} ${lang.get('VOLUME')}`)
+          .setDescription(lang.get('CURRENT_VOLUME', player.state.volume))
+          .send();
+    }
+    if (volume <= 0 || volume > 200) {
+      return msg.sendError('VOLUME_RESTRICTION');
+    }
+    msg.genEmbed()
+        .setTitle(`${emojis.get(emoji.volume)} ${lang.get('VOLUME')}`)
+        .setDescription(lang.get('SETTING_VOLUME', volume))
+        .send();
+    player.volume(volume);
   }
 };
