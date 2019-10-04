@@ -1,5 +1,5 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
+const emoji = require('../../../util/emoji');
 
 module.exports = class extends Command {
   constructor(...args) {
@@ -8,34 +8,21 @@ module.exports = class extends Command {
       requiredPermissions: ['EMBED_LINKS'],
       aliases: ['leave'],
       cooldown: 5,
-      description: (language) => language.get('COMMAND_STOP_DESCRIPTION'),
+      description: (lang) => lang.get('STOP_DESCRIPTION'),
     });
   }
 
-  async run(message, [...paran]) {
-    if (this.client.music.get(message.guild.id) == undefined) return message.sendLocale('ERROR_LAVALINK_NO_MUSIC_RUNNING');
-    if (!message.member.voice.channel || (this.client.music.get(message.guild.id).channel !== message.member.voice.channel.id)) throw 'You need to be in the Voice channel where the bot is in.';
+  async run(msg, [...paran]) {
+    if (!msg.checkVoicePermission()) return;
+    const lang = msg.language;
+    const emojis = this.client.emojis;
+    const pm = this.client.music.get('pm');
+    pm.leave(msg.guild.id);
+    this.client.music.delete(msg.guild.id);
 
-    const embed = new MessageEmbed()
-        .setColor('#dd67ff')
-        .setTimestamp()
-        .setFooter(`Requested by: ${message.author.tag}`)
-        ;
-
-    if (this.client.music.get(message.guild.id).paused) {
-      clearTimeout(this.client.music.get(`${message.guild.id}_pause_timer`));
-      this.client.music.delete(`${message.guild.id}_pause_timer`);
-
-      this.client.music.get(message.guild.id).stop();
-      embed.setTitle(':stop_button: Stopped Playback');
-    } else {
-      this.client.music.get(message.guild.id).stop();
-      embed.setTitle(':stop_button: Stopped Playback');
-    }
-
-    this.client.music.get('pm').leave(message.guild.id);
-    this.client.music.delete(message.guild.id);
-
-    message.send(embed);
+    msg.genEmbed()
+        .setTitle(`${emojis.get(emoji.stop)} ${lang.get('STOP')}`)
+        .setDescription(lang.get('STOPPING'))
+        .send();
   }
 };

@@ -1,5 +1,5 @@
 const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
+const emoji = require('../../../util/emoji');
 
 module.exports = class extends Command {
   constructor(...args) {
@@ -7,38 +7,24 @@ module.exports = class extends Command {
       runIn: ['text'],
       requiredPermissions: ['EMBED_LINKS'],
       cooldown: 5,
-      description: (language) => language.get('COMMAND_PAUSE_DESCRIPTION'),
+      description: (lang) => lang.get('PAUSE_DESCRIPTION'),
     });
   }
 
-  async run(message, [...param]) {
-    const embed = new MessageEmbed()
-        .setColor('#dd67ff')
-        .setTimestamp()
-        .setFooter(`Requested by: ${message.author.tag}`)
-        ;
-
-    if (this.client.music.get(message.guild.id) == undefined) {
-      embed.setTitle(':interrobang: No music playing');
-      embed.setColor('#ff0000');
-    } else if (this.client.music.get(message.guild.id).paused) {
-      this.client.music.get(message.guild.id).resume();
-      embed.setTitle(':arrow_forward: Resuming playback...');
-
-      clearTimeout(this.client.music.get(`${message.guild.id}_pause_timer`));
-      this.client.music.delete(`${message.guild.id}_pause_timer`);
+  async run(msg, [...param]) {
+    if (!msg.checkVoicePermission()) return;
+    const player = this.client.music.get(msg.guild.id);
+    const lang = msg.language;
+    if (player.paused) {
+      player.resume();
     } else {
-      this.client.music.get(message.guild.id).pause();
-      embed.setTitle(':pause_button: Pausing playback');
-
-      const timer = setTimeout(() => {
-        this.client.music.get('pm').leave(message.guild.id);
-        this.client.music.delete(message.guild.id);
-      }, 120000);
-
-      this.client.music.set(`${message.guild.id}_pause_timer`, timer);
+      player.pause();
     }
-
-    message.send(embed);
+    const emojis = this.client.emojis;
+    const icon = player.paused ? emojis.get(emoji.pause): emojis.get(emoji.play);
+    const title = player.paused ? 'PAUSED' : 'UNPAUSED';
+    msg.genEmbed()
+        .setTitle(`${icon} ${lang.get(title)}`)
+        .send();
   }
 };

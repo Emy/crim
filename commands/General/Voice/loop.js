@@ -7,16 +7,20 @@ module.exports = class extends Command {
       requiredPermissions: [],
       aliases: ['l'],
       cooldown: 5,
-      description: (language) => language.get('COMMAND_LOOP_DESCRIPTION'),
+      description: (lang) => lang.get('LOOP_DESCRIPTION'),
     });
   }
 
-  async run(message, [...paran]) {
-    const player = this.client.music.get(message.guild.id);
-    const voiceChannel = message.member.voice.channel;
-    if (!player) return message.sendLocale('ERROR_LAVALINK_NO_MUSIC_RUNNING');
-    if (!voiceChannel.channel || (player.channel !== voiceChannel.id)) throw 'You need to be in the Voice channel where the bot is in.';
+  async run(msg, [...params]) {
+    if (!msg.checkVoicePermission()) return;
+    const player = this.client.music.get(msg.guild.id);
     player.loop = !player.loop;
-    message.send(`Loop: ${player.loop}`);
+    const title = player.loop ? 'LOOPED' : 'UNLOOPED';
+    const desc = player.loop ? 'LOOPED_DESCRIPTION' : 'UNLOOPED_DESCRIPTION';
+
+    msg.genEmbed()
+        .setTitle(msg.language.get(title))
+        .setDescription(msg.language.get(desc))
+        .send();
   }
 };

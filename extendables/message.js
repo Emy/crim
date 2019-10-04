@@ -29,7 +29,7 @@ module.exports = class extends Extendable {
     const emojis = this.client.emojis;
     const language = this.language;
     this.genEmbed()
-        .setTitle(`${emojis.get(emoji.error)} ${language.get('ERROR_TITLE')}`)
+        .setTitle(`${emojis.get(emoji.error)} ${language.get('ERROR')}`)
         .setDescription(language.get(reason, ...params))
         .setColor('#ff8b94')
         .send();
@@ -54,11 +54,11 @@ module.exports = class extends Extendable {
   }
 
   genHMDTime(millis) {
-    let totalSeconds = millis/ 1000;
+    let totalSeconds = millis / 1000;
     const hours = Math.floor(totalSeconds / 3600);
     totalSeconds %= 3600;
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${hours}:${minutes}:${seconds}`;
+    return `${hours != 0 ? `${hours}:` : ''}${minutes}:${seconds}`;
   }
 };
