@@ -148,7 +148,6 @@ module.exports = class extends Language {
       CHUCKNORRIS_DESCRIPTION: 'Get a Chuck Norris joke.',
       DONALD_DESCRIPTION: 'Get intellectual quotes from the POTUS.',
       FACT_DESCRIPTION: 'Get random facts.',
-      DONALD_DESCRIPTION: 'Get intellectual quotes from the POTUS.',
       LMGTFY_DESCRIPTION: 'Sometimes searching on the internet is hard.',
       URBANDICTIONARY_DESCRIPTION: 'Get a definition from the urban dictionary.',
       WHOIS_DESCRIPTION: 'Get information about a discord user.',
