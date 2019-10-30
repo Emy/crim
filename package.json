@@ -15,9 +15,9 @@
     "discord.js": "github:discordjs/discord.js",
     "discord.js-lavalink": "MrJacz/discord.js-lavalink",
     "dotenv": "^8.1.0",
-    "file-type": "^12.3.0",
+    "file-type": "^12.3.1",
     "graphql": "^0.13.2",
-    "klasa": "github:dirigeants/klasa",
+    "klasa": "github:dirigeants/klasa#settings",
     "klasa-dashboard-hooks": "dirigeants/klasa-dashboard-hooks",
     "node-fetch": "^2.2.0",
     "saucenao": "^0.0.2"
