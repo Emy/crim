@@ -1,10 +1,9 @@
 const { Command } = require('klasa');
-const { MessageAttachment } = require('discord.js');
 
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
-      requiredPermissions: ['ATTACH_FILES'],
+      requiredPermissions: ['EMBED_LINKS', 'MANAGE_MESSAGES'],
       aliases: ['emote'],
       cooldown: 3,
       description: (lang) => lang.get('EMOJI_DESCRIPTION'),
@@ -13,6 +12,9 @@ module.exports = class extends Command {
   }
 
   async run(msg, [emoji]) {
-    msg.send(new MessageAttachment(emoji.url));
+    msg.genEmbed()
+        .setImage(emoji.url)
+        .send();
+    if (msg.deletable) await msg.delete();
   }
 };
