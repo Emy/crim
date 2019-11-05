@@ -8,18 +8,18 @@ module.exports = class extends Command {
       requiredPermissions: ['EMBED_LINKS'],
       cooldown: 5,
       description: (lang) => lang.get('KISS_DESCRIPTION'),
-      usage: '<member:member>',
+      usage: '[member:member]',
     });
   }
 
   async run(msg, [member]) {
     try {
-      const author = msg.author;
-      const user = member.user;
+      const author = msg.author.username;
+      const user = member ? member.user.username : msg.language.get('THEMSELVES');
       const data = await (await fetch('https://nekos.life/api/v2/img/kiss')).json();
       if (!(data || data.url)) return msg.sendError('NO_DATA');
       msg.genEmbed()
-          .setEmoteTitle(author.username, user.username, 'KISSING', true)
+          .setEmoteTitle(author, user, 'KISSING', true)
           .setProvidedBy('nekos.life')
           .setImage(data.url)
           .send();
