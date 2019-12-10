@@ -2,7 +2,6 @@
 const { Language, util } = require('klasa');
 
 module.exports = class extends Language {
-
   constructor(...args) {
     super(...args);
     this.language = {
@@ -176,6 +175,8 @@ module.exports = class extends Language {
       FACT: `Fakt`,
       DEFINITION: `Definition`,
       EXAMPLE: `Beispiel`,
+      ARTIST: `Künstler`,
+      TAGS: `Tags`,
 
       // Voice Category
       LOOPED: `Schleife`,
@@ -236,8 +237,6 @@ module.exports = class extends Language {
       PAT_DESCRIPTION: 'Streichle Leute (mit einem süßen anime gif).',
       SLAP_DESCRIPTION: 'Ohrfeige Leute (mit einem süßen anime gif).',
 
-
-
       // Sub category Image'
       ANIMEME_DESCRIPTION: 'Hole ein zufälliges animeme.',
       BOOBS_DESCRIPTION: 'Anime brüste (Nur NSFW Kanal).',
@@ -257,6 +256,7 @@ module.exports = class extends Language {
       LMGTFY_DESCRIPTION: 'Manchmal ist im Internet suchen schwer.',
       URBANDICTIONARY_DESCRIPTION: 'Hole eine Definition aus dem Urban Dictionary.',
       WHOIS_DESCRIPTION: 'Hole informationen über einen Discord Benutzer.',
+      NUMBER_DESCRIPTION: 'Konvertiert die 6 Stelligen magischen nummern in volle degeneration.',
 
       // Sub category Voice
       LOOP_DESCRIPTION: 'Schalte die Schleife des aktuell gespielten Liedes ein oder aus.',
@@ -274,5 +274,4 @@ module.exports = class extends Language {
   async init() {
     await super.init();
   }
-
 };
