@@ -6,7 +6,7 @@ module.exports = class extends Language {
     super(...args, { enabled: true });
 
     this.language = {
-      DEFAULT: (key) => ` has not been localized for en-US yet.`,
+      DEFAULT: (key) => `${key}  has not been localized for en-US yet.`,
       DEFAULT_LANGUAGE: 'Default Language',
       COMMAND_INVITE: (repo) => [
         `To add ${this.client.user.username} to your discord guild:`,
@@ -72,6 +72,8 @@ module.exports = class extends Language {
       FACT: `Fact`,
       DEFINITION: `Definition`,
       EXAMPLE: `Example`,
+      ARTIST: `Artist`,
+      TAGS: `Tags`,
 
 
       // Voice Category
@@ -152,6 +154,7 @@ module.exports = class extends Language {
       LMGTFY_DESCRIPTION: 'Sometimes searching on the internet is hard.',
       URBANDICTIONARY_DESCRIPTION: 'Get a definition from the urban dictionary.',
       WHOIS_DESCRIPTION: 'Get information about a discord user.',
+      NUMBER_DESCRIPTION: 'Converts the magic 6-digit numbers into full degeneracy.',
 
       // Sub category Voice
       LOOP_DESCRIPTION: 'Turn on/off the loop of the currently playing track.',

@@ -199,6 +199,8 @@ module.exports = class extends Language {
       FACT: `Feit`,
       DEFINITION: `Definitie`,
       EXAMPLE: `Voorbeeld`,
+      ARTIST: `Artiest`,
+      TAGS: `Tags`,
 
 
       // Voice Category
@@ -279,6 +281,7 @@ module.exports = class extends Language {
       LMGTFY_DESCRIPTION: 'soms is het zoeken op internet moeilijk.',
       URBANDICTIONARY_DESCRIPTION: 'verkrijg een definite van het urban dictionary.',
       WHOIS_DESCRIPTION: 'verkrijg informatie over een discord gebruiker.',
+      NUMBER_DESCRIPTION: 'Cnoverteert de 6 magische cijfers in een vole degeneratie.',
 
       // Sub category Voice
       LOOP_DESCRIPTION: 'Aan of uit van het herhaalde nummer.',

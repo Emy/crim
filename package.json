@@ -1,5 +1,5 @@
 {
-  "name": "emybot",
+  "name": "filo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Emy",
   "license": "ISC",
   "dependencies": {
     "@sentry/node": "5.6.2",
@@ -20,6 +20,7 @@
     "klasa": "github:dirigeants/klasa",
     "klasa-dashboard-hooks": "dirigeants/klasa-dashboard-hooks",
     "node-fetch": "^2.2.0",
+    "sagiri": "^3.0.1",
     "saucenao": "^0.0.2"
   },
   "devDependencies": {
