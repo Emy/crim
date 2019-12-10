@@ -165,7 +165,7 @@ module.exports = class extends Language {
       CLICK_HERE: 'Klik hier',
 
       // Fun Category
-      THEMSELVES: 'themselves',
+      THEMSELVES: 'zichzelf',
       CUDDLING: 'knuffelt',
       HUGGING: 'knuffelt',
       KISSING: 'kust',
