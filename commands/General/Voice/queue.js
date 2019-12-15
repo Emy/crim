@@ -25,7 +25,7 @@ module.exports = class extends Command {
     for (let i = 0; i < player.songs.length; i++) {
       embed.addField(
           player.songs[i].info.title,
-          msg.genHMDTime(player.songs[i].info.length)
+          msg.genHMDTime(player.songs[i].info.length),
       );
 
       // Split content into pages by creating a new every 10 entries, unless its 0.
