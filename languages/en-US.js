@@ -120,6 +120,7 @@ module.exports = class extends Language {
       LOAD_FAILED: `Loading the track failed!`,
       UNKNOWN_ERROR: 'An unknown error occured! If this issue persists contact my Master!',
       NOT_SAME_CHANNEL: 'You need to be in the same voice channel as me!',
+      NO_UD_FOUND: 'The urban dictionary has nothing to say about your search term!',
 
       // Category Admin command descriptions
       // Sub category Moderation

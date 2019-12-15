@@ -223,6 +223,7 @@ module.exports = class extends Language {
       LOAD_FAILED: `Laden des Tracks fehlgeschlagen!`,
       UNKNOWN_ERROR: 'Unbekannter Fahler aufgetreten! Wenn dieses Problem weiterhin besteht kontaktire bitte meinen Meister!',
       NOT_SAME_CHANNEL: 'Du musst im selben Sprachkanal sein wie ich!',
+      NO_UD_FOUND: 'Das Urban Dictionary hat nichts zu deinem Suchwort gefunden!',
 
       // Category Admin command descriptions
       // Sub category Moderation

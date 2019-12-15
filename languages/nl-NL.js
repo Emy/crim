@@ -247,6 +247,7 @@ module.exports = class extends Language {
       LOAD_FAILED: `Het nummer laden heeft gefaalt!`,
       UNKNOWN_ERROR: 'Er is een onbekende fout opgetreden! Als deze Fout vaker blijft voorkomen dan neem contact op met mijn Master!',
       NOT_SAME_CHANNEL: 'Je moet in dezelfde voice kanaal zitten als mij!',
+      NO_UD_FOUND: 'The urban dictionary has nothing to say about your search term!',
 
       // Category Admin command descriptions
       // Sub category Moderation
