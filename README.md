@@ -1,5 +1,8 @@
 # Filo 
-A cute, multipurpose Discord bot for all your kawaii needs. 
+A cute, multipurpose Discord bot for all your kawaii needs.
+
+### Invite Filo to your Guild
+[Click here](https://discordapp.com/oauth2/authorize?client_id=475708736908820482&permissions=268725328&scope=bot) to invite Filo to your guild!
 
 ### Contributions
 Filo is an amazing bot, but just like all things in life, she can be improved! 
