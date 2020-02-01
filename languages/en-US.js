@@ -6,7 +6,7 @@ module.exports = class extends Language {
     super(...args, { enabled: true });
 
     this.language = {
-      DEFAULT: (key) => ` has not been localized for en-US yet.`,
+      DEFAULT: (key) => `${key}  has not been localized for en-US yet.`,
       DEFAULT_LANGUAGE: 'Default Language',
       COMMAND_INVITE: (repo) => [
         `To add ${this.client.user.username} to your discord guild:`,
@@ -72,6 +72,8 @@ module.exports = class extends Language {
       FACT: `Fact`,
       DEFINITION: `Definition`,
       EXAMPLE: `Example`,
+      ARTIST: `Artist`,
+      TAGS: `Tags`,
 
 
       // Voice Category
@@ -118,6 +120,7 @@ module.exports = class extends Language {
       LOAD_FAILED: `Loading the track failed!`,
       UNKNOWN_ERROR: 'An unknown error occured! If this issue persists contact my Master!',
       NOT_SAME_CHANNEL: 'You need to be in the same voice channel as me!',
+      NO_UD_FOUND: 'The urban dictionary has nothing to say about your search term!',
 
       // Category Admin command descriptions
       // Sub category Moderation
@@ -152,6 +155,7 @@ module.exports = class extends Language {
       LMGTFY_DESCRIPTION: 'Sometimes searching on the internet is hard.',
       URBANDICTIONARY_DESCRIPTION: 'Get a definition from the urban dictionary.',
       WHOIS_DESCRIPTION: 'Get information about a discord user.',
+      NUMBER_DESCRIPTION: 'Converts the magic 6-digit numbers into full degeneracy.',
 
       // Sub category Voice
       LOOP_DESCRIPTION: 'Turn on/off the loop of the currently playing track.',

@@ -26,8 +26,7 @@ module.exports = class extends Command {
         .addField(
             `${emojis.get(emoji.time)} ${lang.get('LENGTH')}`,
             msg.genHMDTime(song.info.length),
-            true
-        )
+            true)
         .send();
   }
 };

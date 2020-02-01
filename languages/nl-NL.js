@@ -165,7 +165,7 @@ module.exports = class extends Language {
       CLICK_HERE: 'Klik hier',
 
       // Fun Category
-      THEMSELVES: 'themselves',
+      THEMSELVES: 'zichzelf',
       CUDDLING: 'knuffelt',
       HUGGING: 'knuffelt',
       KISSING: 'kust',
@@ -199,6 +199,8 @@ module.exports = class extends Language {
       FACT: `Feit`,
       DEFINITION: `Definitie`,
       EXAMPLE: `Voorbeeld`,
+      ARTIST: `Artiest`,
+      TAGS: `Tags`,
 
 
       // Voice Category
@@ -245,6 +247,7 @@ module.exports = class extends Language {
       LOAD_FAILED: `Het nummer laden heeft gefaalt!`,
       UNKNOWN_ERROR: 'Er is een onbekende fout opgetreden! Als deze Fout vaker blijft voorkomen dan neem contact op met mijn Master!',
       NOT_SAME_CHANNEL: 'Je moet in dezelfde voice kanaal zitten als mij!',
+      NO_UD_FOUND: 'The urban dictionary has nothing to say about your search term!',
 
       // Category Admin command descriptions
       // Sub category Moderation
@@ -279,6 +282,7 @@ module.exports = class extends Language {
       LMGTFY_DESCRIPTION: 'soms is het zoeken op internet moeilijk.',
       URBANDICTIONARY_DESCRIPTION: 'verkrijg een definite van het urban dictionary.',
       WHOIS_DESCRIPTION: 'verkrijg informatie over een discord gebruiker.',
+      NUMBER_DESCRIPTION: 'Cnoverteert de 6 magische cijfers in een vole degeneratie.',
 
       // Sub category Voice
       LOOP_DESCRIPTION: 'Aan of uit van het herhaalde nummer.',
