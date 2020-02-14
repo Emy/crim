@@ -18,15 +18,15 @@ module.exports = class extends Command {
   async run(msg, [img]) {
     const lang = msg.language;
     // eslint-disable-next-line max-len
-    const expr = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    const expr = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&/=]*)/;
     if (!img.match(expr)) return msg.sendError(lang.get('NO_VALID_URL'));
     const data = await snClient(img);
     if (!data) return msg.sendError('NO_SOURCE');
     const display = new RichDisplay();
     const noInfo = lang.get('NO_INFORMATION');
     const animeSources = ['AniDB'];
-    const booruSources = ['Danbooru'];
-    
+    // const booruSources = ['Danbooru'];
+
     data.forEach((sauce) => {
       const similarity = sauce.similarity || noInfo;
       const source = sauce.site || noInfo;

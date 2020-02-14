@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
-const { Command, version: klasaVersion, Duration } = require('klasa');
-const { version: discordVersion, MessageEmbed } = require('discord.js');
+const { Command, version: /* klasaVersion,*/ Duration } = require('klasa');
 const emoji = require('../../../util/emoji');
 
 module.exports = class extends Command {
