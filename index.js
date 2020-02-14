@@ -14,5 +14,5 @@ class Filo extends Client {
   }
 }
 
-Client.use(require('klasa-dashboard-hooks'));
+// Client.use(require('klasa-dashboard-hooks'));
 new Filo(config).login(process.env.DISCORD_ACCESS_TOKEN);
