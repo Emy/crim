@@ -24,7 +24,6 @@ module.exports = class extends Command {
           .setImage(data.url)
           .send();
     } catch (error) {
-      console.log(error);
       return msg.sendError('REQUEST_FAILED');
     }
   }

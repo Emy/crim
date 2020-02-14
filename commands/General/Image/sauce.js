@@ -28,7 +28,6 @@ module.exports = class extends Command {
     const booruSources = ['Danbooru'];
     
     data.forEach((sauce) => {
-      console.log(sauce);
       const similarity = sauce.similarity || noInfo;
       const source = sauce.site || noInfo;
       const embed = msg.genEmbed()
