@@ -1,4 +1,5 @@
 // Copyright (c) 2017-2019 dirigeants. All rights reserved. MIT license.
+/* eslint-disable max-len */
 const { Language, util } = require('klasa');
 
 module.exports = class extends Language {
@@ -6,6 +7,9 @@ module.exports = class extends Language {
     super(...args);
     this.language = {
       DEFAULT: (key) => `${key} wurde noch nicht für de-DE übersetzt.`,
+      FLAG: '🇩🇪',
+      LANG: 'Deutsch',
+      SPECIFIER: 'de-DE',
       DEFAULT_LANGUAGE: 'Standard Sprache',
       SETTING_GATEWAY_EXPECTS_GUILD: 'Der Parameter <Guild> erwartet entweder einen Server oder ein Serverobjekt.',
       SETTING_GATEWAY_VALUE_FOR_KEY_NOEXT: (data, key) => `Für das Attribut ${key} ist der Wert ${data} nicht vorhanden.`,
@@ -63,31 +67,31 @@ module.exports = class extends Language {
           'allen recht machen, deswegen steht es auch jedem offen jede einzelne Berechtigungsvergabe entsprechend zu deaktivieren.',
           '',
           'Falls Sie einen Befehl verwenden wollen, für dessen Ausführung der Bot zusätzliche Berechtigungen benötigt, welche',
-          'von Ihnen nicht vergeben wurden, werden Sie bei dem Versuch den Befehl auszuführen eine Benachrichtigung erhalten.'
+          'von Ihnen nicht vergeben wurden, werden Sie bei dem Versuch den Befehl auszuführen eine Benachrichtigung erhalten.',
         ].join(' ')),
-        "Falls Sie einen Fehler finden, würde ich Sie bitten einen 'Issue' auf <https://github.com/dirigeants/klasa> zu erstellen."
+        'Falls Sie einen Fehler finden, würde ich Sie bitten einen \'Issue\' auf <https://github.com/dirigeants/klasa> zu erstellen.',
       ],
       COMMAND_INFO: [
-        "Klasa ist ein 'plug-and-play' Framework, welches auf der Discord.js Bibliothek basiert.",
+        'Klasa ist ein \'plug-and-play\' Framework, welches auf der Discord.js Bibliothek basiert.',
         'Der größte Anteil des Codes ist modular aufgebauft. Dies erlaubt es allen Entwicklern,',
         'Klasa enstprechend ihrer Anforderungen anzupassen',
         '',
         'Anbei einige der Vorzüge des Klasa Frameworks:',
         '• 🐇💨 Schnelle Ladezeiten mit ES2017 Unterstützung (`async`/`await`)',
         '• 🎚🎛 Server settings für jeden Server individuell und kann durch eigenen Code erweitern werden',
-        "• 💬 Anpassbares Befehlsystem mit automatisierter Übersetzung der Befehlsargumente ('Usage Parsing')",
+        '• 💬 Anpassbares Befehlsystem mit automatisierter Übersetzung der Befehlsargumente (\'Usage Parsing\')',
         '• 🔁 Module können sehr einfach neu geladen und heruntergeladen werden',
-        "• 👀 'Monitore' überwachen jede Nachricht und agierend je nach Logik, wie bei einem konventionellen 'message event' system (Wortfilter, Spam protection, etc.)",
-        "• ⛔ 'Inhibitors' können die Ausführung von Befehlen verhindern, basierend auf unterschiedlichen Parametern (Berechtigungen, Blacklists, etc.)",
-        "• 🗄 'Providers' erlauben Ihnen sich mit mit einer externen Datenbank Ihrer Wahl zu verbinden.",
-        "• ✅ 'Finalizers', welche nach einer erfolreichen Durchführung eines Befehls ausgeführt werden",
-        "• ➕ 'Extenables' als passiv agierender Code. Sie fügen bestehenden Discord.js Klassen neue Methoden und Eigenschaften hinzu.",
-        "• 🌐 'Languages', welche es erlauben, den Bot in mehrere Sprachen zu übersetzen",
-        "• ⏲ 'Tasks', welche es erlauben, den Bot Verzögert oder Geplante Aufgaben auszuführen zu lassen",
+        '• 👀 \'Monitore\' überwachen jede Nachricht und agierend je nach Logik, wie bei einem konventionellen \'message event\' system (Wortfilter, Spam protection, etc.)',
+        '• ⛔ \'Inhibitors\' können die Ausführung von Befehlen verhindern, basierend auf unterschiedlichen Parametern (Berechtigungen, Blacklists, etc.)',
+        '• 🗄 \'Providers\' erlauben Ihnen sich mit mit einer externen Datenbank Ihrer Wahl zu verbinden.',
+        '• ✅ \'Finalizers\', welche nach einer erfolreichen Durchführung eines Befehls ausgeführt werden',
+        '• ➕ \'Extenables\' als passiv agierender Code. Sie fügen bestehenden Discord.js Klassen neue Methoden und Eigenschaften hinzu.',
+        '• 🌐 \'Languages\', welche es erlauben, den Bot in mehrere Sprachen zu übersetzen',
+        '• ⏲ \'Tasks\', welche es erlauben, den Bot Verzögert oder Geplante Aufgaben auszuführen zu lassen',
         '',
         'Wir versuchen ein zu 100% anpassbares Framework zu sein, welches es schafft den unterschiedlichen Ansprüchen gerecht zu werden.',
         'Ebenso veröffentlichen wir regelmässig Aktualisierungen und Fehlerbehebungen.',
-        'Falls wir Ihr Interesse für das Klasa Framework wecken konnten, besuchen Sie bitte https://klasa.js.org für weiterführende Informationen.'
+        'Falls wir Ihr Interesse für das Klasa Framework wecken konnten, besuchen Sie bitte https://klasa.js.org für weiterführende Informationen.',
       ],
       COMMAND_HELP_DM: '📥 | Alle für Sie verfügbaren Befehle wurden Ihnen per Direktnachricht zugeschickt.',
       COMMAND_HELP_NODM: '❌ | Ich konnte Ihnen keine Direktnachricht schicken, da Sie den Erhalt von Direktnachrichten deaktiviert haben.',
@@ -246,8 +250,10 @@ module.exports = class extends Language {
       DANKMEME_DESCRIPTION: 'Hole ein zufälliges dank meme.',
       EMOJI_DESCRIPTION: 'Zeige ein benutzerdefiniertes emoji in voller größe.',
       FOXGIRL_DESCRIPTION: 'Zeige ein süßes Fuchs mädchen (Nur NSFW Kanal).',
+      GASM_DESCRIPTION: 'Orgasmus Emojis (Nur NSFW Kanal).',
       KIDOL_DESCRIPTION: 'Zeige ein zufälliges K-pop Idol.',
       NEKO_DESCRIPTION: 'Zeige ein süßes und lüsternes Katzen mädchen (Nur NSFW Kanal).',
+      PUSSY_DESCRIPTION: 'Anime pussy (Nur NSFW Kanal).',
       SAUCE_DESCRIPTION: 'Suche die Quelle eines anime, manga oder hentai links.',
 
       // Sub category Information

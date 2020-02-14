@@ -10,6 +10,9 @@ module.exports = class extends Language {
     super(...args);
     this.language = {
       DEFAULT: (key) => `${key} has not been localized for nl-NL yet.`,
+      FLAG: '🇳🇱',
+      LANG: 'Nederlands',
+      SPECIFIER: 'nl-NL',
       DEFAULT_LANGUAGE: 'Default Language',
       PREFIX_REMINDER: (prefix = `@${this.client.user.tag}`) => `The prefix${Array.isArray(prefix) ?
 				`es for this guild are: ${prefix.map((pre) => `\`${pre}\``).join(', ')}` :
@@ -270,8 +273,10 @@ module.exports = class extends Language {
       DANKMEME_DESCRIPTION: 'Willekeurige dank meme.',
       EMOJI_DESCRIPTION: 'toon een custom emoji in full size',
       FOXGIRL_DESCRIPTION: 'toon een kawai fox girl (NSFW kanaal).',
+      GASM_DESCRIPTION: 'Gasm Emojis (NSFW channel only).',
       KIDOL_DESCRIPTION: 'toon een idool van een random K-Pop groep.',
       NEKO_DESCRIPTION: 'toon een kawai en lewd kat girl (NSFW kanaal).',
+      PUSSY_DESCRIPTION: 'Anime pussy (NSFW channel only).',
       SAUCE_DESCRIPTION: 'ik probeer de bron te zoeken van de anime, manga of hentai link.',
 
       // Sub category Information
