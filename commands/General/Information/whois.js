@@ -15,7 +15,7 @@ module.exports = class extends Command {
   }
 
   async run(msg, [member]) {
-    const emojis = this.client.emojis;
+    const emojis = this.client.emojis.cache;
     let roles = '';
     member.roles.map((r) => r.name != '@everyone' ? roles += `${r.name} ` : '');
     msg.genEmbed()

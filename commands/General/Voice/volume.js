@@ -15,7 +15,7 @@ module.exports = class extends Command {
   async run(msg, [volume]) {
     if (!msg.checkVoicePermission()) return;
     const player = this.client.music.get(msg.guild.id);
-    const emojis = this.client.emojis;
+    const emojis = this.client.emojis.cache;
     const lang = msg.language;
     if (!volume) {
       return msg.genEmbed()

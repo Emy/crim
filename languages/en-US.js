@@ -113,6 +113,7 @@ module.exports = class extends Language {
       NO_SOURCE: `I couldn't find any source for that on saucenao!`,
       NO_ANIME_FOUND: (anime) => `I could not find *${anime}* on anilist.`,
       NOT_IN_VC: `You aren't in a voice channel right now!`,
+      NO_MUSIC_RUNNING: `There's no music playing right now!`,
       LAVALINK_NO_DATA: `I haven't received any data from the music server! Try again later.`,
       SELECTION_NAN: `Your response isn't a valid number`,
       SELECTION_INVALID: `There was an error selecting the right option!`,

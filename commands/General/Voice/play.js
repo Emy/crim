@@ -151,10 +151,10 @@ module.exports = class extends Command {
   sendNowPlayingEmbed(msg, song) {
     const lang = msg.language;
     msg.genEmbed()
-        .setTitle(`${this.client.emojis.get(emoji.play)} ${lang.get('NOW_PLAYING')}`)
+        .setTitle(`${this.client.emojis.cache.get(emoji.play)} ${lang.get('NOW_PLAYING')}`)
         .setDescription(Util.escapeMarkdown(song.info.title))
         .setThumbnail(`https://img.youtube.com/vi/${song.info.identifier}/default.jpg`)
-        .addField(`${this.client.emojis.get(emoji.time)} ${lang.get('LENGTH')}`, msg.genHMDTime(song.info.length), true)
+        .addField(`${this.client.emojis.cache.get(emoji.time)} ${lang.get('LENGTH')}`, msg.genHMDTime(song.info.length), true)
         .send();
   }
 

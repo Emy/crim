@@ -15,7 +15,7 @@ module.exports = class extends Command {
   async run(msg, [...paran]) {
     if (!msg.checkVoicePermission()) return;
     const lang = msg.language;
-    const emojis = this.client.emojis;
+    const emojis = this.client.emojis.cache;
     const pm = this.client.music.get('pm');
     pm.leave(msg.guild.id);
     this.client.music.delete(msg.guild.id);

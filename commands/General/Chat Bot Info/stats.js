@@ -26,7 +26,7 @@ module.exports = class extends Command {
     }
 
     const language = message.language;
-    const emojis = this.client.emojis;
+    const emojis = this.client.emojis.cache;
     message.genEmbed()
         .setTitle(`${emojis.get(emoji.graph)} ${language.get('STATISTICS')}`)
         .addField(`${emojis.get(emoji.memory)} ${language.get('MEMORY')}`, `${(memory || process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB`, true)
