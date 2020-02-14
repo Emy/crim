@@ -16,7 +16,7 @@ module.exports = class extends Command {
     const bool = msg.channel.permissionsFor(everyone).has('SEND_MESSAGES');
     try {
       await msg.channel.updateOverwrite(everyone, {SEND_MESSAGES: !bool});
-      const icon = this.client.emojis.get(bool ? emoji.lock : emoji.unlock);
+      const icon = this.client.emojis.cache.get(bool ? emoji.lock : emoji.unlock);
       const titleLocalized = bool ? 'CHANNEL_LOCKED' : 'CHANNEL_UNLOCKED';
       msg.genEmbed()
           .setTitle(`${icon} ${msg.language.get(titleLocalized)}`)

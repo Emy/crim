@@ -18,7 +18,7 @@ module.exports = class extends Command {
     const lang = msg.language;
     const player = this.client.music.get(msg.guild.id);
     const song = player.songs[0];
-    const emojis = this.client.emojis;
+    const emojis = this.client.emojis.cache;
     msg.genEmbed()
         .setTitle(`${emojis.get(emoji.play)} ${lang.get('NOW_PLAYING')}`)
         .setDescription(Util.escapeMarkdown(song.info.title))

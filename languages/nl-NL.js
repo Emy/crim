@@ -240,6 +240,7 @@ module.exports = class extends Language {
       NO_SOURCE: `Ik kan niks vinden over de bron!  `,
       NO_ANIME_FOUND: (anime) => `Ik heb deze *${anime}* niet gevonden op de Anilijst.`,
       NOT_IN_VC: `je bent niet in een voice kanaal!`,
+      NO_MUSIC_RUNNING: `There's no music playing right now!`,
       LAVALINK_NO_DATA: `ik heb geen data ontvangen van de Muziek server! Probeer later nog eens`,
       SELECTION_NAN: `Je terug koppeling in niet geldig`,
       SELECTION_INVALID: `Er is een Fout met het selecteren van deze optie`,

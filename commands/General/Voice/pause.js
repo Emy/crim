@@ -20,7 +20,7 @@ module.exports = class extends Command {
     } else {
       player.pause();
     }
-    const emojis = this.client.emojis;
+    const emojis = this.client.emojis.cache;
     const icon = player.paused ? emojis.get(emoji.pause): emojis.get(emoji.play);
     const title = player.paused ? 'PAUSED' : 'UNPAUSED';
     msg.genEmbed()
