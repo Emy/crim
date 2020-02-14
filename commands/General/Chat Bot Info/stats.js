@@ -31,8 +31,8 @@ module.exports = class extends Command {
         .setTitle(`${emojis.get(emoji.graph)} ${language.get('STATISTICS')}`)
         .addField(`${emojis.get(emoji.memory)} ${language.get('MEMORY')}`, `${(memory || process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB`, true)
         .addField(`${emojis.get(emoji.time)} ${language.get('UPTIME')}`, Duration.toNow(Date.now() - (process.uptime() * 1000)), true)
-        .addField(`${emojis.get(emoji.users)} ${language.get('USERS')}`, (users || this.client.users.size).toLocaleString(), true)
-        .addField(`${emojis.get(emoji.server)} ${language.get('GUILDS')}`, (guilds || this.client.guilds.size).toLocaleString(), true)
+        .addField(`${emojis.get(emoji.users)} ${language.get('USERS')}`, (users || this.client.users.cache.size).toLocaleString(), true)
+        .addField(`${emojis.get(emoji.server)} ${language.get('GUILDS')}`, (guilds || this.client.guilds.cache.size).toLocaleString(), true)
         // Not really necessary for the end user.
         // .addField(message.language.get('FIELD_KLASA_VERSION'), klasaVersion, true)
         // .addField(message.language.get('FIELD_DISCORDJS_VERSION'), `v${discordVersion}`, true)

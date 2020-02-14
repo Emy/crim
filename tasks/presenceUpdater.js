@@ -8,8 +8,8 @@ module.exports = class extends Task {
 
   async run(data) {
     const presenceRotation = [
-      `with ${this.client.users.size} users.`,
-      `on ${this.client.guilds.size} servers.`,
+      `with ${this.client.users.cache.size} users.`,
+      `on ${this.client.guilds.cache.size} servers.`,
       `@${this.client.user.username} help`,
       `@${this.client.user.username} invite`,
     ];
