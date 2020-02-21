@@ -50,7 +50,7 @@ module.exports = class extends Command {
       const embed = msg.genEmbed()
           .setThumbnail(media.coverImage.large)
           .setTitle(title)
-          .setURL(`https://anilist.co/anime/${media.id}`)
+          .setURL(media.siteUrl)
           .addField(lang.get('SCORE'), score, true)
           .addField(lang.get('STATUS'), status, true)
           .addField(lang.get('START_DATE'), startDate.toDateString(), true)
