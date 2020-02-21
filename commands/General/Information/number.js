@@ -23,6 +23,5 @@ module.exports = class extends Command {
         .addField(msg.language.get('TAGS'), doujin.details.tags.map((tags) => tags.split('(')[0].trim()).join(', '))
         .setProvidedBy('nhentai.net')
         .send();
-    console.log(doujin);
   }
 };

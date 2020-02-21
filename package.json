@@ -13,7 +13,7 @@
   "dependencies": {
     "@sentry/node": "5.6.2",
     "discord.js": "github:discordjs/discord.js",
-    "discord.js-lavalink": "MrJacz/discord.js-lavalink",
+    "discord.js-lavalink": "TacticalTechJay/discord.js-lavalink#patch-1",
     "dotenv": "^8.1.0",
     "file-type": "^12.3.1",
     "graphql": "^0.13.2",

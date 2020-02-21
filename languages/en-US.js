@@ -7,6 +7,9 @@ module.exports = class extends Language {
 
     this.language = {
       DEFAULT: (key) => `${key}  has not been localized for en-US yet.`,
+      FLAG: '🇺🇸',
+      LANG: 'English (US)',
+      SPECIFIER: 'en-US',
       DEFAULT_LANGUAGE: 'Default Language',
       COMMAND_INVITE: (repo) => [
         `To add ${this.client.user.username} to your discord guild:`,
@@ -143,8 +146,10 @@ module.exports = class extends Language {
       DANKMEME_DESCRIPTION: 'Get a random dank meme.',
       EMOJI_DESCRIPTION: 'Display a custom emoji in full size.',
       FOXGIRL_DESCRIPTION: 'Display a cute fox girl (NSFW channel only).',
+      GASM_DESCRIPTION: 'Gasm Emojis (NSFW channel only).',
       KIDOL_DESCRIPTION: 'Display an idol from a random K-Pop group.',
       NEKO_DESCRIPTION: 'Display a cute and lewd cat girl (NSFW channel only).',
+      PUSSY_DESCRIPTION: 'Anime pussy (NSFW channel only).',
       SAUCE_DESCRIPTION: 'Trying to find the source of an anime, manga or hentai image link.',
 
       // Sub category Information

@@ -60,14 +60,13 @@ module.exports = class extends Command {
             const promptResponse = await msg.prompt(lang.get('CHOOSE_NUMBER'));
             const track = parseInt(promptResponse.content);
             if (isNaN(track)) {
-              return msg.sendError('VOICE_SELECTION_NAN');
+              return msg.sendError('SELECTION_NAN');
             }
             if (!(track >= 1 && track <= data.tracks.length)) {
               return msg.sendError('SELECTION_INVALID');
             }
             await this.addTrack(msg, data.tracks[track-1]);
           } catch (error) {
-            console.log(error);
             msg.send('SELECTION FAILED');
           }
           break;
@@ -110,7 +109,7 @@ module.exports = class extends Command {
       return msg.sendError('NOT_SAME_CHANNEL');
     }
     while (tracks.length > 0) {
-      // console.log('added song:', tracks[0].info.title);
+      // added song: tracks[0].info.title
       player.songs.push(tracks.shift());
     }
   }
