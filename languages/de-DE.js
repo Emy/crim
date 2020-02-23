@@ -264,7 +264,7 @@ module.exports = class extends Language {
       FACT_DESCRIPTION: 'Hole zufällige Fakten.',
       LMGTFY_DESCRIPTION: 'Manchmal ist im Internet suchen schwer.',
       URBANDICTIONARY_DESCRIPTION: 'Hole eine Definition aus dem Urban Dictionary.',
-      WHOIS_DESCRIPTION: 'Hole informationen über einen Discord Benutzer.',
+      USERINFO_DESCRIPTION: 'Hole informationen über einen Discord Benutzer.',
       NUMBER_DESCRIPTION: 'Konvertiert die 6 Stelligen magischen nummern in volle degeneration.',
 
       // Sub category Voice

@@ -287,7 +287,7 @@ module.exports = class extends Language {
       FACT_DESCRIPTION: 'Krijg random feiten',
       LMGTFY_DESCRIPTION: 'soms is het zoeken op internet moeilijk.',
       URBANDICTIONARY_DESCRIPTION: 'verkrijg een definite van het urban dictionary.',
-      WHOIS_DESCRIPTION: 'verkrijg informatie over een discord gebruiker.',
+      USERINFO_DESCRIPTION: 'verkrijg informatie over een discord gebruiker.',
       NUMBER_DESCRIPTION: 'Cnoverteert de 6 magische cijfers in een vole degeneratie.',
 
       // Sub category Voice
