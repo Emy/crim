@@ -51,9 +51,7 @@ module.exports = class extends Language {
 			COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${name} является обязательным аргументом.`,
 			COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `Отсутствует обязательный параметр: (${possibles})`,
 			COMMANDMESSAGE_NOMATCH: (possibles) => `Ваш вариант не соответствует ни одному из возможных: (${possibles})`,
-			// eslint-disable-next-line max-len
 			MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) => `${tag} | **${error}** | Ответьте на это сообщение допустимым значением аргумента в течение **${time}** ${this.pluralize(time, 'секунды', 'секунд', 'секунд')} или отправьте **${abortOptions.join('**, **')}** для отмены.`,
-			// eslint-disable-next-line max-len
 			MONITOR_COMMAND_HANDLER_REPEATING_REPROMPT: (tag, name, time, cancelOptions) => `${tag} | **${name}** является повторяющимся аргументом | Ответьте на это сообщение дополнительными значениями аргумента в течение **${time}** ${this.pluralize(time, 'секунды', 'секунд', 'секунд')} или отправьте **${cancelOptions.join('**, **')}** для отмены.`,
 			MONITOR_COMMAND_HANDLER_ABORTED: 'Отменено',
 			INHIBITOR_COOLDOWN: (remaining) => `Вы только что использовали эту команду. Вы сможете использовать её снова через ${remaining} ${this.pluralize(remaining, 'секунды', 'секунд', 'секунд')}.`,
