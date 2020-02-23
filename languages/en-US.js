@@ -160,7 +160,7 @@ module.exports = class extends Language {
       FACT_DESCRIPTION: 'Get random facts.',
       LMGTFY_DESCRIPTION: 'Sometimes searching on the internet is hard.',
       URBANDICTIONARY_DESCRIPTION: 'Get a definition from the urban dictionary.',
-      WHOIS_DESCRIPTION: 'Get information about a discord user.',
+      USERINFO_DESCRIPTION: 'Get information about a discord user.',
       NUMBER_DESCRIPTION: 'Converts the magic 6-digit numbers into full degeneracy.',
 
       // Sub category Voice
