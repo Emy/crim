@@ -11,7 +11,7 @@
   "author": "Emy",
   "license": "ISC",
   "dependencies": {
-    "@sentry/node": "5.6.2",
+    "@sentry/node": "^5.12.4",
     "discord.js": "github:discordjs/discord.js",
     "discord.js-lavalink": "TacticalTechJay/discord.js-lavalink#patch-1",
     "dotenv": "^8.1.0",
