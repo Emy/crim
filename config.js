@@ -1,20 +1,20 @@
 exports.config = {
   /**
-     * General Options
-     */
+   * General Options
+   */
   ownerID: process.env.DISCORD_OWNER_ID,
   // Disables/Enables a process.on('unhandledRejection'...) handler
   production: false,
   // The default language that comes with klasa. More base languages can be found on Klasa-Pieces
-  language: 'en-US',
+  language: "en-US",
   // The default configurable prefix for each guild
-  prefix: '!',
+  prefix: "!",
   // If custom configs should be preserved when a guild removes your bot
   preserveConfigs: true,
   // If your bot should be able to mention @everyone
   disableEveryone: false,
   // Whether d.js should queue your rest request in 'sequential' or 'burst' mode
-  apiRequestMethod: 'sequential',
+  apiRequestMethod: "sequential",
   // The time in ms to add to ratelimits, to ensure you wont hit a 429 response
   restTimeOffset: 500,
   // Any Websocket Events you don't want to listen to
@@ -25,8 +25,8 @@ exports.config = {
   // readyMessage: (client) => `Successfully initialized. Ready to serve ${client.guilds.size} guild${client.guilds.size === 1 ? '' : 's'}.`,
 
   /**
-     * Caching Options
-     */
+   * Caching Options
+   */
   fetchAllMembers: true,
   messageCacheMaxSize: 200,
   messageCacheLifetime: 0,
@@ -35,21 +35,21 @@ exports.config = {
   messageSweepInterval: 0,
 
   /**
-     * Sharding Options
-     */
+   * Sharding Options
+   */
   shardId: 0,
   shardCount: 1,
 
   /**
-     * Command Handler Options
-     */
+   * Command Handler Options
+   */
   commandEditing: false,
   commandLogging: false,
   typing: false,
 
   /**
-     * Database Options
-     */
+   * Database Options
+   */
   providers: {
     /*
         // Provider Connection object for process based databases:
@@ -59,28 +59,28 @@ exports.config = {
     //        db: 'emybot',
     //        silent: false
     //    },
-    default: 'json',
+    default: "json"
   },
 
   /**
-     * Custom Prompt Defaults
-     */
+   * Custom Prompt Defaults
+   */
   customPromptDefaults: {
     time: 30000,
     limit: Infinity,
-    quotedStringSupport: false,
+    quotedStringSupport: false
   },
 
   /**
-     * Klasa Piece Defaults
-     */
+   * Klasa Piece Defaults
+   */
   pieceDefaults: {
     commands: {
       aliases: [],
       autoAliases: true,
       bucket: 1,
       cooldown: 0,
-      description: '',
+      description: "",
       enabled: true,
       guarded: false,
       nsfw: false,
@@ -89,25 +89,25 @@ exports.config = {
       promptTime: 30000,
       requiredConfigs: [],
       requiredPermissions: 0,
-      runIn: ['text', 'dm', 'group'],
+      runIn: ["text", "dm", "group"],
       subcommands: false,
-      usage: '',
+      usage: "",
       quotedStringSupport: false,
-      deletable: false,
+      deletable: false
     },
     events: {
       enabled: true,
-      once: false,
+      once: false
     },
     extendables: {
       enabled: true,
       klasa: false,
-      appliesTo: [],
+      appliesTo: []
     },
     finalizers: { enabled: true },
     inhibitors: {
       enabled: true,
-      spamProtection: false,
+      spamProtection: false
     },
     languages: { enabled: true },
     monitors: {
@@ -116,56 +116,59 @@ exports.config = {
       ignoreSelf: true,
       ignoreOthers: true,
       ignoreWebhooks: true,
-      ignoreEdits: true,
+      ignoreEdits: true
     },
     providers: {
-      enabled: true,
-      sql: false,
-      cache: false,
+      engine: "postgresql",
+      options: {
+        max: 20,
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 2000
+      }
     },
-    tasks: { enabled: true },
+    tasks: { enabled: true }
   },
 
   /**
-     * Console Event Handlers (enabled/disabled)
-     */
+   * Console Event Handlers (enabled/disabled)
+   */
   consoleEvents: {
     debug: false,
     error: true,
     log: true,
     verbose: false,
     warn: true,
-    wtf: true,
+    wtf: true
   },
 
   /**
-     * Console Options
-     */
+   * Console Options
+   */
   console: {
     // Alternatively a Moment Timestamp string can be provided to customize the timestamps.
     timestamps: true,
     utc: false,
     colors: {
-      debug: { time: { background: 'magenta' } },
-      error: { time: { background: 'red' } },
-      log: { time: { background: 'blue' } },
-      verbose: { time: { text: 'gray' } },
-      warn: { time: { background: 'lightyellow', text: 'black' } },
-      wtf: { message: { text: 'red' }, time: { background: 'red' } },
-    },
+      debug: { time: { background: "magenta" } },
+      error: { time: { background: "red" } },
+      log: { time: { background: "blue" } },
+      verbose: { time: { text: "gray" } },
+      warn: { time: { background: "lightyellow", text: "black" } },
+      wtf: { message: { text: "red" }, time: { background: "red" } }
+    }
   },
 
   /**
-     * Custom Setting Gateway Options
-     */
+   * Custom Setting Gateway Options
+   */
   gateways: {
     guilds: {},
     users: {},
-    clientStorage: {},
+    clientStorage: {}
   },
 
   /**
-     * Klasa Schedule Options
-     */
-  schedule: { interval: 60000 },
+   * Klasa Schedule Options
+   */
+  schedule: { interval: 60000 }
 };
