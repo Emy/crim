@@ -65,10 +65,10 @@ module.exports = class extends SQLProvider {
   async init() {
     const connection = mergeDefault(
       {
-        host: providers.host,
-        port: providers.port,
-        database: providers.database,
-        options: providers.options
+        host: providers.postgresql.host,
+        port: providers.postgresql.port,
+        database: providers.postgresql.database,
+        options: providers.postgresql.options
       },
       this.client.options.providers.postgresql
     );
