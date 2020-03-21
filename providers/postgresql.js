@@ -1,36 +1,63 @@
+// Copyright (c) 2017-2019 dirigeants. All rights reserved. MIT license.
+
+/**
+MIT License
+
+Copyright (c) 2017-2019 dirigeants
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+© 2020 GitHub, Inc.
+*/
+
 const {
   SQLProvider,
   Type,
   QueryBuilder,
   util: { mergeDefault, isNumber }
-} = require("klasa");
-const { Pool } = require("pg");
-const { providers } = require("../config");
+} = require('klasa');
+const { Pool } = require('pg');
+const { providers } = require('../config');
 
 module.exports = class extends SQLProvider {
   constructor(...args) {
     super(...args);
     this.qb = new QueryBuilder({
-      boolean: "BOOL",
+      boolean: 'BOOL',
       integer: ({ max }) =>
-        max !== null && max >= 2 ** 32 ? "BIGINT" : "INTEGER",
-      float: "DOUBLE PRECISION",
-      uuid: "UUID",
+        max !== null && max >= 2 ** 32 ? 'BIGINT' : 'INTEGER',
+      float: 'DOUBLE PRECISION',
+      uuid: 'UUID',
       json: {
-        type: "JSON",
+        type: 'JSON',
         resolver: input => `'${JSON.stringify(input)}'::json`
       },
       any: {
-        type: "JSON",
+        type: 'JSON',
         resolver: input => `'${JSON.stringify(input)}'::json`
       },
       array: type => `${type}[]`,
       arrayResolver: (values, piece, resolver) =>
         values.length
-          ? `array[${values.map(value => resolver(value, piece)).join(", ")}]`
+          ? `array[${values.map(value => resolver(value, piece)).join(', ')}]`
           : "'{}'",
       formatDatatype: (name, datatype, def = null) =>
-        `"${name}" ${datatype}${def !== null ? ` NOT NULL DEFAULT ${def}` : ""}`
+        `"${name}" ${datatype}${def !== null ? ` NOT NULL DEFAULT ${def}` : ''}`
     });
     this.db = null;
   }
@@ -38,9 +65,9 @@ module.exports = class extends SQLProvider {
   async init() {
     const connection = mergeDefault(
       {
-        host: process.env.DATABASE_HOST,
-        port: process.env.DATABASE_PORT,
-        database: process.env.DATABASE,
+        host: providers.host,
+        port: providers.port,
+        database: providers.database,
         options: providers.options
       },
       this.client.options.providers.postgresql
@@ -58,7 +85,7 @@ module.exports = class extends SQLProvider {
       )
     );
 
-    this.db.on("error", err => this.client.emit("error", err));
+    this.db.on('error', err => this.client.emit('error', err));
     this.dbconnection = await this.db.connect();
   }
 
@@ -82,7 +109,7 @@ module.exports = class extends SQLProvider {
       return this.run(
         `CREATE TABLE ${sanitizeKeyName(table)} (${rows
           .map(([k, v]) => `${sanitizeKeyName(k)} ${v}`)
-          .join(", ")});`
+          .join(', ')});`
       );
     const gateway = this.client.gateways[table];
     if (!gateway)
@@ -96,7 +123,7 @@ module.exports = class extends SQLProvider {
 				${[
           `id VARCHAR(${gateway.idLength || 18}) PRIMARY KEY NOT NULL UNIQUE`,
           ...schemaValues.map(this.qb.parse.bind(this.qb))
-        ].join(", ")}
+        ].join(', ')}
 			)`);
   }
 
@@ -133,9 +160,9 @@ module.exports = class extends SQLProvider {
 
   get(table, key, value) {
     // If a key is given (id), swap it and search by id - value
-    if (typeof value === "undefined") {
+    if (typeof value === 'undefined') {
       value = key;
-      key = "id";
+      key = 'id';
     }
     return this.runOne(
       `SELECT * FROM ${sanitizeKeyName(table)} WHERE ${sanitizeKeyName(
@@ -158,7 +185,7 @@ module.exports = class extends SQLProvider {
     );
   }
 
-  getSorted(table, key, order = "DESC", limitMin, limitMax) {
+  getSorted(table, key, order = 'DESC', limitMin, limitMax) {
     return this.runAll(
       `SELECT * FROM ${sanitizeKeyName(table)} ORDER BY ${sanitizeKeyName(
         key
@@ -170,15 +197,15 @@ module.exports = class extends SQLProvider {
     const [keys, values] = this.parseUpdateInput(data, false);
 
     // Push the id to the inserts.
-    if (!keys.includes("id")) {
-      keys.push("id");
+    if (!keys.includes('id')) {
+      keys.push('id');
       values.push(id);
     }
     return this.run(
       `
-			INSERT INTO ${sanitizeKeyName(table)} (${keys.map(sanitizeKeyName).join(", ")})
+			INSERT INTO ${sanitizeKeyName(table)} (${keys.map(sanitizeKeyName).join(', ')})
 			VALUES (${Array.from({ length: keys.length }, (__, i) => `$${i + 1}`).join(
-        ", "
+        ', '
       )});`,
       values
     );
@@ -223,18 +250,18 @@ module.exports = class extends SQLProvider {
 
   addColumn(table, piece) {
     return this.run(
-      piece.type !== "Folder"
+      piece.type !== 'Folder'
         ? `ALTER TABLE ${sanitizeKeyName(table)} ADD COLUMN ${this.qb.parse(
             piece
           )};`
         : `ALTER TABLE ${sanitizeKeyName(table)} ${[...piece.values(true)]
             .map(subpiece => `ADD COLUMN ${this.qb.parse(subpiece)}`)
-            .join(", ")};`
+            .join(', ')};`
     );
   }
 
   removeColumn(table, columns) {
-    if (typeof columns === "string")
+    if (typeof columns === 'string')
       return this.run(
         `ALTER TABLE ${sanitizeKeyName(table)} DROP COLUMN ${sanitizeKeyName(
           columns
@@ -244,15 +271,15 @@ module.exports = class extends SQLProvider {
       return this.run(
         `ALTER TABLE ${sanitizeKeyName(table)} DROP COLUMN ${columns
           .map(sanitizeKeyName)
-          .join(", ")};`
+          .join(', ')};`
       );
     throw new TypeError(
-      "Invalid usage of PostgreSQL#removeColumn. Expected a string or string[]."
+      'Invalid usage of PostgreSQL#removeColumn. Expected a string or string[].'
     );
   }
 
   updateColumn(table, piece) {
-    const [column, datatype] = this.qb.parse(piece).split(" ");
+    const [column, datatype] = this.qb.parse(piece).split(' ');
     return this.run(
       `ALTER TABLE ${sanitizeKeyName(
         table
@@ -262,12 +289,12 @@ module.exports = class extends SQLProvider {
               piece.default,
               piece
             )}`
-          : ""
+          : ''
       };`
     );
   }
 
-  getColumns(table, schema = "public") {
+  getColumns(table, schema = 'public') {
     return this.runAll(
       `
 			SELECT column_name
@@ -298,7 +325,7 @@ module.exports = class extends SQLProvider {
  * @private
  */
 function sanitizeKeyName(value) {
-  if (typeof value !== "string")
+  if (typeof value !== 'string')
     throw new TypeError(
       `[SANITIZE_NAME] Expected a string, got: ${new Type(value)}`
     );
@@ -316,7 +343,7 @@ function sanitizeKeyName(value) {
  */
 function parseRange(min, max) {
   // Min value validation
-  if (typeof min === "undefined") return "";
+  if (typeof min === 'undefined') return '';
   if (!isNumber(min)) {
     throw new TypeError(
       `[PARSE_RANGE] 'min' parameter expects an integer or undefined, got ${min}`
@@ -329,7 +356,7 @@ function parseRange(min, max) {
   }
 
   // Max value validation
-  if (typeof max !== "undefined") {
+  if (typeof max !== 'undefined') {
     if (!isNumber(max)) {
       throw new TypeError(
         `[PARSE_RANGE] 'max' parameter expects an integer or undefined, got ${max}`
@@ -342,5 +369,5 @@ function parseRange(min, max) {
     }
   }
 
-  return `LIMIT ${min}${typeof max === "number" ? `,${max}` : ""}`;
+  return `LIMIT ${min}${typeof max === 'number' ? `,${max}` : ''}`;
 }

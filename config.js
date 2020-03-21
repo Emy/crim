@@ -6,15 +6,15 @@ exports.config = {
   // Disables/Enables a process.on('unhandledRejection'...) handler
   production: false,
   // The default language that comes with klasa. More base languages can be found on Klasa-Pieces
-  language: "en-US",
+  language: 'en-US',
   // The default configurable prefix for each guild
-  prefix: "!",
+  prefix: '!',
   // If custom configs should be preserved when a guild removes your bot
   preserveConfigs: true,
   // If your bot should be able to mention @everyone
   disableEveryone: false,
   // Whether d.js should queue your rest request in 'sequential' or 'burst' mode
-  apiRequestMethod: "sequential",
+  apiRequestMethod: 'sequential',
   // The time in ms to add to ratelimits, to ensure you wont hit a 429 response
   restTimeOffset: 500,
   // Any Websocket Events you don't want to listen to
@@ -59,7 +59,7 @@ exports.config = {
     //        db: 'emybot',
     //        silent: false
     //    },
-    default: "json"
+    default: 'json'
   },
 
   /**
@@ -80,7 +80,7 @@ exports.config = {
       autoAliases: true,
       bucket: 1,
       cooldown: 0,
-      description: "",
+      description: '',
       enabled: true,
       guarded: false,
       nsfw: false,
@@ -89,9 +89,9 @@ exports.config = {
       promptTime: 30000,
       requiredConfigs: [],
       requiredPermissions: 0,
-      runIn: ["text", "dm", "group"],
+      runIn: ['text', 'dm', 'group'],
       subcommands: false,
-      usage: "",
+      usage: '',
       quotedStringSupport: false,
       deletable: false
     },
@@ -119,7 +119,12 @@ exports.config = {
       ignoreEdits: true
     },
     providers: {
-      engine: "postgresql",
+      engine: 'postgresql',
+      database: process.env.DATABASE,
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
       options: {
         max: 20,
         idleTimeoutMillis: 30000,
@@ -149,12 +154,12 @@ exports.config = {
     timestamps: true,
     utc: false,
     colors: {
-      debug: { time: { background: "magenta" } },
-      error: { time: { background: "red" } },
-      log: { time: { background: "blue" } },
-      verbose: { time: { text: "gray" } },
-      warn: { time: { background: "lightyellow", text: "black" } },
-      wtf: { message: { text: "red" }, time: { background: "red" } }
+      debug: { time: { background: 'magenta' } },
+      error: { time: { background: 'red' } },
+      log: { time: { background: 'blue' } },
+      verbose: { time: { text: 'gray' } },
+      warn: { time: { background: 'lightyellow', text: 'black' } },
+      wtf: { message: { text: 'red' }, time: { background: 'red' } }
     }
   },
 
