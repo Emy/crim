@@ -1,7 +1,5 @@
 node_modules
-src/config.js
 .DS_Store
-commands/.DS_Store
 config.json
 package-lock.json
 bwd
@@ -11,3 +9,4 @@ yarn.lock
 yarn-error.log
 .env
 *.iml
+dist
