@@ -1,4 +1,5 @@
-import { Command, CommandStore, KlasaClient } from 'klasa';
+import { MessageAttachment } from 'discord.js';
+import { Argument, Command, CommandStore, KlasaClient, KlasaMessage } from 'klasa';
 
 export default class extends Command {
   constructor(client: KlasaClient, store: CommandStore, file: string[], dir: string) {
@@ -7,13 +8,15 @@ export default class extends Command {
       aliases: ['emote'],
       cooldown: 3,
       description: (lang) => lang.get('EMOJI_DESCRIPTION'),
-      usage: '<emoji:emoji>',
+      usage: '<content:string>',
     });
   }
 
-  async run(msg, [emoji]) {
-    msg.genEmbed().setImage(emoji.url).send();
-    if (msg.deletable) await msg.delete();
-    return null;
+  async run(msg: KlasaMessage, [content]: [string]) {
+    if (!Argument.regex.emoji.test(content)) return msg.send('No emoji found');
+    const emoji = Argument.regex.emoji.exec(content)[0].replace('<', '').replace('>', '').split(':');
+    const ext = emoji[0] == 'a' ? 'gif' : 'png';
+    const attachment = new MessageAttachment(`https://cdn.discordapp.com/emojis/${emoji[2]}.${ext}`);
+    return msg.send(attachment);
   }
 }

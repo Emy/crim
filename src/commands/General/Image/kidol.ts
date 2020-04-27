@@ -13,6 +13,7 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage) {
+    const lang = msg.language;
     let data = await (await fetch('http://www.kapi.xyz/api/v1/idols/random/')).json();
     if (!data) return msg.sendLocale('NO_DATA');
     data = data[Object.keys(data)[0]];
@@ -20,7 +21,12 @@ export default class extends Command {
     const groupAndIdol = imageUrl.pathname.split('/').slice(4, 6);
     const embed = new MessageEmbed()
       .setTitle(msg.language.get('TITLE_KIDOL', groupAndIdol[0], groupAndIdol[1]))
-      .setImage(imageUrl.toString());
+      .setImage(imageUrl.toString())
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: kapi.xyz`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
     msg.send(embed);
   }
 }

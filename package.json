@@ -14,10 +14,10 @@
   "license": "AGPL-3.0-or-later",
   "dependencies": {
     "@sentry/node": "5.6.2",
+    "anilist-node": "^1.4.0",
     "discord.js": "discordjs/discord.js",
     "dotenv": "^8.1.0",
     "file-type": "^12.3.1",
-    "graphql": "^0.13.2",
     "klasa": "dirigeants/klasa",
     "nekos.life": "^2.0.5",
     "nhentai-js": "^3.3.0",

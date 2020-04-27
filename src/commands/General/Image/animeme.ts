@@ -12,12 +12,20 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage) {
+    const lang = msg.language;
     const response = await fetch(`https://www.reddit.com/user/emdix/m/animemes/top/.json?sort=top&t=day&limit=500`);
     let data = await response.json();
     if (!(data || data.data)) return msg.send(msg.language.get('NO_DATA'));
     data = data.data.children;
     const animeme = data[Math.floor(Math.random() * data.length)].data;
-    const embed = new MessageEmbed().setTitle(animeme.title).setImage(animeme.url);
-    msg.send(embed);
+    const embed = new MessageEmbed()
+      .setDescription(animeme.title)
+      .setImage(animeme.url)
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: reddit.com`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
+    return msg.send(embed);
   }
 }

@@ -24,8 +24,6 @@ export default class extends Command {
     if (!data) return msg.sendLocale('NO_SOURCE');
     const display = new RichDisplay();
     const noInfo = lang.get('NO_INFORMATION');
-    const animeSources = ['AniDB'];
-    // const booruSources = ['Danbooru'];
 
     data.forEach((sauce) => {
       const similarity = sauce.similarity || noInfo;
@@ -36,18 +34,6 @@ export default class extends Command {
         .setURL(sauce.url)
         .addField(lang.get('SIMILARITY'), similarity, true)
         .addField(lang.get('SOURCE'), source, true);
-
-      if (animeSources.some((source) => source.includes(source))) {
-        // const part = sauce.raw.data.part || noInfo;
-        // const year = sauce.raw.data.year || noInfo;
-        // const estTime = sauce.raw.data.est_time || noInfo;
-        // embed
-        //   .setTitle(sauce.raw.data.source)
-        //   .addField(lang.get('PART'), part, true)
-        //   .addField(lang.get('YEAR'), year, true)
-        //   .addField(lang.get('ESTIMATED_TIMESTAMP'), estTime, true);
-      }
-
       display.addPage(embed);
     });
 

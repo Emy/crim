@@ -12,6 +12,7 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage, [question]: [string]) {
+    const lang = msg.language;
     const answers = [
       'It is certain',
       'As I see it, yes',
@@ -36,7 +37,9 @@ export default class extends Command {
     ];
     const embed = new MessageEmbed()
       .addField(msg.language.get('QUESTION'), question)
-      .addField(msg.language.get('ANSWER'), answers[Math.floor(Math.random() * answers.length)]);
+      .addField(msg.language.get('ANSWER'), answers[Math.floor(Math.random() * answers.length)])
+      .setFooter(`${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag}`, msg.author.avatarURL({ format: 'jpg' }))
+      .setTimestamp();
     return msg.send(embed);
   }
 }

@@ -20,7 +20,12 @@ export default class extends Command {
       .setTitle(`**${data._embedded.author[0].name}** ${lang.get('TWEETED')} ${subject}`)
       .setURL(data._embedded.source[0].url)
       .setDescription(data.value)
-      .setThumbnail('http://avatars.io/twitter/realDonaldTrump');
+      .setThumbnail('http://avatars.io/twitter/realDonaldTrump')
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: tronalddump.io`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
     return msg.send(embed);
   }
 }

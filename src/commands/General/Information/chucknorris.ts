@@ -12,9 +12,16 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage) {
+    const lang = msg.language;
     const data = await (await fetch(`https://api.chucknorris.io/jokes/random`)).json();
     if (!(data || data.value)) return msg.sendLocale('NO_DATA');
-    const embed = new MessageEmbed().setDescription(data.value);
+    const embed = new MessageEmbed()
+      .setDescription(data.value)
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: chucknorris.io`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
     return msg.send(embed);
   }
 }

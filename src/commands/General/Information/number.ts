@@ -13,6 +13,7 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage, [number]: [string]) {
+    const lang = msg.language;
     if (!nhentai.exists(number)) return msg.send('no hentai found...');
     const doujin = await nhentai.getDoujin(number);
     const embed = new MessageEmbed()
@@ -23,7 +24,12 @@ export default class extends Command {
         msg.language.get('ARTIST'),
         doujin.details.artists.map((artist) => artist.split('(')[0].trim()).join(', '),
       )
-      .addField(msg.language.get('TAGS'), doujin.details.tags.map((tags) => tags.split('(')[0].trim()).join(', '));
+      .addField(msg.language.get('TAGS'), doujin.details.tags.map((tags) => tags.split('(')[0].trim()).join(', '))
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: nhentai.net`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
     return msg.send(embed);
   }
 }

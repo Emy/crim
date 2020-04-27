@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandStore, KlasaClient, KlasaMessage } from 'klasa';
 import Client from 'nekos.life';
 const nekos = new Client();
@@ -14,8 +14,15 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage) {
-    const neko = await nekos.sfw.neko();
-    const embed = new MessageEmbed().setImage(neko.url);
+    const lang = msg.language;
+    const neko = (msg.channel as TextChannel).nsfw ? await nekos.nsfw.neko() : await nekos.sfw.neko();
+    const embed = new MessageEmbed()
+      .setImage(neko.url)
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: nekos.life`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
     return msg.send(embed);
   }
 }

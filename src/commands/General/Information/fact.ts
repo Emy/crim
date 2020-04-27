@@ -14,9 +14,15 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage) {
+    const lang = msg.language;
     const fact = await nekos.sfw.fact();
-    console.log(fact);
-    const embed = new MessageEmbed().setDescription(fact.fact);
+    const embed = new MessageEmbed()
+      .setDescription(fact.fact)
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: nekos.life`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
     return msg.send(embed);
   }
 }

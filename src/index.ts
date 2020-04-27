@@ -3,7 +3,6 @@ import Sentry from '@sentry/node';
 import { Client, KlasaClientOptions } from 'klasa';
 import { Shoukaku, ShoukakuOptions } from 'shoukaku';
 import { config } from './config';
-import Queue from './util/queue';
 
 if (process.env.NODE_ENV == 'production') Sentry.init({ dsn: process.env.SENTRY_DSN });
 
@@ -26,11 +25,11 @@ const shoukakuNodes = [
 
 class FiloClient extends Client {
   shoukaku: Shoukaku;
-  queue: Queue;
+  //queue: Queue;
   constructor(options: KlasaClientOptions) {
     super(options);
     this.shoukaku = new Shoukaku(this, shoukakuNodes, shoukakuConfig);
-    this.queue = new Queue(this);
+    //this.queue = new Queue(this);
     this.shoukaku.on('ready', (name, resumed) =>
       console.log(
         `Lavalink Node: ${name} is now connected. This connection is ${resumed ? 'resumed' : 'a new connection'}`,

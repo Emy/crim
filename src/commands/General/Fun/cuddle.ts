@@ -15,12 +15,18 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage, [member]: [GuildMember]) {
+    const lang = msg.language;
     const author = msg.author.username;
     const user = member?.user?.username ?? msg.language.get('THEMSELVES');
     const cuddle = await nekos.sfw.cuddle();
     const embed = new MessageEmbed()
-      .setTitle(msg.language.get('EMOTE_TITLE', author, msg.language.get('CUDDLING'), user, ''))
-      .setImage(cuddle.url);
+      .setDescription(msg.language.get('EMOTE_TITLE', author, msg.language.get('CUDDLING'), user, ''))
+      .setImage(cuddle.url)
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: nekos.life`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
     return msg.send(embed);
   }
 }

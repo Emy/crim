@@ -12,13 +12,21 @@ export default class extends Command {
   }
 
   async run(msg: KlasaMessage) {
+    const lang = msg.language;
     let data = await (
       await fetch(`https://www.reddit.com/user/emdix/m/dankmemes/top/.json?sort=top&t=day&limit=500`)
     ).json();
     if (!(data || data.data)) return msg.send(msg.language.get('NO_DATA'));
     data = data.data.children;
     const dankmeme = data[Math.floor(Math.random() * data.length)].data;
-    const embed = new MessageEmbed().setTitle(dankmeme.title).setImage(dankmeme.url);
-    msg.send(embed);
+    const embed = new MessageEmbed()
+      .setTitle(dankmeme.title)
+      .setImage(dankmeme.url)
+      .setFooter(
+        `${lang.get('FOOTER_REQUESTED_BY')}: ${msg.author.tag} | ${lang.get('FOOTER_PROVIDED_BY')}: reddit.com`,
+        msg.author.avatarURL({ format: 'jpg' }),
+      )
+      .setTimestamp();
+    return msg.send(embed);
   }
 }
