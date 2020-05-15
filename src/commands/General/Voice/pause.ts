@@ -20,6 +20,7 @@ export default class extends Command {
     if (msg.member.voice.channel.id != dispatcher.player.voiceConnection.voiceChannelID) {
       return msg.send('We need to be in the same voice channel.');
     }
-    return msg.send('I could not pause/unpause');
+    await dispatcher.player.setPaused(!dispatcher.player.paused);
+    return msg.send(`Paused: ${dispatcher.player.paused}`);
   }
 }

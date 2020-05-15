@@ -1,6 +1,5 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandStore, KlasaClient, KlasaMessage, TextPrompt, Usage } from 'klasa';
-import { LoadTrackResponse } from 'shoukaku';
 import FiloClient from './../../../lib/client';
 
 export default class extends Command {
@@ -34,7 +33,7 @@ export default class extends Command {
     }
 
     // Should be a LoadTrackResponse at this point.
-    const ltr = tracks as LoadTrackResponse;
+    const ltr = tracks;
     if (Array.isArray(ltr.tracks)) {
       ltr.tracks = ltr.tracks.slice(0, 5);
       const embed = new MessageEmbed()
