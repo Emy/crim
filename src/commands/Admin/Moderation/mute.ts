@@ -15,7 +15,7 @@ export default class extends Command {
     });
   }
 
-  async run(msg: KlasaMessage, [mem, dur, reason]: [GuildMember, Timestamp, string]) {
+  async run(msg: KlasaMessage, []: [GuildMember, Timestamp, string]) {
     return msg.send('');
   }
 }

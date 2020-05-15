@@ -14,7 +14,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    "outDir": "../dist",
+    "outDir": "dist",
     "pretty": true,
     "removeComments": true,
     "resolveJsonModule": true,
@@ -24,5 +24,5 @@
     "target": "esnext",
     "types": ["node", "discord.js", "klasa"]
   },
-  "exclude": ["node_modules/**/*"]
+  "exclude": ["node_modules", "dist"]
 }

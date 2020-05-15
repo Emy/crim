@@ -1,16 +1,12 @@
-require('dotenv').config();
-import Sentry from '@sentry/node';
-import { Client, KlasaClientOptions } from 'klasa';
-import { Shoukaku, ShoukakuOptions } from 'shoukaku';
-import { config } from './config';
+import { KlasaClient, KlasaClientOptions } from 'klasa';
+import { Shoukaku } from 'shoukaku';
+import Queue from './queue';
 
-if (process.env.NODE_ENV == 'production') Sentry.init({ dsn: process.env.SENTRY_DSN });
-
-const shoukakuConfig: ShoukakuOptions = {
+const shoukakuConfig = {
   moveOnDisconnect: true,
   resumable: true,
   resumableTimeout: 30,
-  reconnectTries: 1000000,
+  reconnectTries: 10,
   restTimeout: 10000,
 };
 
@@ -23,13 +19,13 @@ const shoukakuNodes = [
   },
 ];
 
-class FiloClient extends Client {
+export default class FiloClient extends KlasaClient {
   shoukaku: Shoukaku;
-  //queue: Queue;
+  queue: Queue;
   constructor(options: KlasaClientOptions) {
     super(options);
     this.shoukaku = new Shoukaku(this, shoukakuNodes, shoukakuConfig);
-    //this.queue = new Queue(this);
+    this.queue = new Queue(this);
     this.shoukaku.on('ready', (name, resumed) =>
       console.log(
         `Lavalink Node: ${name} is now connected. This connection is ${resumed ? 'resumed' : 'a new connection'}`,
@@ -44,4 +40,3 @@ class FiloClient extends Client {
     );
   }
 }
-new FiloClient(config).login(process.env.DISCORD_ACCESS_TOKEN);
