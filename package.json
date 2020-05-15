@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "node_modules/.bin/tsc",
-    "start": "yarn build && node ./dist/filo.js",
+    "start": "npm run build && node ./dist/filo.js",
     "lint": "eslint \"src/**\" --fix",
-    "dev": "yarn lint && yarn start"
+    "dev": "npm run lint && npm run start"
   },
   "keywords": [],
   "author": "Emy",
