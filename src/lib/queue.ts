@@ -1,5 +1,5 @@
 import { Client, KlasaMessage } from 'klasa';
-import { ShoukakuSocket, Track } from 'shoukaku';
+import { ShoukakuSocket, ShoukakuTrack } from 'shoukaku';
 import Dispatcher from './dispatcher';
 
 export default class Queue extends Map {
@@ -10,7 +10,7 @@ export default class Queue extends Map {
     this.client = client;
   }
 
-  async handleTrack(node: ShoukakuSocket, track: Track, msg: KlasaMessage): Promise<Dispatcher | null> {
+  async handleTrack(node: ShoukakuSocket, track: ShoukakuTrack, msg: KlasaMessage): Promise<Dispatcher | null> {
     if (!track) return;
     let dispatcher = this.get(msg.guild.id);
     if (!dispatcher) {

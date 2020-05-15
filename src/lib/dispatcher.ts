@@ -1,6 +1,6 @@
 import { TextChannel } from 'discord.js';
 import { KlasaGuild } from 'klasa';
-import { ShoukakuPlayer, Track } from 'shoukaku';
+import { ShoukakuPlayer, ShoukakuTrack } from 'shoukaku';
 import FiloClient from '../lib/client';
 
 class EventHandlers {
@@ -18,10 +18,10 @@ class Dispatcher {
   guild: KlasaGuild;
   textChanel: TextChannel;
   player: ShoukakuPlayer;
-  queue: Track[];
+  queue: ShoukakuTrack[];
   playing: boolean;
   onEvent: (param: unknown) => void;
-  current: Track;
+  current: ShoukakuTrack;
   loop: boolean;
   constructor(options) {
     this.client = options.client;
@@ -59,7 +59,7 @@ class Dispatcher {
     if (!this.loop) this.textChanel.send(`Playing: ${this.current.info.title}`);
   }
 
-  async addTrack(track: Track) {
+  async addTrack(track: ShoukakuTrack) {
     this.queue.push(track);
   }
 }
