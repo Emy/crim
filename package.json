@@ -4,29 +4,38 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node_modules/.bin/tsc",
+    "start": "yarn build && node ./dist/filo.js",
+    "lint": "eslint \"src/**\" --fix",
+    "dev": "yarn lint && yarn start"
   },
   "keywords": [],
   "author": "Emy",
-  "license": "ISC",
+  "license": "AGPL-3.0-or-later",
   "dependencies": {
-    "@sentry/node": "^5.12.4",
-    "discord.js": "github:discordjs/discord.js",
-    "discord.js-lavalink": "TacticalTechJay/discord.js-lavalink#patch-1",
+    "@sentry/node": "5.6.2",
+    "anilist-node": "^1.4.0",
+    "discord.js": "discordjs/discord.js",
     "dotenv": "^8.1.0",
     "file-type": "^12.3.1",
-    "graphql": "^0.13.2",
-    "klasa": "github:dirigeants/klasa",
-    "klasa-dashboard-hooks": "dirigeants/klasa-dashboard-hooks",
+    "klasa": "dirigeants/klasa",
+    "nekos.life": "^2.0.5",
     "nhentai-js": "^3.3.0",
     "node-fetch": "^2.2.0",
-    "pako": "^1.0.10",
     "sagiri": "^3.0.1",
-    "saucenao": "^0.0.2"
+    "shoukaku": "Deivu/Shoukaku",
+    "urban-dictionary": "^2.2.1"
   },
   "devDependencies": {
-    "eslint": "^6.0.1",
-    "eslint-config-google": "^0.13.0"
+    "@types/node": "^13.9.3",
+    "@types/node-fetch": "^2.5.5",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "klasa-decorators": "^0.0.1",
+    "prettier": "^2.0.2",
+    "typescript": "^3.8.3"
   }
 }

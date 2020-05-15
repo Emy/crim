@@ -1,22 +1,11 @@
 {
-    "env": {
-        "browser": false,
-        "commonjs": true,
-        "es6": true
-    },
-    "extends": "google",
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
+    "parser": "@typescript-eslint/parser",
+    "extends": ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
     "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module",
-        "allowImportExportEverywhere": true
+        "ecmaVersion": 2020,
+        "sourceType": "module"
     },
     "rules": {
-        "object-curly-spacing": 0,
-        "require-jsdoc": 0,
-        "no-tabs": ["error", { "allowIndentationTabs": true }]
+        "@typescript-eslint/explicit-function-return-type": "off"
     }
 }
