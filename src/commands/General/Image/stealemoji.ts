@@ -3,9 +3,10 @@ import { Argument, Command, CommandStore, KlasaClient, KlasaMessage } from 'klas
 export default class extends Command {
   constructor(client: KlasaClient, store: CommandStore, file: string[], dir: string) {
     super(client, store, file, dir, {
-      requiredPermissions: ['EMBED_LINKS', 'MANAGE_MESSAGES'],
+      requiredPermissions: ['SEND_MESSAGES', 'MANAGE_EMOJIS'],
       aliases: ['steal'],
       cooldown: 3,
+      permissionLevel: 6,
       description: (lang) => lang.get('STEALEMOJI_DESCRIPTION'),
       usage: '<name:string> <emoji:...string>',
       usageDelim: ' ',
