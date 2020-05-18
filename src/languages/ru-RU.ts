@@ -245,6 +245,7 @@ module.exports = class extends Language {
       PART: `Часть`,
       YEAR: `Год`,
       ESTIMATED_TIMESTAMP: `Примерная отметка времени`,
+      EMOJI_STOLEN: (stolenEmoji) => `Emoji ${stolenEmoji} stolen successfully!`,
 
       // Information Category
       QUESTION: `Вопрос`,
@@ -337,6 +338,7 @@ module.exports = class extends Language {
       NEKO_DESCRIPTION: 'Показывает милую неко-тян (Только в NSFW каналах).',
       PUSSY_DESCRIPTION: 'Показывает хентай (гениталии) (Только в NSFW каналах).',
       SAUCE_DESCRIPTION: 'Пытается найти источник аниме, манги или хентая по ссылке на изображение.',
+      STEALEMOJI_DESCRIPTION: 'Steal an emoji from another guild',
 
       // Sub category Information
       EIGHTBALL_DESCRIPTION: 'Получает мудрый ответ на вопрос да/нет.',

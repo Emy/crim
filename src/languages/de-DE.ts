@@ -179,6 +179,7 @@ export default class extends Language {
       PART: `Teil`,
       YEAR: `Jahr`,
       ESTIMATED_TIMESTAMP: `Geschätzter Zeitstempel`,
+      EMOJI_STOLEN: (stolenEmoji) => `Emoji ${stolenEmoji} erfolgreich geklaut!`,
 
       // Information Category
       QUESTION: `Frage`,
@@ -272,6 +273,7 @@ export default class extends Language {
       NEKO_DESCRIPTION: 'Zeige ein süßes und lüsternes Katzen mädchen (Nur NSFW Kanal).',
       PUSSY_DESCRIPTION: 'Anime pussy (Nur NSFW Kanal).',
       SAUCE_DESCRIPTION: 'Suche die Quelle eines anime, manga oder hentai links.',
+      STEALEMOJI_DESCRIPTION: 'Klaue ein custom emoji von einem anderen Server.',
 
       // Sub category Information
       EIGHTBALL_DESCRIPTION: 'Gibt weise Antworten auf ja nein Fragen.',

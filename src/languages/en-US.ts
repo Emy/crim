@@ -59,6 +59,7 @@ export default class extends Language {
       PART: `Part`,
       YEAR: `Year`,
       ESTIMATED_TIMESTAMP: `Estimated timestamp`,
+      EMOJI_STOLEN: (stolenEmoji) => `Emoji ${stolenEmoji} stolen successfully!`,
 
       // Information Category
       QUESTION: `Question`,
@@ -151,6 +152,7 @@ export default class extends Language {
       NEKO_DESCRIPTION: 'Display a cute and lewd cat girl (NSFW channel only).',
       PUSSY_DESCRIPTION: 'Anime pussy (NSFW channel only).',
       SAUCE_DESCRIPTION: 'Trying to find the source of an anime, manga or hentai image link.',
+      STEALEMOJI_DESCRIPTION: 'Steal an emoji from another guild',
 
       // Sub category Information
       EIGHTBALL_DESCRIPTION: 'Get wise answers for yes or no questions.',
