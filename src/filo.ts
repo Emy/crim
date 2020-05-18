@@ -1,5 +1,5 @@
 require('dotenv').config();
-import Sentry from '@sentry/node';
+import * as Sentry from '@sentry/node';
 import { config } from './config';
 import FiloClient from './lib/client';
 
