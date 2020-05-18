@@ -8,7 +8,7 @@ export default class extends Command {
       requiredPermissions: [],
       permissionLevel: 6,
       description: '',
-      usage: '<user:user> [daysToBan:int] [reason:...string]',
+      usage: '<user:user> [daysToPurge:int] [reason:...string]',
     });
   }
 
