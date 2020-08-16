@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "node_modules/.bin/tsc",
-    "start": "npm run build && node ./dist/filo.js",
-    "heroku": "node ./dist/filo.js",
+    "start": "$npm_execpath run build && node ./dist/index.js",
     "lint": "eslint \"src/**\" --fix",
-    "dev": "npm run lint && npm run start"
+    "dev": "concurrently \"tsc -w\" \"nodemon ./dist/index.js\""
   },
   "engines": {
     "node": "14.x"
@@ -19,26 +18,26 @@
   "dependencies": {
     "@sentry/node": "^5.15.5",
     "anilist-node": "^1.4.0",
-    "discord.js": "discordjs/discord.js",
-    "dotenv": "^8.1.0",
-    "file-type": "^12.3.1",
-    "klasa": "dirigeants/klasa",
+    "discord-akairo": "^8.1.0",
+    "discord.js": "^12.2.0",
+    "kurasuta": "^2.2.0",
     "nekos.life": "^2.0.5",
     "nhentai-js": "^3.3.0",
+    "node-cron": "^2.0.3",
     "node-fetch": "^2.2.0",
     "sagiri": "^3.0.1",
-    "shoukaku": "Deivu/Shoukaku",
+    "ts-dotenv": "^0.8.1",
     "urban-dictionary": "^2.2.1"
   },
   "devDependencies": {
-    "@types/node": "^13.9.3",
+    "@types/node": "^14.0.27",
     "@types/node-fetch": "^2.5.5",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "concurrently": "^5.3.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
-    "klasa-decorators": "^0.0.1",
     "prettier": "^2.0.2",
     "typescript": "^3.8.3"
   }
