@@ -1,16 +1,15 @@
 import { Message } from 'discord.js';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
 
-class AnimemeCommand extends CrimCommand {
+class AnimemeCommand extends Command {
   constructor() {
     super('animeme', {
       aliases: ['animeme'],
       channel: 'guild',
-      category: 'Image'
+      description: 'Get a random animeme.',
     });
-    this.helpText = 'Get a random animeme.';
   }
 
   async exec(message: Message) {
@@ -21,7 +20,7 @@ class AnimemeCommand extends CrimCommand {
     const animeme = data[Math.floor(Math.random() * data.length)].data;
 
     const embed = new MessageEmbed()
-    .setDescription(animeme.title)
+      .setDescription(animeme.title)
       .setImage(animeme.url)
       .setFooter(
         `Requested by: ${message.author.tag} | Provided by: reddit.com`,
@@ -32,4 +31,4 @@ class AnimemeCommand extends CrimCommand {
   }
 }
 
-module.exports = AnimemeCommand;
+export default AnimemeCommand;

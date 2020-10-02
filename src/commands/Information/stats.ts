@@ -1,14 +1,13 @@
 import { Message } from 'discord.js';
 import { MessageEmbed } from 'discord.js';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
 
-class StatsCommand extends CrimCommand {
+class StatsCommand extends Command {
   constructor() {
     super('stats', {
       aliases: ['stats'],
-      category: 'Information'
+      description: 'Show bot stats.',
     });
-    this.helpText = 'Show bot stats.';
   }
 
   exec(message: Message) {
@@ -21,11 +20,11 @@ class StatsCommand extends CrimCommand {
           value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`,
           inline: true,
         },
-        {
-          name: 'Uptime',
-          value: `...`,
-          inline: true,
-        },
+        // {
+        //   name: 'Uptime',
+        //   value: `...`,
+        //   inline: true,
+        // },
         {
           name: 'Users',
           value: this.client.users.cache.size,
@@ -46,10 +45,16 @@ class StatsCommand extends CrimCommand {
           value: `[Click here](https://github.com/Emy/filo)`,
           inline: true,
         },
+        {
+          name: 'Shard',
+          value: `${this.client.shard.id + 1} / ${this.client.shard.shards.length}`,
+          inline: true,
+        },
       ])
+      .setThumbnail(this.client.user.avatarURL({ format: 'png' }))
       .setFooter(`Requested by: ${message.author.tag}`, message.author.avatarURL({ format: 'jpg' }));
     return message.channel.send(embed);
   }
 }
 
-module.exports = StatsCommand;
+export default StatsCommand;

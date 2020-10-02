@@ -1,17 +1,16 @@
 import { Message } from 'discord.js';
-import { GuildMember } from 'discord.js';
+import { GuildMember, MessageEmbed } from 'discord.js';
 import NekoClient from 'nekos.life';
-import { MessageEmbed } from 'discord.js';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
+
 const nekos = new NekoClient();
 
-class HugCommand extends CrimCommand {
+class HugCommand extends Command {
   constructor() {
     super('hug', {
       aliases: ['hug'],
       channel: 'guild',
-      category: 'Fun',
-      helpText: 'HELPUUUU',
+      description: 'Hug someone.',
       args: [
         {
           id: 'target',
@@ -20,7 +19,6 @@ class HugCommand extends CrimCommand {
         },
       ],
     });
-    this.helpText = 'Hug someone.'
   }
 
   async exec(message: Message, args: any) {
@@ -37,4 +35,4 @@ class HugCommand extends CrimCommand {
   }
 }
 
-module.exports = HugCommand;
+export default HugCommand;

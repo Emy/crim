@@ -1,17 +1,17 @@
 import { Message } from 'discord.js';
 import NekoClient from 'nekos.life';
 import { MessageEmbed } from 'discord.js';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
+
 const nekos = new NekoClient();
 
-class FoxgirlCommand extends CrimCommand {
+class FoxgirlCommand extends Command {
   constructor() {
     super('foxgirl', {
       aliases: ['foxgirl'],
       channel: 'guild',
-      category: 'Image'
+      description: 'Get a random foxgirl.',
     });
-    this.helpText = 'Get a random foxgirl.';
   }
 
   async exec(message: Message) {
@@ -26,4 +26,4 @@ class FoxgirlCommand extends CrimCommand {
   }
 }
 
-module.exports = FoxgirlCommand;
+export default FoxgirlCommand;

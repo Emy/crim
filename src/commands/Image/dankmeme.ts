@@ -1,16 +1,15 @@
 import { Message } from 'discord.js';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
 
-class DankmemeCommand extends CrimCommand {
+class DankmemeCommand extends Command {
   constructor() {
     super('dankmeme', {
       aliases: ['dankmeme'],
       channel: 'guild',
-      category: 'Image'
+      description: 'Get a random dank meme.',
     });
-    this.helpText = 'Get a random dank meme.';
   }
 
   async exec(message: Message) {
@@ -21,7 +20,7 @@ class DankmemeCommand extends CrimCommand {
     const dankmeme = data[Math.floor(Math.random() * data.length)].data;
 
     const embed = new MessageEmbed()
-    .setDescription(dankmeme.title)
+      .setDescription(dankmeme.title)
       .setImage(dankmeme.url)
       .setFooter(
         `Requested by: ${message.author.tag} | Provided by: reddit.com`,
@@ -32,4 +31,4 @@ class DankmemeCommand extends CrimCommand {
   }
 }
 
-module.exports = DankmemeCommand;
+export default DankmemeCommand;

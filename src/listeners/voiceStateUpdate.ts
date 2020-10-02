@@ -14,4 +14,4 @@ class VoiceStateUpdateListener extends Listener {
   }
 }
 
-module.exports = VoiceStateUpdateListener;
+export default VoiceStateUpdateListener;

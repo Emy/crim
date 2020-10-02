@@ -2,15 +2,16 @@ import { Message } from 'discord.js';
 import { GuildMember } from 'discord.js';
 import NekoClient from 'nekos.life';
 import { MessageEmbed } from 'discord.js';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
+
 const nekos = new NekoClient();
 
-class SlapCommand extends CrimCommand {
+class SlapCommand extends Command {
   constructor() {
     super('slap', {
       aliases: ['slap'],
       channel: 'guild',
-      category: 'Fun',
+      description: 'Slap someone.',
       args: [
         {
           id: 'target',
@@ -19,7 +20,6 @@ class SlapCommand extends CrimCommand {
         },
       ],
     });
-    this.helpText = 'Slap someone.';
   }
 
   async exec(message: Message, args: any) {
@@ -36,4 +36,4 @@ class SlapCommand extends CrimCommand {
   }
 }
 
-module.exports = SlapCommand;
+export default SlapCommand;

@@ -2,15 +2,16 @@ import { Message } from 'discord.js';
 import { GuildMember } from 'discord.js';
 import NekoClient from 'nekos.life';
 import { MessageEmbed } from 'discord.js';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
+
 const nekos = new NekoClient();
 
-class PatCommand extends CrimCommand {
+class PatCommand extends Command {
   constructor() {
     super('pat', {
       aliases: ['pat'],
       channel: 'guild',
-      category: 'Fun',
+      description: 'Pat someone.',
       args: [
         {
           id: 'target',
@@ -19,7 +20,6 @@ class PatCommand extends CrimCommand {
         },
       ],
     });
-    this.helpText = 'Pat someone.';
   }
 
   async exec(message: Message, args: any) {
@@ -36,4 +36,4 @@ class PatCommand extends CrimCommand {
   }
 }
 
-module.exports = PatCommand;
+export default PatCommand;

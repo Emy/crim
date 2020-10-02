@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo';
-import cron from 'node-cron'
+import cron from 'node-cron';
 
 class ReadyListener extends Listener {
   constructor() {
@@ -20,23 +20,18 @@ class ReadyListener extends Listener {
         `@${this.client.user.username} invite`,
       ];
 
-      const types = [
-        0,
-        3,
-        2,
-        2
-      ]
+      const types = [0, 3, 2, 2];
 
-      counter= ++counter % statuses.length;
+      counter = ++counter % statuses.length;
 
       this.client.user.setPresence({
         activity: {
           name: statuses[counter],
-          type: types[counter]
-        } 
-      })
+          type: types[counter],
+        },
+      });
     });
   }
 }
 
-module.exports = ReadyListener;
+export default ReadyListener;

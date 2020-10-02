@@ -2,17 +2,17 @@ import { Message } from 'discord.js';
 import NekoClient from 'nekos.life';
 import { MessageEmbed } from 'discord.js';
 import { TextChannel } from 'discord.js';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
+
 const nekos = new NekoClient();
 
-class NekoCommand extends CrimCommand {
+class NekoCommand extends Command {
   constructor() {
     super('neko', {
       aliases: ['neko'],
       channel: 'guild',
-      category: 'Image'
+      description: 'Get a random neko picture/gif.',
     });
-    this.helpText = 'Get a random neko picture/gif.';
   }
 
   async exec(message: Message) {
@@ -27,4 +27,4 @@ class NekoCommand extends CrimCommand {
   }
 }
 
-module.exports = NekoCommand;
+export default NekoCommand;

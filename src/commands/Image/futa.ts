@@ -2,20 +2,20 @@ import { Message } from 'discord.js';
 import NekoClient from 'nekos.life';
 import { MessageEmbed } from 'discord.js';
 import { TextChannel } from 'discord.js';
-import CrimCommand from '../../lib/CrimCommand';
+import { Command } from 'discord-akairo';
+
 const nekos = new NekoClient();
 
-class FutaCommand extends CrimCommand {
+class FutaCommand extends Command {
   constructor() {
     super('futa', {
       aliases: ['futa'],
       channel: 'guild',
-      category: 'Image',
+      description: 'Get a random futanari picture/gif. (NSFW Only)',
       userPermissions(message: Message) {
         if (!(message.channel as TextChannel).nsfw) return message.channel.send('This is a NFSW channel only command!');
       },
     });
-    this.helpText = 'Get a random futanari picture/gif. (NSFW Only)';
   }
 
   async exec(message: Message) {
@@ -30,4 +30,4 @@ class FutaCommand extends CrimCommand {
   }
 }
 
-module.exports = FutaCommand;
+export default FutaCommand;
