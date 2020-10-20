@@ -1,7 +1,9 @@
 import { Listener } from 'discord-akairo';
 import cron from 'node-cron';
+import CrimClient from '../lib/CrimClient';
 
 class ReadyListener extends Listener {
+  client: CrimClient;
   constructor() {
     super('ready', {
       emitter: 'client',

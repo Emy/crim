@@ -13,6 +13,7 @@ class MessageBlockedListener extends Listener {
   }
 
   exec(msg, reason) {
+    if (reason === 'client') return;
     logger.debug(`MESSAGE BLOCKED LISTENER INVOKED - Reason: ${reason}`);
     const embed = new MessageEmbed();
     switch (reason) {
