@@ -1,10 +1,11 @@
 import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 'discord-akairo';
 import { join } from 'path';
 import { ClientOptions } from 'discord.js';
-import { load } from 'ts-dotenv';
 import mongoose from 'mongoose';
 import { configure, getLogger, LogLevel } from '@log4js2/core';
 import GuildSettingsManager from './managers/GuildSettingsManager';
+import { Manager } from '@lavacord/discord.js';
+import config from '../config';
 
 configure({
   layout: '%d [%p] %c %M- %m %ex',
@@ -12,30 +13,24 @@ configure({
   loggers: [
     {
       tag: 'Crim',
-      level: LogLevel.ALL,
+      level: config.NODE_ENV === 'production' ? LogLevel.INFO : LogLevel.ALL,
     },
   ],
 });
 
 const logger = getLogger('Crim');
 
-const env = load({
-  NODE_ENV: String,
-  OWNERID: String,
-  DISCORD_ACCESS_TOKEN: String,
-  SENTRY_DSN: String,
-  MONGODB_CONNECTION_STRING: String,
-});
-
 export default class CrimClient extends AkairoClient {
   settings: GuildSettingsManager;
   commandHandler: CommandHandler;
   inhibitorHandler: InhibitorHandler;
   listenerHandler: ListenerHandler;
+  music: Manager;
+
   constructor(options: ClientOptions) {
     super(
       {
-        ownerID: env.OWNERID.split(','),
+        ownerID: config.owners,
       },
       {
         disableMentions: 'everyone',
@@ -86,7 +81,7 @@ export default class CrimClient extends AkairoClient {
   }
 
   async login(token: string): Promise<string> {
-    await mongoose.connect(env.MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
     logger.info('DB connected.');
     return super.login(token);
   }
