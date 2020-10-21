@@ -21,6 +21,7 @@ class AnimemeCommand extends Command {
 
     const embed = new MessageEmbed()
       .setDescription(animeme.title)
+      .setColor('#ffb347')
       .setImage(animeme.url)
       .setFooter(
         `Requested by: ${message.author.tag} | Provided by: reddit.com`,

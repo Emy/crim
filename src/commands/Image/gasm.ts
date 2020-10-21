@@ -21,6 +21,7 @@ class GasmCommand extends Command {
   async exec(message: Message) {
     const embed = new MessageEmbed()
       .setImage((await nekos.nsfw.gasm()).url)
+      .setColor('#77dd77')
       .setFooter(
         `Requested by: ${message.author.tag} | Provided by: nekos.life`,
         message.author.avatarURL({ format: 'jpg' }),

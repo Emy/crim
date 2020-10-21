@@ -21,6 +21,7 @@ class DankmemeCommand extends Command {
 
     const embed = new MessageEmbed()
       .setDescription(dankmeme.title)
+      .setColor('#ffb347')
       .setImage(dankmeme.url)
       .setFooter(
         `Requested by: ${message.author.tag} | Provided by: reddit.com`,

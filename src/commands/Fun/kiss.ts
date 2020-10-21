@@ -24,6 +24,7 @@ class KissCommand extends Command {
     const target = args.target as GuildMember;
     const embed = new MessageEmbed()
       .setDescription(`**${message.member.displayName}** is kissing **${target?.displayName ?? 'themselves'}**`)
+      .setColor('#77dd77')
       .setImage((await nekos.sfw.kiss()).url)
       .setFooter(
         `Requested by: ${message.author.tag} | Provided by: nekos.life`,

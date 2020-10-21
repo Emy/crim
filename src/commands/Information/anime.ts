@@ -30,7 +30,7 @@ class AnimeCommand extends Command {
     const embed = new MessageEmbed()
       .setAuthor(anime.title.english ?? anime.title.romaji, 'https://anilist.co/favicon.ico', anime.siteUrl)
       .setThumbnail(anime.coverImage.large)
-      .setColor('#02a9ff')
+      .setColor('#89cff0')
       .setDescription(anime.description.replace(/<[^>]*>?/gm, ''))
       .addFields([
         {

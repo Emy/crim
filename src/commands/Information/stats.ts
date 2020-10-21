@@ -13,7 +13,7 @@ class StatsCommand extends Command {
   exec(message: Message) {
     const embed = new MessageEmbed()
       .setTitle('Stats')
-      .setColor('GREEN')
+      .setColor('#b39eb5')
       .addFields([
         {
           name: 'Memory',
