@@ -22,6 +22,7 @@ class InviteFilterCommand extends Command {
   }
 
   async exec(message: Message, args: any) {
+    logger.debug('INVITE FILTER INVOKED');
     const guildSettings = await this.client.settings.get(message.guild.id);
     switch (args.bool) {
       case 'on':
