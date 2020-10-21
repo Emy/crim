@@ -6,7 +6,7 @@ import { getLogger } from '@log4js2/core';
 const logger = getLogger('Crim');
 
 class SkipCommand extends Command {
-    client: CrimClient;
+  client: CrimClient;
   constructor() {
     super('skip', {
       aliases: ['skip'],
@@ -16,11 +16,11 @@ class SkipCommand extends Command {
   }
 
   async exec(message: Message, args: any) {
-      logger.debug('SKIP COMMAND')
-      const player = this.client.music.players.get(message.guild.id);
-      if(!player) return message.channel.send('No music running.');
-      this.client.music.players.get(message.guild.id).stop();
-      message.reply('Skipping the track...')
+    logger.debug('SKIP COMMAND');
+    const player = this.client.music.players.get(message.guild.id);
+    if (!player) return message.channel.send('No music running.');
+    this.client.music.players.get(message.guild.id).stop();
+    message.reply('Skipping the track...');
   }
 }
 
