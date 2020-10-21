@@ -15,7 +15,7 @@ class HelpCommand extends Command {
   async exec(message: Message) {
     const embed = new MessageEmbed()
       .setTitle('Command list')
-      .setColor('blue')
+      .setColor('#aec6cf')
       .setDescription(
         `For additional help please use \`${(await this.client.settings.get(message.guild.id)).prefix}help <command>\``,
       );
