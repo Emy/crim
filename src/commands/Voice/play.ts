@@ -1,14 +1,11 @@
 import { Message } from 'discord.js';
 import { Command } from 'discord-akairo';
 import CrimClient from '../../lib/CrimClient';
-import { getLogger } from '@log4js2/core';
 import fetch from 'node-fetch';
 import { URLSearchParams } from 'url';
 import CrimPlayer from '../../lib/structs/CrimPlayer';
 import { LavalinkNode } from '@lavacord/discord.js';
 import { MessageEmbed } from 'discord.js';
-
-const logger = getLogger('Crim');
 
 class PlayCommand extends Command {
   client: CrimClient;
@@ -96,7 +93,6 @@ class PlayCommand extends Command {
         embed.setTitle('🔍 Track search');
         const numbers = { '1️⃣': 1, '2️⃣': 2, '3️⃣': 3, '4️⃣': 4, '5️⃣': 5 };
         let count = 0;
-        logger.debug(Object.keys(numbers));
         response.tracks.slice(0, 5).forEach((track) => {
           embed.addField(`${Object.keys(numbers)[count++]} ${track.info.title}`, track.info.author);
         });
