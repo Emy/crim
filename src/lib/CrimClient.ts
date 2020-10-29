@@ -35,6 +35,7 @@ export default class CrimClient extends AkairoClient {
       {
         disableMentions: 'everyone',
         partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+        fetchAllMembers: true,
         ...options,
       },
     );
