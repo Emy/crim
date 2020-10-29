@@ -13,12 +13,10 @@ class HelpCommand extends Command {
   }
 
   async exec(message: Message) {
-    const embed = new MessageEmbed()
-      .setTitle('Command list')
-      .setColor('#aec6cf')
-      .setDescription(
-        `For additional help please use \`${(await this.client.settings.get(message.guild.id)).prefix}help <command>\``,
-      );
+    const embed = new MessageEmbed().setTitle('Command list').setColor('#aec6cf');
+    // .setDescription(
+    //   `For additional help please use \`${(await this.client.settings.get(message.guild.id)).prefix}help <command>\``,
+    // );
 
     this.client.commandHandler.categories.map((category) => {
       embed.addField(category.id, `\`${category.map((command) => command.id).join('` `')}\``);

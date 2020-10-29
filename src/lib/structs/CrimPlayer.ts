@@ -5,16 +5,18 @@ import CrimTrack from './CrimTrack';
 export default class CrimPlayer extends Player {
   queue: CrimTrack[];
   nowPlaying: CrimTrack;
+  loop: boolean;
   guildID: string;
 
   constructor(node: LavalinkNode, id: string) {
     super(node, id);
     this.queue = [];
+    this.loop = false;
 
     this.once('error', (error) => console.error(error));
     this.on('end', async (data) => {
       if (data.reason === 'REPLACED') return;
-      if (this.queue.length !== 0) return this.nextTrack();
+      if (this.queue.length !== 0 || this.loop) return this.nextTrack();
       await this.manager.leave(this.guildID);
     });
   }
@@ -36,7 +38,7 @@ export default class CrimPlayer extends Player {
   }
 
   nextTrack() {
-    this.nowPlaying = this.queue.shift();
+    if (!this.loop) this.nowPlaying = this.queue.shift();
     this.play(this.nowPlaying.track);
   }
 }

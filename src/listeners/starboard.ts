@@ -7,7 +7,7 @@ const logger = getLogger('Crim');
 
 class MessageBlockedListener extends Listener {
   constructor() {
-    super('messageReactionAdd', {
+    super('starboard', {
       emitter: 'client',
       event: 'messageReactionAdd',
     });

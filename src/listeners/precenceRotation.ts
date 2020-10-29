@@ -5,7 +5,7 @@ import CrimClient from '../lib/CrimClient';
 class ReadyListener extends Listener {
   client: CrimClient;
   constructor() {
-    super('ready', {
+    super('precenceRotation', {
       emitter: 'client',
       event: 'ready',
     });
