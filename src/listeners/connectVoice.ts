@@ -4,12 +4,11 @@ import { LavalinkNodeOptions, Manager } from '@lavacord/discord.js';
 import CrimClient from '../lib/CrimClient';
 import CrimPlayer from '../lib/structs/CrimPlayer';
 import { getLogger } from '@log4js2/core';
+import config from '../config';
 
 const logger = getLogger('Crim');
 
-const nodes: LavalinkNodeOptions[] = [
-  { id: '1', host: 'filo.local', port: 2333, password: 'youshallnotpass', reconnectInterval: 1000 },
-];
+const nodes: LavalinkNodeOptions[] = config.voiceNodes;
 
 class ReadyListener extends Listener {
   client: CrimClient;
