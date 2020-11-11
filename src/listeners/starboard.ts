@@ -18,7 +18,7 @@ class MessageBlockedListener extends Listener {
 
     if (reaction.partial) reaction = await reaction.fetch();
     if (reaction.emoji.identifier !== '%E2%AD%90') return;
-    logger.debug(`STARS: ${reaction.count}`);
+    logger.debug(`STARS: ${reaction.count} | USER: ${user}`);
   }
 }
 

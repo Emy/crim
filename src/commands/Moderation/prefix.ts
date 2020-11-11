@@ -18,12 +18,16 @@ class PrefixCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message, args: PrefixCommandArguments) {
     const guildSettings = await this.client.settings.get(message.guild.id);
     guildSettings.prefix = args.prefix;
     await guildSettings.save();
     return message.reply(`Prefix changed to ${args.prefix}`);
   }
 }
+
+type PrefixCommandArguments = {
+  prefix: string;
+};
 
 export default PrefixCommand;
