@@ -42,7 +42,7 @@ class StatsCommand extends Command {
         },
         {
           name: 'Source code',
-          value: `[Click here](https://github.com/Emy/filo)`,
+          value: `[Click here](https://github.com/Emy/crim)`,
           inline: true,
         },
         {
