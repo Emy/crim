@@ -9,7 +9,11 @@ class CuddleCommand extends Command {
     super('cuddle', {
       aliases: ['cuddle'],
       channel: 'guild',
-      description: 'Cuddle someone.',
+      description: [
+        'Cuddle someone.',
+        'Usage: `cuddle <@mention | nothing>`',
+        "(If someone is mentioned you cuddle them. If there's no mention you cuddle yourself.)",
+      ],
       args: [
         {
           id: 'target',
@@ -20,7 +24,7 @@ class CuddleCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message, args: CuddleCommandArguments) {
     const target = args.target as GuildMember;
     const embed = new MessageEmbed()
       .setDescription(`**${message.member.displayName}** is cuddling **${target?.displayName ?? 'themselves'}**`)
@@ -34,5 +38,9 @@ class CuddleCommand extends Command {
     return message.channel.send(embed);
   }
 }
+
+type CuddleCommandArguments = {
+  target: GuildMember;
+};
 
 export default CuddleCommand;

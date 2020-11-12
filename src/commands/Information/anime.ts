@@ -9,7 +9,7 @@ class AnimeCommand extends Command {
     super('anime', {
       aliases: ['anime'],
       channel: 'guild',
-      description: 'Get information about an anime.',
+      description: ['Get information about an anime.', 'Usage: `anime <animeName>`'],
       args: [
         {
           id: 'anime',
@@ -21,8 +21,8 @@ class AnimeCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
-    const searchTerm = args.anime as string;
+  async exec(message: Message, args: AnimeCommandArguments) {
+    const searchTerm = args.anime;
     if (!searchTerm) return message.channel.send('No Anime specified.');
     const search = await anilist.search('anime', searchTerm);
     if (!search?.pageInfo.total) return message.channel.send('No anime found');
@@ -70,5 +70,9 @@ class AnimeCommand extends Command {
     return message.channel.send(embed);
   }
 }
+
+type AnimeCommandArguments = {
+  anime: string;
+};
 
 export default AnimeCommand;

@@ -10,7 +10,11 @@ class HugCommand extends Command {
     super('hug', {
       aliases: ['hug'],
       channel: 'guild',
-      description: 'Hug someone.',
+      description: [
+        'Hug someone.',
+        'Usage: `hug <@mention | nothing>`',
+        "(If someone is mentioned you hug them. If there's no mention you hug yourself.)",
+      ],
       args: [
         {
           id: 'target',
@@ -21,7 +25,7 @@ class HugCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message, args: HugCommandArguments) {
     const target = args.target as GuildMember;
     const embed = new MessageEmbed()
       .setDescription(`**${message.member.displayName}** is hugging **${target?.displayName ?? 'themselves'}**`)
@@ -35,5 +39,9 @@ class HugCommand extends Command {
     return message.channel.send(embed);
   }
 }
+
+type HugCommandArguments = {
+  target: GuildMember;
+};
 
 export default HugCommand;

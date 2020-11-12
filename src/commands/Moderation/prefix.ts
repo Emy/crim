@@ -7,7 +7,11 @@ class PrefixCommand extends Command {
   constructor() {
     super('prefix', {
       aliases: ['prefix'],
-      description: 'Change the prefix (default: !)',
+      description: [
+        'Change the prefix (default: !)',
+        'Usage: `prefix <prefix>`',
+        'prefix: The prefix that is needed to let the bot listen to comands. (Default prefix is !)',
+      ],
       args: [
         {
           id: 'prefix',
