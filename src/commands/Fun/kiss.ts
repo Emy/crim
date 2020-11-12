@@ -9,7 +9,11 @@ class KissCommand extends Command {
     super('kiss', {
       aliases: ['kiss'],
       channel: 'guild',
-      description: 'Kiss someone.',
+      description: [
+        'Kiss someone.',
+        'Usage: `kiss <@mention | nothing>`',
+        "(If someone is mentioned you kiss them. If there's no mention you kiss yourself.)",
+      ],
       args: [
         {
           id: 'target',
@@ -20,7 +24,7 @@ class KissCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message, args: KissCommandArguments) {
     const target = args.target as GuildMember;
     const embed = new MessageEmbed()
       .setDescription(`**${message.member.displayName}** is kissing **${target?.displayName ?? 'themselves'}**`)
@@ -34,5 +38,9 @@ class KissCommand extends Command {
     return message.channel.send(embed);
   }
 }
+
+type KissCommandArguments = {
+  target: GuildMember;
+};
 
 export default KissCommand;

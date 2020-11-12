@@ -11,7 +11,11 @@ class SlapCommand extends Command {
     super('slap', {
       aliases: ['slap'],
       channel: 'guild',
-      description: 'Slap someone.',
+      description: [
+        'Slap someone.',
+        'Usage: `slap <@mention | nothing>`',
+        "(If someone is mentioned you slap them. If there's no mention you slap yourself.)",
+      ],
       args: [
         {
           id: 'target',
@@ -22,7 +26,7 @@ class SlapCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message, args: SlapCommandArguments) {
     const target = args.target as GuildMember;
     const embed = new MessageEmbed()
       .setDescription(`**${message.member.displayName}** is slapping **${target?.displayName ?? 'themselves'}**`)
@@ -36,5 +40,9 @@ class SlapCommand extends Command {
     return message.channel.send(embed);
   }
 }
+
+type SlapCommandArguments = {
+  target: GuildMember;
+};
 
 export default SlapCommand;

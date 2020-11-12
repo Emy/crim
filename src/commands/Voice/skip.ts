@@ -15,7 +15,7 @@ class SkipCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message) {
     logger.debug('SKIP COMMAND');
     const player = this.client.music.players.get(message.guild.id);
     if (!player) return message.channel.send('No music running.');

@@ -33,7 +33,7 @@ class PlayCommand extends Command {
   //   if (player.state.)
   // }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message, args: PlayCommandArguments) {
     if (!message.member.voice.channelID) return message.channel.send('Not in a voice channel.');
     const search = args.search as string;
     const idealNode = this.client.music?.idealNodes[0];
@@ -147,5 +147,9 @@ class PlayCommand extends Command {
     player.nextTrack();
   }
 }
+
+type PlayCommandArguments = {
+  search: string;
+};
 
 export default PlayCommand;

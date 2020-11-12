@@ -10,7 +10,7 @@ class StatsCommand extends Command {
     });
   }
 
-  exec(message: Message) {
+  async exec(message: Message) {
     const embed = new MessageEmbed()
       .setTitle('Stats')
       .setColor('#b39eb5')
@@ -37,12 +37,13 @@ class StatsCommand extends Command {
         },
         {
           name: 'Developer',
-          value: 'Emy#0001',
+          value:
+            this.client.users.cache.get('127938763535024128') ?? (await this.client.users.fetch('127938763535024128')),
           inline: true,
         },
         {
           name: 'Source code',
-          value: `[Click here](https://github.com/Emy/filo)`,
+          value: `[Click here](https://github.com/Emy/crim)`,
           inline: true,
         },
         {

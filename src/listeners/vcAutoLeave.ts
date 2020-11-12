@@ -15,7 +15,7 @@ class VoiceStateUpdateListener extends Listener {
     });
   }
 
-  async exec(oldMember: VoiceState, newMember: VoiceState) {
+  async exec(oldMember: VoiceState) {
     if (!oldMember.channel) return;
     const player = this.client.music.players.get(oldMember.guild.id) as CrimPlayer;
     if (!player) return;

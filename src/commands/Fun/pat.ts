@@ -11,7 +11,11 @@ class PatCommand extends Command {
     super('pat', {
       aliases: ['pat'],
       channel: 'guild',
-      description: 'Pat someone.',
+      description: [
+        'Pat someone.',
+        'Usage: `pat <@mention | nothing>`',
+        "(If someone is mentioned you pat them. If there's no mention you pat yourself.)",
+      ],
       args: [
         {
           id: 'target',
@@ -22,7 +26,7 @@ class PatCommand extends Command {
     });
   }
 
-  async exec(message: Message, args: any) {
+  async exec(message: Message, args: PatCommandArguments) {
     const target = args.target as GuildMember;
     const embed = new MessageEmbed()
       .setDescription(`**${message.member.displayName}** is patting **${target?.displayName ?? 'themselves'}**`)
@@ -36,5 +40,9 @@ class PatCommand extends Command {
     return message.channel.send(embed);
   }
 }
+
+type PatCommandArguments = {
+  target: GuildMember;
+};
 
 export default PatCommand;

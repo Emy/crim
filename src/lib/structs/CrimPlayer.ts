@@ -21,7 +21,7 @@ export default class CrimPlayer extends Player {
     });
   }
 
-  addTrack(message: Message, llTrack: any): CrimTrack {
+  addTrack(message: Message, llTrack: LavaLinkTrack): CrimTrack {
     const track = new CrimTrack({
       title: llTrack.info.title,
       track: llTrack.track,
@@ -42,3 +42,16 @@ export default class CrimPlayer extends Player {
     this.play(this.nowPlaying.track);
   }
 }
+
+type LavaLinkTrack = {
+  info: {
+    title: string;
+    uri: string;
+    length: number;
+    position: number;
+    isSeekable: boolean;
+    identifier: string;
+    author: string;
+  };
+  track: string;
+};
