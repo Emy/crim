@@ -1,12 +1,13 @@
-node_modules
+node_modules/
 .DS_Store
 config.json
 package-lock.json
 bwd
 yarn.lock
-.vscode
+.vscode/
 .idea
+.env
 yarn-error.log
 config.ts
 *.iml
-dist
+dist/
