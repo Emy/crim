@@ -8,7 +8,7 @@ import CrimPlayer from '../../lib/structs/CrimPlayer';
 const logger = getLogger('Crim');
 
 class LoopCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('loop', {
       aliases: ['loop', 'l'],
@@ -28,7 +28,7 @@ class LoopCommand extends Command {
       .setDescription(
         player.loop ? 'I am looping the current track.' : 'I will stop looping the currently playing track.',
       );
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});;
   }
 }
 

@@ -8,7 +8,7 @@ import CrimPlayer from '../../lib/structs/CrimPlayer';
 const logger = getLogger('Crim');
 
 class VolumeCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('volume', {
       aliases: ['volume', 'v'],
@@ -28,7 +28,7 @@ class VolumeCommand extends Command {
         'Volume changing is not available at the moment. We are searching for a viable solution as changing volume is causing a heavy load on the server. \
         You can just change the volume locally by right clicking on me in the voice channel and changing the volume to your liking.',
       );
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});;
   }
 }
 

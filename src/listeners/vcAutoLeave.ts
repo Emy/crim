@@ -7,7 +7,7 @@ import CrimPlayer from '../lib/structs/CrimPlayer';
 const logger = getLogger('Crim');
 
 class VoiceStateUpdateListener extends Listener {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('vcAutoLeave', {
       emitter: 'client',

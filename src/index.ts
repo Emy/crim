@@ -2,7 +2,7 @@ import CrimClient from './lib/CrimClient';
 import { ShardingManager } from 'kurasuta';
 import { join } from 'path';
 import { getLogger } from '@log4js2/core';
-import config from './config';
+import config from './config'
 
 const logger = getLogger('Crim');
 

@@ -8,7 +8,7 @@ import CrimPlayer from '../../lib/structs/CrimPlayer';
 const logger = getLogger('Crim');
 
 class PauseCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('pause', {
       aliases: ['pause', 'p'],
@@ -26,7 +26,7 @@ class PauseCommand extends Command {
       .setTitle('🎵 Pause')
       .setColor('#ffd1dc')
       .setDescription(player.paused ? 'Paused the music' : 'Resuming the music.');
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});;
   }
 }
 

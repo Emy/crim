@@ -9,7 +9,7 @@ import humanizeDuration from 'humanize-duration';
 const logger = getLogger('Crim');
 
 class QueueCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('queue', {
       aliases: ['queue'],
@@ -34,7 +34,7 @@ class QueueCommand extends Command {
       .setTitle('Queue')
       .setColor('#ffd1dc')
       .setDescription(queue == '' ? 'No tracks in queue' : 'Showing the 10 most recent tracks... \n\n' + queue);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});;
   }
 }
 

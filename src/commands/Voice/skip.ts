@@ -6,7 +6,7 @@ import { getLogger } from '@log4js2/core';
 const logger = getLogger('Crim');
 
 class SkipCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('skip', {
       aliases: ['skip'],

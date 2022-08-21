@@ -3,7 +3,7 @@ import cron from 'node-cron';
 import CrimClient from '../lib/CrimClient';
 
 class ReadyListener extends Listener {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('precenceRotation', {
       emitter: 'client',
@@ -27,10 +27,12 @@ class ReadyListener extends Listener {
       counter = ++counter % statuses.length;
 
       this.client.user.setPresence({
-        activity: {
-          name: statuses[counter],
-          type: types[counter],
-        },
+        activities: [
+          {
+            name: statuses[counter],
+            type: types[counter],
+          }
+        ]
       });
     });
   }

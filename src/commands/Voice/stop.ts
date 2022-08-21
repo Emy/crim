@@ -7,7 +7,7 @@ import CrimPlayer from '../../lib/structs/CrimPlayer';
 const logger = getLogger('Crim');
 
 class StopCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('stop', {
       aliases: ['stop'],

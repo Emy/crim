@@ -8,7 +8,7 @@ import { LavalinkNode } from '@lavacord/discord.js';
 import { MessageEmbed } from 'discord.js';
 
 class PlayCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('play', {
       aliases: ['play'],
@@ -34,7 +34,7 @@ class PlayCommand extends Command {
   // }
 
   async exec(message: Message, args: PlayCommandArguments) {
-    if (!message.member.voice.channelID) return message.channel.send('Not in a voice channel.');
+    if (!message.member.voice.channelId) return message.channel.send('Not in a voice channel.');
     const search = args.search as string;
     const idealNode = this.client.music?.idealNodes[0];
     if (!idealNode) return message.channel.send('No nodes found... Try again later.');
@@ -59,7 +59,7 @@ class PlayCommand extends Command {
           .setTitle('🎵 Added Track')
           .setColor('#ffd1dc')
           .setDescription(`The Track: **${response.tracks[0].info.title}** has been added to the queue.`);
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});;
         break;
       case 'PLAYLIST_LOADED':
         await this.handleTracks(node, message, response.tracks);
@@ -67,7 +67,7 @@ class PlayCommand extends Command {
           .setTitle('🎵 Added Playlist')
           .setColor('#ffd1dc')
           .setDescription(`The Playlist: **${response.playlistInfo.name}** has been added to the queue.`);
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});;
         break;
       default:
         this.tryYTSearch(node, message, search);
@@ -97,14 +97,14 @@ class PlayCommand extends Command {
           embed.addField(`${Object.keys(numbers)[count++]} ${track.info.title}`, track.info.author);
         });
         count = 0;
-        const msg = await message.channel.send(embed);
+        const msg = await message.channel.send({embeds: [embed]});;
         response.tracks.slice(0, 5).forEach(() => {
           msg.react(Object.keys(numbers)[count++]);
         });
         msg
           .awaitReactions(
-            (reaction, user) => user.id === message.author.id && Object.keys(numbers).includes(reaction.emoji.name),
             {
+              filter: (reaction, user) => user.id === message.author.id && Object.keys(numbers).includes(reaction.emoji.name),
               time: 15000,
               max: 1,
             },
@@ -121,7 +121,7 @@ class PlayCommand extends Command {
                   response.tracks[Number.parseInt(reaction.emoji.name) - 1].info.title
                 }** has been added to the queue.`,
               );
-            msg.edit(embed);
+            msg.edit({embeds: [embed]});
           });
         break;
 
@@ -134,7 +134,7 @@ class PlayCommand extends Command {
     const player = (this.client.music.players.get(message.guild.id) ??
       (await this.client.music.join({
         guild: message.guild.id,
-        channel: message.member.voice.channelID,
+        channel: message.member.voice.channelId,
         node: node.id,
       }))) as CrimPlayer;
     player.guildID = message.guild.id;

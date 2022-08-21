@@ -3,7 +3,7 @@ import CrimClient from '../../lib/CrimClient';
 import { Message } from 'discord.js';
 
 class PrefixCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('prefix', {
       aliases: ['prefix'],

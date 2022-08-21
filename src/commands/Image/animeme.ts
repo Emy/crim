@@ -28,7 +28,7 @@ class AnimemeCommand extends Command {
         message.author.avatarURL({ format: 'jpg' }),
       );
 
-    return message.channel.send(embed);
+    return message.channel.send({embeds: [embed]});;
   }
 }
 

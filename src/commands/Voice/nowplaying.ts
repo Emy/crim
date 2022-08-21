@@ -9,7 +9,7 @@ import humanizeDuration from 'humanize-duration';
 const logger = getLogger('Crim');
 
 class NowPlayingCommand extends Command {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('nowplaying', {
       aliases: ['nowplaying', 'np'],
@@ -26,9 +26,19 @@ class NowPlayingCommand extends Command {
       .setTitle('🎵 Now playing')
       .setColor('#ffd1dc')
       .setDescription(player.nowPlaying.title)
-      .addField('Position', humanizeDuration(Math.floor(player.state.position), { maxDecimalPoints: 0 }), true)
-      .addField('Time', humanizeDuration(Math.floor(player.state.time / 10000000), { maxDecimalPoints: 0 }), true);
-    message.channel.send(embed);
+      .addFields([
+        {
+          name: 'Position',
+          value: humanizeDuration(Math.floor(player.state.position), { maxDecimalPoints: 0 }),
+          inline: true
+        },
+        {
+          name: 'Time',
+          value: humanizeDuration(Math.floor(player.state.time / 10000000)),
+          inline: true
+        }
+      ])
+    message.channel.send({embeds: [embed]});;
   }
 }
 

@@ -11,7 +11,7 @@ const logger = getLogger('Crim');
 const nodes: LavalinkNodeOptions[] = config.voiceNodes;
 
 class ReadyListener extends Listener {
-  client: CrimClient;
+  declare client: CrimClient;
   constructor() {
     super('connectVoice', {
       emitter: 'client',

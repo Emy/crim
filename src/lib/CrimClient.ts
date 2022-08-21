@@ -31,11 +31,11 @@ export default class CrimClient extends AkairoClient {
     super(
       {
         ownerID: config.owners,
+        ...options
       },
       {
-        disableMentions: 'everyone',
+        allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
         partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-        fetchAllMembers: true,
         ...options,
       },
     );

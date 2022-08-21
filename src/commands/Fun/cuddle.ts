@@ -30,12 +30,13 @@ class CuddleCommand extends Command {
       .setDescription(`**${message.member.displayName}** is cuddling **${target?.displayName ?? 'themselves'}**`)
       .setColor('#77dd77')
       .setImage((await nekos.sfw.cuddle()).url)
-      .setFooter(
-        `Requested by: ${message.author.tag} | Provided by: nekos.life`,
-        message.author.avatarURL({ format: 'jpg' }),
+      .setFooter({
+        text: `Requested by: ${message.author.tag} | Provided by: nekos.life`,
+        iconURL: message.author.avatarURL({ format: 'jpg' })
+      }
       );
 
-    return message.channel.send(embed);
+    return message.channel.send({embeds: [embed]});
   }
 }
 
