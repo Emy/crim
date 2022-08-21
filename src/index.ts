@@ -8,7 +8,7 @@ const logger = getLogger('Crim');
 export class ShardBot {
   static start(): void {
 
-    const manager = new ShardingManager(join(__dirname, '..', 'dist', 'bot.js'), {
+    const manager = new ShardingManager(join(__dirname, 'bot.js'), {
       token: config.discordToken,
     });
       

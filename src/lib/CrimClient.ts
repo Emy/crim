@@ -42,6 +42,7 @@ export default class CrimClient extends AkairoClient {
     this.settings = new GuildSettingsManager();
 
     this.commandHandler = new CommandHandler(this, {
+      commandUtilSweepInterval: 0,
       directory: join(__dirname, '..', 'commands'),
       prefix: async (message) => {
         if (message.guild && message.guild.available) {
