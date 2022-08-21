@@ -43,12 +43,16 @@ class StatsCommand extends Command {
         value: `[Click here](https://github.com/Emy/crim)`,
         inline: true,
       },
-      {
-        name: 'Shard',
-        value: `${this.client.shard.id + 1} / ${this.client.shard.shards.length}`,
-        inline: true,
-      },
     ]
+    if(this.client.shard){
+      newFields.push(
+        {
+          name: 'Shard',
+          value: `${this.client.shard.ids[0] + 1} / ${this.client.shard.count}`,
+          inline: true,
+        }
+      )
+    }
     const embed = new MessageEmbed()
       .setTitle('Stats')
       .setColor('#b39eb5')

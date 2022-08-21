@@ -1,24 +1,25 @@
-import CrimClient from './lib/CrimClient';
-import { ShardingManager } from 'kurasuta';
 import { join } from 'path';
 import { getLogger } from '@log4js2/core';
 import config from './config'
+import { ShardingManager } from 'discord.js';
 
 const logger = getLogger('Crim');
 
-const manager = new ShardingManager(join(__dirname, 'lib', 'BaseCluster'), {
-  token: config.discordToken,
-  client: CrimClient,
-  shardCount: 'auto',
-  ipcSocket: 9454,
-  timeout: 60000,
-});
+export class ShardBot {
+  static start(): void {
 
-manager
-  .spawn()
-  .then(() => {
-    logger.info('Spawning shard. Shard count: {}', manager.shardCount);
-  })
-  .catch((reason) => {
-    logger.error('Spawning error: REASON = {}', reason);
-  });
+    const manager = new ShardingManager(join(__dirname, '..', 'dist', 'bot.js'), {
+      token: config.discordToken,
+    });
+      
+    manager.spawn()
+    .then(() => {
+      logger.info('Spawning shard');
+    })
+    .catch((reason) => {
+      logger.error('Spawning error: REASON = {}', reason);
+    });;
+  }
+}
+
+ShardBot.start();
