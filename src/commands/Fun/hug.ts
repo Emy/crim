@@ -31,9 +31,10 @@ class HugCommand extends Command {
       .setDescription(`**${message.member.displayName}** is hugging **${target?.displayName ?? 'themselves'}**`)
       .setColor('#77dd77')
       .setImage((await nekos.sfw.hug()).url)
-      .setFooter(
-        `Requested by: ${message.author.tag} | Provided by: nekos.life`,
-        message.author.avatarURL({ format: 'jpg' }),
+      .setFooter({
+        text: `Requested by: ${message.author.tag} | Provided by: nekos.life`,
+        iconURL: message.author.avatarURL({ format: 'jpg' }),
+      }
       );
 
     return message.channel.send({embeds: [embed]});;

@@ -24,8 +24,10 @@ class AnimemeCommand extends Command {
       .setColor('#ffb347')
       .setImage(animeme.url)
       .setFooter(
-        `Requested by: ${message.author.tag} | Provided by: reddit.com`,
-        message.author.avatarURL({ format: 'jpg' }),
+        {
+          text: `Requested by: ${message.author.tag} | Provided by: reddit.com`,
+          iconURL: message.author.avatarURL({ format: 'jpg' }),
+        }
       );
 
     return message.channel.send({embeds: [embed]});;

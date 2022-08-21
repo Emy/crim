@@ -20,7 +20,7 @@ class InviteCommand extends Command {
 
         This link contains preconfigured settings. You can change them to your liking on the website or in the roles tab.`,
       )
-      .setFooter(`Requested by: ${message.author.tag}`, message.author.avatarURL({ format: 'jpg' }));
+      .setFooter({text: `Requested by: ${message.author.tag}`, iconURL: message.author.avatarURL({ format: 'jpg' })});
     return message.channel.send({embeds: [embed]});;
   }
 }

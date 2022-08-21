@@ -32,9 +32,10 @@ class SlapCommand extends Command {
       .setDescription(`**${message.member.displayName}** is slapping **${target?.displayName ?? 'themselves'}**`)
       .setColor('#77dd77')
       .setImage((await nekos.sfw.slap()).url)
-      .setFooter(
-        `Requested by: ${message.author.tag} | Provided by: nekos.life`,
-        message.author.avatarURL({ format: 'jpg' }),
+      .setFooter({
+        text: `Requested by: ${message.author.tag} | Provided by: nekos.life`,
+        iconURL: message.author.avatarURL({ format: 'jpg' }),
+      }
       );
 
     return message.channel.send({embeds: [embed]});;

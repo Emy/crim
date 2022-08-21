@@ -19,8 +19,10 @@ class FoxgirlCommand extends Command {
       .setImage((await nekos.sfw.foxGirl()).url)
       .setColor('#77dd77')
       .setFooter(
-        `Requested by: ${message.author.tag} | Provided by: nekos.life`,
-        message.author.avatarURL({ format: 'jpg' }),
+        {
+          text: `Requested by: ${message.author.tag} | Provided by: nekos.life`,
+          iconURL: message.author.avatarURL({ format: 'jpg' }),
+        }
       );
 
     return message.channel.send({embeds: [embed]});;

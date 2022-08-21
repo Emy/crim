@@ -22,9 +22,10 @@ class GasmCommand extends Command {
     const embed = new MessageEmbed()
       .setImage((await nekos.nsfw.gasm()).url)
       .setColor('#77dd77')
-      .setFooter(
-        `Requested by: ${message.author.tag} | Provided by: nekos.life`,
-        message.author.avatarURL({ format: 'jpg' }),
+      .setFooter({
+        text: `Requested by: ${message.author.tag} | Provided by: nekos.life`,
+        iconURL: message.author.avatarURL({ format: 'jpg' }),
+      }
       );
 
     return message.channel.send({embeds: [embed]});;
