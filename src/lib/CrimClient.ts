@@ -4,7 +4,6 @@ import { ClientOptions } from 'discord.js';
 import mongoose from 'mongoose';
 import { configure, getLogger, LogLevel } from '@log4js2/core';
 import GuildSettingsManager from './managers/GuildSettingsManager';
-import { Manager } from '@lavacord/discord.js';
 import config from '../config';
 
 configure({
@@ -25,7 +24,7 @@ export default class CrimClient extends AkairoClient {
   commandHandler: CommandHandler;
   inhibitorHandler: InhibitorHandler;
   listenerHandler: ListenerHandler;
-  music: Manager;
+  shoukaku: any;
 
   constructor(options: ClientOptions) {
     super(
