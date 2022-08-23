@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, CacheType, CommandInteraction  } from "discord.js";
+import { ApplicationCommandOptionType, CommandInteraction  } from "discord.js";
 
 export abstract class Command{
     aliases: string[];
@@ -11,26 +11,15 @@ export abstract class Command{
 
     constructor(id: string, options: CommandOptions){
         this.id = id;
+        this.description = options.description;
         this.aliases = options.aliases;
         this.channel = options.channel;
-        this.description = options.usage;
+        this.usage = options.usage;
         this.memberPermissions = options.memberPermissions;
         this.parameters = options.parameters;
     }
 
     public abstract execute(interaction: CommandInteraction): Promise<void>;
-
-}
-
-export class TestCommand extends Command{
-
-    constructor(){
-        super("test", {description: "test1"})
-    }
-
-    public async execute(interaction: CommandInteraction<CacheType>): Promise<void> {
-        return interaction.reply('Test1');
-    }
 
 }
 
