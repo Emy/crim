@@ -11,5 +11,4 @@ export default class PingCommand extends Command {
   public execute(interaction: CommandInteraction<CacheType>): Promise<void> {
     return interaction.reply('Pong.');
   }
-
 }

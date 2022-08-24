@@ -3,17 +3,16 @@ import { NekoActCommand } from './nekoact';
 
 const nekos = new NekoClient();
 
-export default class PatCommand extends NekoActCommand{
+export default class PatCommand extends NekoActCommand {
+  constructor() {
+    super('pat', 'pat someone', 'User to pat');
+  }
 
-    constructor(){
-        super("pat", 'pat someone','User to pat');
-    }
+  getImage(): Promise<NekoClient.NekoRequestResults> {
+    return nekos.sfw.pat();
+  }
 
-    getImage(): Promise<NekoClient.NekoRequestResults> {
-      return nekos.sfw.pat();
-    }
-    
-    getAct(): string {
-      return "patting";
-    }
+  getAct(): string {
+    return 'patting';
+  }
 }

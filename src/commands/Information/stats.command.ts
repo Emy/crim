@@ -34,8 +34,10 @@ class StatsCommand extends Command {
       },
       {
         name: 'Developer',
-        value:
-          String(interaction.client.users.cache.get('127938763535024128') ?? (await interaction.client.users.fetch('127938763535024128'))),
+        value: String(
+          interaction.client.users.cache.get('127938763535024128') ??
+            (await interaction.client.users.fetch('127938763535024128')),
+        ),
         inline: true,
       },
       {
@@ -43,23 +45,24 @@ class StatsCommand extends Command {
         value: `[Click here](https://github.com/Emy/crim)`,
         inline: true,
       },
-    ]
-    if(interaction.client.shard){
-      newFields.push(
-        {
-          name: 'Shard',
-          value: `${interaction.client.shard.ids[0] + 1} / ${interaction.client.shard.count}`,
-          inline: true,
-        }
-      )
+    ];
+    if (interaction.client.shard) {
+      newFields.push({
+        name: 'Shard',
+        value: `${interaction.client.shard.ids[0] + 1} / ${interaction.client.shard.count}`,
+        inline: true,
+      });
     }
     const embed = new MessageEmbed()
       .setTitle('Stats')
       .setColor('#b39eb5')
       .addFields(newFields)
       .setThumbnail(interaction.client.user.avatarURL({ format: 'png' }))
-      .setFooter({text: `Requested by: ${interaction.user.tag}`,iconURL: interaction.user.avatarURL({ format: 'jpg' })});
-    return interaction.reply({embeds: [embed]});;
+      .setFooter({
+        text: `Requested by: ${interaction.user.tag}`,
+        iconURL: interaction.user.avatarURL({ format: 'jpg' }),
+      });
+    return interaction.reply({ embeds: [embed] });
   }
 }
 

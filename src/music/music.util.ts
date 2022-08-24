@@ -2,7 +2,7 @@ import { CommandInteraction, VoiceBasedChannel } from 'discord.js';
 import CrimClient from '../lib/CrimClient';
 import { Manager, Player, SearchResult } from 'erela.js';
 import humanizeDuration from 'humanize-duration';
-import { status } from '../commands/Voice/status';
+import { Status } from '../commands/Voice/status';
 import { getLogger } from '@log4js2/core';
 
 const NO_PLAYER_FOUND = 'No music running...';
@@ -20,13 +20,15 @@ export class MusicUtils {
    * @param interaction Loop CommandInteraction
    * @returns Message to descripe method execution
    */
-  public static loop(interaction: CommandInteraction): status {
+  public static loop(interaction: CommandInteraction): Status {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
     const loopEnabled: boolean = player.trackRepeat;
     player.setTrackRepeat(!loopEnabled);
-    return this.createSuccessStatus(player.trackRepeat ? 'I am looping the current track.' : 'I will stop looping the currently playing track.');
+    return this.createSuccessStatus(
+      player.trackRepeat ? 'I am looping the current track.' : 'I will stop looping the currently playing track.',
+    );
   }
 
   /**
@@ -35,11 +37,11 @@ export class MusicUtils {
    * @param interaction Play CommandInteraction, must contain title option
    * @returns Message to descripe method execution
    */
-  public static async play(interaction: CommandInteraction): Promise<status> {
+  public static async play(interaction: CommandInteraction): Promise<Status> {
     const manager: Manager = this.getManager(interaction);
     const channel: VoiceBasedChannel = this.getVoiceChannelOfMember(interaction);
     if (!channel) return this.createErrorStatus(NOT_IN_VOICE);
-    logger.info(`Test ${channel.id}` )
+    logger.info(`Test ${channel.id}`);
     const player: Player = manager.create({
       guild: interaction.guild.id,
       voiceChannel: channel.id,
@@ -56,7 +58,7 @@ export class MusicUtils {
         throw res.exception;
       }
     } catch (err) {
-      logger.error("Error", err);
+      logger.error('Error', err);
       return this.createErrorStatus('search for title could not be completed');
     }
     switch (res.loadType) {
@@ -78,7 +80,9 @@ export class MusicUtils {
         player.queue.add(tracks);
 
         if (!player.playing && !player.paused && player.queue.totalSize === tracks.length) player.play();
-        return this.createSuccessStatus(`To many search results. First ${tracks.length} tracks has been added to the queue.`);
+        return this.createSuccessStatus(
+          `To many search results. First ${tracks.length} tracks has been added to the queue.`,
+        );
     }
   }
 
@@ -94,7 +98,7 @@ export class MusicUtils {
    * @param interaction Pause CommandInteraction
    * @returns Message to descripe method execution
    */
-  public static pause(interaction: CommandInteraction): status {
+  public static pause(interaction: CommandInteraction): Status {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
@@ -112,7 +116,7 @@ export class MusicUtils {
    * @param interaction queue CommandInteraction
    * @returns the first 10 tracks in queue, if exists, or a error message
    */
-  public static queue(interaction: CommandInteraction): status {
+  public static queue(interaction: CommandInteraction): Status {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
@@ -123,7 +127,9 @@ export class MusicUtils {
         maxDecimalPoints: 0,
       })})\n`;
     });
-    return this.createSuccessStatus(queue == '' ? 'No tracks in queue' : 'Showing the 10 most recent tracks... \n\n' + queue);
+    return this.createSuccessStatus(
+      queue == '' ? 'No tracks in queue' : 'Showing the 10 most recent tracks... \n\n' + queue,
+    );
   }
 
   /**
@@ -132,7 +138,7 @@ export class MusicUtils {
    * @param interaction stop CommandInteraction
    * @returns Message to descripe method execution
    */
-  public static stop(interaction: CommandInteraction): status {
+  public static stop(interaction: CommandInteraction): Status {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
@@ -150,7 +156,7 @@ export class MusicUtils {
    * @param interaction skip CommandInteraction
    * @returns Message to descripe method execution
    */
-  public static skip(interaction: CommandInteraction): status {
+  public static skip(interaction: CommandInteraction): Status {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
@@ -169,7 +175,7 @@ export class MusicUtils {
    * @param interaction volume CommandInteraction, with volume option, with a number between 1 and 100
    * @returns Message to descripe method execution
    */
-  public static volume(interaction: CommandInteraction): status {
+  public static volume(interaction: CommandInteraction): Status {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
@@ -178,7 +184,8 @@ export class MusicUtils {
     if (channel.id !== player.voiceChannel) return this.createErrorStatus(NOT_IN_SAME_VOICE);
 
     const volume: number = interaction.options.getNumber('volume');
-    if (!volume || volume < 1 || volume > 100) return this.createErrorStatus('you need to give a volume between 1 and 100.');
+    if (!volume || volume < 1 || volume > 100)
+      return this.createErrorStatus('you need to give a volume between 1 and 100.');
 
     player.setVolume(volume);
     return this.createSuccessStatus(`Set the music volume to \`${volume}\`.`);
@@ -204,16 +211,16 @@ export class MusicUtils {
     };
   }
 
-  static createErrorStatus(message: string): status{
-    return {error: true, message}
+  static createErrorStatus(message: string): Status {
+    return { error: true, message };
   }
 
-  static createSuccessStatus(message: string): status{
-    return {error: false, message}
+  static createSuccessStatus(message: string): Status {
+    return { error: false, message };
   }
 
   static getVoiceChannelOfMember(interaction: CommandInteraction): VoiceBasedChannel {
-    const guild = interaction.client.guilds.cache.get(interaction.guildId)
+    const guild = interaction.client.guilds.cache.get(interaction.guildId);
     const member = guild.members.cache.get(interaction.member.user.id);
     return member.voice.channel;
   }

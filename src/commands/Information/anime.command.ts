@@ -17,19 +17,22 @@ export default class AnimeCommand extends Command {
     const search = await anilist.searchEntry.anime(searchTerm, null, 1, 1);
     if (!search?.pageInfo.total) return interaction.reply('No anime found');
     const anime = await anilist.media.anime(search.media[0].id);
-    const newFields: EmbedFieldData[] = this.createFields(anime)
+    const newFields: EmbedFieldData[] = this.createFields(anime);
     const embed = new MessageEmbed()
-      .setAuthor({name: anime.title.english ?? anime.title.romaji, iconURL: 'https://anilist.co/favicon.ico', url: anime.siteUrl})
+      .setAuthor({
+        name: anime.title.english ?? anime.title.romaji,
+        iconURL: 'https://anilist.co/favicon.ico',
+        url: anime.siteUrl,
+      })
       .setThumbnail(anime.coverImage.large)
       .setColor('#89cff0')
       .setDescription(anime.description.replace(/<[^>]*>?/gm, ''))
       .addFields(newFields)
       .setFooter({
         text: `Requested by: ${interaction.user.tag} | Provided by anilist.co`,
-        iconURL: interaction.user.avatarURL({ format: 'jpg' })
-      }
-      );
-    return interaction.reply({embeds: [embed]});
+        iconURL: interaction.user.avatarURL({ format: 'jpg' }),
+      });
+    return interaction.reply({ embeds: [embed] });
   }
 
   private createFields(anime: AnimeEntry): EmbedFieldData[] {

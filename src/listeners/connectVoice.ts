@@ -19,7 +19,6 @@ class ReadyListener extends Listener {
   async exec() {
     // logger.debug('CONNECTVOICE LISTENER INVOKED');
     // this.client.music = new Manager(this.client, nodes, { user: this.client.user.id, player: CrimPlayer });
-
     // this.client.music.on('reconnecting', (node) => {
     //   logger.debug('RECONNECT NODE: {}', node.host);
     // });
@@ -29,11 +28,9 @@ class ReadyListener extends Listener {
     // } catch (error) {
     //   logger.error('Connection to Lavalink Node(s) failed. Error: {}', error);
     // }
-
     // cron.schedule('* * * * *', async () => {
     //   this.client.music.nodes.forEach(async (node) => {
     //     if (node.connected) return;
-
     //     try {
     //       logger.debug('TRYING TO RECONNECT NODE: {}', node.id);
     //       await node.connect();

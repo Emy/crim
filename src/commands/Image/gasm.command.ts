@@ -5,7 +5,7 @@ const nekos = new NekoClient();
 
 export default class GasmCommand extends NekoImageCommand {
   constructor() {
-    super('gasm', "Get a random gasm picture/gif. (NSFW Only)", true);
+    super('gasm', 'Get a random gasm picture/gif. (NSFW Only)', true);
   }
 
   getImage(): Promise<NekoClient.NekoRequestResults> {

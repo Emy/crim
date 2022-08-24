@@ -10,7 +10,6 @@ export default class EmojiCommand extends Command {
   }
 
   public execute(interaction: CommandInteraction<CacheType>): Promise<void> {
-   return interaction.reply("Not Supported hat the moment");
+    return interaction.reply('Not Supported hat the moment');
   }
-
 }

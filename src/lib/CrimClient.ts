@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import { configure, getLogger, LogLevel } from '@log4js2/core';
 import GuildSettingsManager from './managers/GuildSettingsManager';
 import config from '../config';
-import { Manager } from "erela.js";
+import { Manager } from 'erela.js';
 
 configure({
   layout: '%d [%p] %c %M- %m %ex',
@@ -31,7 +31,7 @@ export default class CrimClient extends AkairoClient {
     super(
       {
         ownerID: config.owners,
-        ...options
+        ...options,
       },
       {
         allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
@@ -75,7 +75,10 @@ export default class CrimClient extends AkairoClient {
   }
 
   async login(token: string): Promise<string> {
-    await mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(config.mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     logger.info('DB connected.');
     return super.login(token);
   }

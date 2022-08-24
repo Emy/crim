@@ -1,4 +1,4 @@
-export interface status{
-    message: string;
-    error: boolean;
+export interface Status {
+  message: string;
+  error: boolean;
 }

@@ -5,7 +5,7 @@ const nekos = new NekoClient();
 
 export default class FutaCommand extends NekoImageCommand {
   constructor() {
-    super('futa', "Get a random futanari picture/gif. (NSFW only)", true);
+    super('futa', 'Get a random futanari picture/gif. (NSFW only)', true);
   }
 
   getImage(): Promise<NekoClient.NekoRequestResults> {

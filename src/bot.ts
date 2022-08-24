@@ -18,12 +18,12 @@ async function start() {
     .on('nodeConnect', (node) => logger.info(`Node ${node.options.identifier} connected`))
     .on('nodeError', (node, error) => logger.error(`Node ${node.options.identifier} had an error: ${error.message}`));
   client.manager = manager;
-  client.once("ready", () => {
+  client.once('ready', () => {
     // Initiates the manager and connects to all the nodes
     client.manager.init(client.user.id);
     console.log(`Logged in as ${client.user.tag}`);
   });
-  client.on("raw", d => client.manager.updateVoiceState(d));
+  client.on('raw', (d) => client.manager.updateVoiceState(d));
   new CommandHandler(client);
   client.login(config.discordToken);
 }
