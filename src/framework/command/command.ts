@@ -4,7 +4,7 @@ export abstract class Command{
     aliases: string[];
     channel: string;
     description: string;
-    usage: string;
+    usage: UsageOptions[];
     id: string;
     memberPermissions: number;
     parameters: Parameter[];
@@ -34,7 +34,14 @@ export interface CommandOptions{
     aliases?: string[];
     channel?: string;
     description?: string;
-    usage?: string;
+    usage?: UsageOptions[];
     memberPermissions?: number;
     parameters?: Parameter[];
+}
+
+export interface UsageOptions{
+    optionName: 'String' | 'Integer' | 'Number' | 'Boolean' | 'User' | 'Member'
+    description: string,
+    required: boolean,
+    name: string
 }

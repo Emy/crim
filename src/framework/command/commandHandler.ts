@@ -43,11 +43,18 @@ export class CommandHandler {
         const rest = new REST({ version: '10' }).setToken(config.discordToken);
         const commands = []
         await Array.from(this.commands.values()).forEach(value => {
-            commands.push(new SlashCommandBuilder().setName(value.id).setDescription(value.description ?? 'No description available.'))
+            const handler: SlashCommandBuilder = new SlashCommandBuilder().setName(value.id).setDescription(value.description ?? 'No description available.');
+            if(value.usage) {
+                value.usage.map(usageOption => {
+                    handler[`add${usageOption.optionName}Option`]
+                    (option => option.setName(usageOption.name).setDescription(usageOption.description).setRequired(usageOption.required))
+                })
+            }
+            commands.push(handler)
             logger.info(`ID> ${value.id} DESC> ${value.description}, USAGE> ${value.usage}`)
         })
         
-        rest.put(Routes.applicationGuildCommands("APPL ID", "GUILD ID"), { body: commands.map(command => command.toJSON())})
+        rest.put(Routes.applicationGuildCommands(config.applicationID, config.guildID), { body: commands.map(command => command.toJSON())})
         .then(() => logger.info('Successfully registered application commands.'))
         .catch(logger.error);
         client.on('interactionCreate', async interaction => {
