@@ -1,4 +1,4 @@
-import { CommandInteraction, VoiceState } from 'discord.js';
+import { CommandInteraction, VoiceBasedChannel } from 'discord.js';
 import CrimClient from '../lib/CrimClient';
 import { Manager, Player, SearchResult } from 'erela.js';
 import humanizeDuration from 'humanize-duration';
@@ -37,11 +37,12 @@ export class MusicUtils {
    */
   public static async play(interaction: CommandInteraction): Promise<status> {
     const manager: Manager = this.getManager(interaction);
-    const channel: VoiceState = interaction.guild.me.voice;
+    const channel: VoiceBasedChannel = this.getVoiceChannelOfMember(interaction);
     if (!channel) return this.createErrorStatus(NOT_IN_VOICE);
+    logger.info(`Test ${channel.id}` )
     const player: Player = manager.create({
       guild: interaction.guild.id,
-      voiceChannel: interaction.guild.me.voice.id,
+      voiceChannel: channel.id,
       textChannel: interaction.channel.id,
     });
     if (player.state !== 'CONNECTED') player.connect();
@@ -97,7 +98,7 @@ export class MusicUtils {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
-    const channel: VoiceState = interaction.guild.me.voice;
+    const channel: VoiceBasedChannel = this.getVoiceChannelOfMember(interaction);
     if (!channel) return this.createErrorStatus(NOT_IN_VOICE);
     if (channel.id !== player.voiceChannel) return this.createErrorStatus(NOT_IN_SAME_VOICE);
 
@@ -135,7 +136,7 @@ export class MusicUtils {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
-    const channel: VoiceState = interaction.guild.me.voice;
+    const channel: VoiceBasedChannel = this.getVoiceChannelOfMember(interaction);
     if (!channel) return this.createErrorStatus(NOT_IN_VOICE);
     if (channel.id !== player.voiceChannel) return this.createErrorStatus(NOT_IN_SAME_VOICE);
 
@@ -153,7 +154,7 @@ export class MusicUtils {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
-    const channel: VoiceState = interaction.guild.me.voice;
+    const channel: VoiceBasedChannel = this.getVoiceChannelOfMember(interaction);
     if (!channel) return this.createErrorStatus(NOT_IN_VOICE);
     if (channel.id !== player.voiceChannel) NOT_IN_SAME_VOICE;
     if (!player.queue.current) return this.createErrorStatus(NO_RUNNING_MUSIC);
@@ -172,7 +173,7 @@ export class MusicUtils {
     const manager: Manager = this.getManager(interaction);
     const player: Player = manager.get(interaction.guild.id);
     if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
-    const channel: VoiceState = interaction.guild.me.voice;
+    const channel: VoiceBasedChannel = this.getVoiceChannelOfMember(interaction);
     if (!channel) return this.createErrorStatus(NOT_IN_VOICE);
     if (channel.id !== player.voiceChannel) return this.createErrorStatus(NOT_IN_SAME_VOICE);
 
@@ -199,7 +200,7 @@ export class MusicUtils {
     return {
       title: player.queue.current.title,
       position: humanizeDuration(Math.floor(player.position), { maxDecimalPoints: 0 }),
-      time: humanizeDuration(Math.floor(player.queue.current.duration / 10000000)),
+      time: humanizeDuration(Math.floor(player.queue.current.duration)),
     };
   }
 
@@ -209,5 +210,11 @@ export class MusicUtils {
 
   static createSuccessStatus(message: string): status{
     return {error: false, message}
+  }
+
+  static getVoiceChannelOfMember(interaction: CommandInteraction): VoiceBasedChannel {
+    const guild = interaction.client.guilds.cache.get(interaction.guildId)
+    const member = guild.members.cache.get(interaction.member.user.id);
+    return member.voice.channel;
   }
 }
