@@ -12,7 +12,7 @@ export default class PatCommand extends NekoActCommand{
     getImage(): Promise<NekoClient.NekoRequestResults> {
       return nekos.sfw.pat();
     }
-    
+
     getAct(): string {
       return "patting";
     }

@@ -4,7 +4,7 @@ import { MessageEmbedCommand } from "./messageembed";
 import { status } from "./status";
 
 export default class StopCommand extends MessageEmbedCommand {
-  
+
   constructor() {
     super('stop','Stop the music.');
   }

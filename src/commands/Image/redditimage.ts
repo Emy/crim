@@ -13,7 +13,7 @@ export abstract class RedditImageCommand extends Command {
         if (!(data || data.data)) return interaction.reply('no images found');
         data = data.data.children;
         const dankmeme = data[Math.floor(Math.random() * data.length)].data;
-    
+
         const embed = new MessageEmbed()
           .setDescription(dankmeme.title)
           .setColor('#ffb347')

@@ -12,7 +12,7 @@ export default class SlapCommand extends NekoActCommand{
     getImage(): Promise<NekoClient.NekoRequestResults> {
       return nekos.sfw.slap();
     }
-    
+
     getAct(): string {
       return "slapping";
     }

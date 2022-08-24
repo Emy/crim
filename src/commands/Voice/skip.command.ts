@@ -4,9 +4,9 @@ import { MessageEmbedCommand } from "./messageembed";
 import { status } from "./status";
 
 export default class SkipCommand extends MessageEmbedCommand {
-  
+
   constructor() {
-    super('skip', 
+    super('skip',
       'Skip a track.',
     );
   }

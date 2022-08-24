@@ -54,7 +54,7 @@ export class CommandHandler {
             commands.push(handler)
             logger.info(`ID> ${value.id} DESC> ${value.description}, USAGE> ${value.usage}`)
         })
-        
+
         rest.put(Routes.applicationGuildCommands(config.applicationID, config.guildID), { body: commands.map(command => command.toJSON())})
         .then(() => logger.info('Successfully registered application commands.'))
         .catch(logger.error);

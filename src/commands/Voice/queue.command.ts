@@ -4,7 +4,7 @@ import { MessageEmbedCommand } from "./messageembed";
 import { status } from "./status";
 
 export default class QueueCommand extends MessageEmbedCommand {
-  
+
   constructor() {
     super('queue',
       'Show the music queue.',
@@ -18,5 +18,5 @@ export default class QueueCommand extends MessageEmbedCommand {
   getTitle(): string {
     return "Queue";
   }
-  
+
 }
