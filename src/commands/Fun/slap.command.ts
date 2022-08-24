@@ -3,16 +3,17 @@ import { NekoActCommand } from './nekoact';
 
 const nekos = new NekoClient();
 
-export default class CuddleCommand extends NekoActCommand{
+export default class SlapCommand extends NekoActCommand{
 
     constructor(){
-        super("cuddle", 'cuddle someone','User to cuddle');
+        super("slap", 'slap someone','User to slap');
     }
 
     getImage(): Promise<NekoClient.NekoRequestResults> {
-      return nekos.sfw.cuddle();
+      return nekos.sfw.slap();
     }
+    
     getAct(): string {
-      return "cuddling";
+      return "slapping";
     }
 }
