@@ -8,6 +8,7 @@ export abstract class Command{
     id: string;
     memberPermissions: number;
     parameters: Parameter[];
+    nsfw: boolean;
 
     constructor(id: string, options: CommandOptions){
         this.id = id;
@@ -17,6 +18,7 @@ export abstract class Command{
         this.usage = options.usage;
         this.memberPermissions = options.memberPermissions;
         this.parameters = options.parameters;
+        this.nsfw = options.nsfw ? true : false;
     }
 
     public abstract execute(interaction: CommandInteraction): Promise<void>;
@@ -37,6 +39,7 @@ export interface CommandOptions{
     usage?: UsageOptions[];
     memberPermissions?: number;
     parameters?: Parameter[];
+    nsfw?: boolean;
 }
 
 export interface UsageOptions{

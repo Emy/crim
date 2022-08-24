@@ -8,6 +8,7 @@ import CrimClient from '../../lib/CrimClient';
 import { resolve } from 'path';
 import { readdirSync } from 'fs';
 import { REST } from '@discordjs/rest';
+import { CommandInteraction, TextChannel } from 'discord.js';
 
 const logger = getLogger('Crim');
 
@@ -61,10 +62,21 @@ export class CommandHandler {
             if (!interaction.isCommand()) return;
             const { commandName } = interaction;
             try{
-                await this.commands.get(commandName).execute(interaction)
+                const command: Command = this.commands.get(commandName);
+                if(command.nsfw && !this.isNsfw(interaction) ){
+                    await interaction.reply('This command can only be run on a nsfw channel')
+                } else {
+                    await command.execute(interaction)
+                }
             }catch(e){
-                logger.info("Error ", e)
+                logger.error("Error ", e)
             }
         });
     }
+
+    isNsfw(interaction: CommandInteraction): boolean {
+        const guild = interaction.client.guilds.cache.get(interaction.guildId)
+        const channel = guild.channels.cache.get(interaction.channelId) as TextChannel;
+        return channel.nsfw;
+      }
 }

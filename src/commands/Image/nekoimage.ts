@@ -3,8 +3,8 @@ import { Command } from '../../framework/command/command';
 import NekoClient from 'nekos.life';
 
 export abstract class NekoImageCommand extends Command {
-    constructor(id: string, description: string) {
-        super(id, {description: description});
+    constructor(id: string, description: string, nsfw: boolean) {
+        super(id, {description: description, nsfw: nsfw});
     }
 
     public async execute(interaction: CommandInteraction<CacheType>): Promise<void> {

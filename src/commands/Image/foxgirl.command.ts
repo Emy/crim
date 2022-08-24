@@ -5,7 +5,7 @@ const nekos = new NekoClient();
 
 export default class FoxgirlCommand extends NekoImageCommand {
   constructor() {
-    super('foxgirl', "Get a random foxgirl.");
+    super('foxgirl', "Get a random foxgirl.", false);
   }
 
   getImage(): Promise<NekoClient.NekoRequestResults> {
