@@ -3,7 +3,7 @@ import { NekoActCommand } from './nekoact';
 
 const nekos = new NekoClient();
 
-export default class CuddleCommand extends NekoActCommand{
+export default class HugCommand extends NekoActCommand{
 
     constructor(){
         super("hug", 'hug someone','User to hug');
