@@ -58,12 +58,21 @@ export class CommandHandler {
       logger.info(`ID> ${value.id} DESC> ${value.description}, USAGE> ${value.usage}`);
     });
 
-    rest
-      .put(Routes.applicationGuildCommands(config.applicationID, config.guildID), {
-        body: commands.map((command) => command.toJSON()),
-      })
-      .then(() => logger.info('Successfully registered application commands.'))
-      .catch(logger.error);
+    if (config.NODE_ENV === 'production') {
+      rest
+        .put(Routes.applicationCommands(config.applicationID), {
+          body: commands.map((command) => command.toJSON()),
+        })
+        .then(() => logger.info('Successfully registered application commands.'))
+        .catch(logger.error);
+    } else {
+      rest
+        .put(Routes.applicationGuildCommands(config.applicationID, config.guildID), {
+          body: commands.map((command) => command.toJSON()),
+        })
+        .then(() => logger.info('Successfully registered application commands.'))
+        .catch(logger.error);
+    }
     client.on('interactionCreate', async (interaction) => {
       if (!interaction.isCommand()) return;
       const { commandName } = interaction;

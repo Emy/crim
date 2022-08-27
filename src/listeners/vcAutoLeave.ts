@@ -15,9 +15,9 @@ class VoiceStateUpdateListener extends Listener {
   }
 
   async exec(oldMember: VoiceState) {
-    if (!oldMember.channel) return
-    const player = this.client.manager.players.get(oldMember.guild.id)
-    if (oldMember.channel.members.size === 1){
+    if (!oldMember.channel) return;
+    const player = this.client.manager.players.get(oldMember.guild.id);
+    if (oldMember.channel.members.size === 1) {
       player.destroy();
     }
   }
