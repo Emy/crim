@@ -1,7 +1,8 @@
 sudo: false
 language: node_js
+dist: focal
 node_js:
-  - '14'
+  - '18'
 cache:
   directories:
     - node_modules

@@ -1,45 +1,38 @@
 import Anilist, { AnimeEntry } from 'anilist-node';
-import { EmbedFieldData, Message, MessageEmbed } from 'discord.js';
-import { Command } from 'discord-akairo';
+import { CacheType, CommandInteraction, EmbedFieldData, MessageEmbed } from 'discord.js';
+import { Command } from '../../framework/command/command';
 
 const anilist = new Anilist();
 
-class AnimeCommand extends Command {
+export default class AnimeCommand extends Command {
   constructor() {
     super('anime', {
-      aliases: ['anime'],
-      channel: 'guild',
-      description: ['Get information about an anime.', 'Usage: `anime <animeName>`'],
-      args: [
-        {
-          id: 'anime',
-          type: 'string',
-          match: 'text',
-          default: '',
-        },
-      ],
+      description: 'Get information about an anime.',
+      usage: [{ optionName: 'String', description: 'name of the anime', required: true, name: 'anime' }],
     });
   }
 
-  async exec(message: Message, args: AnimeCommandArguments) {
-    const searchTerm = args.anime;
-    if (!searchTerm) return message.channel.send('No Anime specified.');
+  public async execute(interaction: CommandInteraction<CacheType>): Promise<void> {
+    const searchTerm = interaction.options.getString('anime');
     const search = await anilist.searchEntry.anime(searchTerm, null, 1, 1);
-    if (!search?.pageInfo.total) return message.channel.send('No anime found');
+    if (!search?.pageInfo.total) return interaction.reply('No anime found');
     const anime = await anilist.media.anime(search.media[0].id);
-    const newFields: EmbedFieldData[] = this.createFields(anime)
+    const newFields: EmbedFieldData[] = this.createFields(anime);
     const embed = new MessageEmbed()
-      .setAuthor({name: anime.title.english ?? anime.title.romaji, iconURL: 'https://anilist.co/favicon.ico', url: anime.siteUrl})
+      .setAuthor({
+        name: anime.title.english ?? anime.title.romaji,
+        iconURL: 'https://anilist.co/favicon.ico',
+        url: anime.siteUrl,
+      })
       .setThumbnail(anime.coverImage.large)
       .setColor('#89cff0')
       .setDescription(anime.description.replace(/<[^>]*>?/gm, ''))
       .addFields(newFields)
       .setFooter({
-        text: `Requested by: ${message.author.tag} | Provided by anilist.co`,
-        iconURL: message.author.avatarURL({ format: 'jpg' })
-      }
-      );
-    return message.channel.send({embeds: [embed]});
+        text: `Requested by: ${interaction.user.tag} | Provided by anilist.co`,
+        iconURL: interaction.user.avatarURL({ format: 'jpg' }),
+      });
+    return interaction.reply({ embeds: [embed] });
   }
 
   private createFields(anime: AnimeEntry): EmbedFieldData[] {
@@ -76,9 +69,3 @@ class AnimeCommand extends Command {
     ];
   }
 }
-
-type AnimeCommandArguments = {
-  anime: string;
-};
-
-export default AnimeCommand;

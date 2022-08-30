@@ -1,14 +1,31 @@
-import config from './config'
-import CrimClient from './lib/CrimClient'
-import { Shoukaku, Connectors } from 'shoukaku';
+import config from './config';
+import CrimClient from './lib/CrimClient';
+import { CommandHandler } from './framework/command/commandHandler';
+import { Manager } from 'erela.js';
+import { getLogger } from '@log4js2/core';
+
+const logger = getLogger('Crim');
 
 async function start() {
-    //TODO intents
-    const client = new CrimClient({intents: ['DIRECT_MESSAGES', 'GUILDS', 'GUILD_MESSAGES']});
-    const shoukaku = new Shoukaku(new Connectors.DiscordJS(client), config.voiceNodes);
-    client.shoukaku = shoukaku;
-    shoukaku.on('error', (_, error) => console.log(error));
-    client.login(config.discordToken);
+  const client = new CrimClient({ intents: ['DIRECT_MESSAGES', 'GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES'] });
+  const manager: Manager = new Manager({
+    nodes: config.voiceNodes,
+    send(id, payload) {
+      const guild = client.guilds.cache.get(id);
+      if (guild) guild.shard.send(payload);
+    },
+  })
+    .on('nodeConnect', (node) => logger.info(`Node ${node.options.identifier} connected`))
+    .on('nodeError', (node, error) => logger.error(`Node ${node.options.identifier} had an error: ${error.message}`));
+  client.manager = manager;
+  client.once('ready', () => {
+    // Initiates the manager and connects to all the nodes
+    client.manager.init(client.user.id);
+    console.log(`Logged in as ${client.user.tag}`);
+  });
+  client.on('raw', (d) => client.manager.updateVoiceState(d));
+  new CommandHandler(client);
+  client.login(config.discordToken);
 }
 
 start();

@@ -31,8 +31,8 @@ class ReadyListener extends Listener {
           {
             name: statuses[counter],
             type: types[counter],
-          }
-        ]
+          },
+        ],
       });
     });
   }

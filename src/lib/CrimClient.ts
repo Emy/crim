@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import { configure, getLogger, LogLevel } from '@log4js2/core';
 import GuildSettingsManager from './managers/GuildSettingsManager';
 import config from '../config';
+import { Manager } from 'erela.js';
 
 configure({
   layout: '%d [%p] %c %M- %m %ex',
@@ -24,13 +25,13 @@ export default class CrimClient extends AkairoClient {
   commandHandler: CommandHandler;
   inhibitorHandler: InhibitorHandler;
   listenerHandler: ListenerHandler;
-  shoukaku: any;
+  manager: Manager;
 
   constructor(options: ClientOptions) {
     super(
       {
         ownerID: config.owners,
-        ...options
+        ...options,
       },
       {
         allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
@@ -44,15 +45,7 @@ export default class CrimClient extends AkairoClient {
     this.commandHandler = new CommandHandler(this, {
       commandUtilSweepInterval: 0,
       directory: join(__dirname, '..', 'commands'),
-      prefix: async (message) => {
-        if (message.guild && message.guild.available) {
-          logger.debug('PREFIX FETCH');
-          const prefix = (await this.settings.get(message.guild.id)).prefix;
-          logger.debug('PREFIX FETCHED!');
-          return prefix;
-        }
-        return '!';
-      },
+      prefix: '!',
     });
 
     this.inhibitorHandler = new InhibitorHandler(this, {
@@ -82,7 +75,10 @@ export default class CrimClient extends AkairoClient {
   }
 
   async login(token: string): Promise<string> {
-    await mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(config.mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     logger.info('DB connected.');
     return super.login(token);
   }

@@ -19,36 +19,36 @@ class MessageBlockedListener extends Listener {
     let embedTitle: string = null;
     switch (reason) {
       case 'filter':
-        embedTitle = 'Automod - Word filter'
+        embedTitle = 'Automod - Word filter';
         break;
       case 'antiInvite':
-        embedTitle = 'Automod - Anti invite'
+        embedTitle = 'Automod - Anti invite';
         break;
       default:
         break;
     }
-    if(embedTitle){
+    if (embedTitle) {
       embed
-      .setTitle(embedTitle)
-      .setAuthor({name: msg.author.tag, iconURL: msg.author.avatarURL({ format: 'jpg' })})
-      .setColor('BLUE')
-      .addFields([
-        {
-          name: 'Offender',
-          value: msg.author,
-          inline: true
-        },
-        {
-          name: 'Warnpoints',
-          value: "0",
-          inline: true
-        }, 
-        {
-          name: 'Content',
-          value: msg.content
-        }
-      ])
-      .setTimestamp();
+        .setTitle(embedTitle)
+        .setAuthor({ name: msg.author.tag, iconURL: msg.author.avatarURL({ format: 'jpg' }) })
+        .setColor('BLUE')
+        .addFields([
+          {
+            name: 'Offender',
+            value: msg.author,
+            inline: true,
+          },
+          {
+            name: 'Warnpoints',
+            value: '0',
+            inline: true,
+          },
+          {
+            name: 'Content',
+            value: msg.content,
+          },
+        ])
+        .setTimestamp();
       msg.channel.send(embed);
     }
   }
