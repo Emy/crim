@@ -10,7 +10,7 @@ export class LoggerUtil {
 
   /**
    * Singleton, get or create Instance of this class
-   * 
+   *
    * @returns Instance of Class
    */
   public static getInstance(): LoggerUtil {
@@ -22,7 +22,7 @@ export class LoggerUtil {
 
   /**
    * creates a child logger
-   * 
+   *
    * @returns Logger
    */
   public createChildLogger(): Logger {
