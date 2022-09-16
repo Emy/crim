@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo';
-import {Logger} from 'tslog';
+import { Logger } from 'tslog';
 import { MessageEmbed } from 'discord.js';
 import { LoggerUtil } from '../logger.util';
 

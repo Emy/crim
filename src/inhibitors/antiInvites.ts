@@ -1,7 +1,7 @@
 import { Inhibitor } from 'discord-akairo';
 import { Message } from 'discord.js';
 import CrimClient from '../lib/CrimClient';
-import {Logger} from 'tslog';
+import { Logger } from 'tslog';
 import { LoggerUtil } from '../logger.util';
 
 const logger: Logger = LoggerUtil.getInstance().createChildLogger();

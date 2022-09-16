@@ -3,7 +3,7 @@ import CrimClient from '../lib/CrimClient';
 import { Manager, Player, SearchResult } from 'erela.js';
 import humanizeDuration from 'humanize-duration';
 import { Status } from '../commands/Voice/status';
-import {Logger} from 'tslog';
+import { Logger } from 'tslog';
 import { LoggerUtil } from '../logger.util';
 
 const NO_PLAYER_FOUND = 'No music running...';

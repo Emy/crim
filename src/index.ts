@@ -1,5 +1,5 @@
 import { join } from 'path';
-import {Logger} from 'tslog';
+import { Logger } from 'tslog';
 import config from './config';
 import { ShardingManager } from 'discord.js';
 import { LoggerUtil } from './logger.util';

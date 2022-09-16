@@ -1,7 +1,7 @@
 import config from '../../config';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { Routes } from 'discord-api-types/v9';
-import {Logger} from 'tslog';
+import { Logger } from 'tslog';
 import { Command } from './command';
 import path, { join } from 'path';
 import CrimClient from '../../lib/CrimClient';

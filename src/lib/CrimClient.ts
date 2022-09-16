@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import GuildSettingsManager from './managers/GuildSettingsManager';
 import { LoggerUtil } from '../logger.util';
 import { Manager } from 'erela.js';
-import {Logger} from 'tslog';
+import { Logger } from 'tslog';
 import config from '../config';
 
 const logger: Logger = LoggerUtil.getInstance().createChildLogger();
