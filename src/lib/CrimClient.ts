@@ -2,23 +2,13 @@ import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 
 import { join } from 'path';
 import { ClientOptions } from 'discord.js';
 import mongoose from 'mongoose';
-import { configure, getLogger, LogLevel } from '@log4js2/core';
 import GuildSettingsManager from './managers/GuildSettingsManager';
-import config from '../config';
+import { LoggerUtil } from '../logger.util';
 import { Manager } from 'erela.js';
+import {Logger} from 'tslog';
+import config from '../config';
 
-configure({
-  layout: '%d [%p] %c %M- %m %ex',
-  appenders: ['Console'],
-  loggers: [
-    {
-      tag: 'Crim',
-      level: config.NODE_ENV === 'production' ? LogLevel.INFO : LogLevel.ALL,
-    },
-  ],
-});
-
-const logger = getLogger('Crim');
+const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 
 export default class CrimClient extends AkairoClient {
   settings: GuildSettingsManager;

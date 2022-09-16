@@ -1,9 +1,10 @@
 import { join } from 'path';
-import { getLogger } from '@log4js2/core';
+import {Logger} from 'tslog';
 import config from './config';
 import { ShardingManager } from 'discord.js';
+import { LoggerUtil } from './logger.util';
 
-const logger = getLogger('Crim');
+const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 
 export class ShardBot {
   static start(): void {

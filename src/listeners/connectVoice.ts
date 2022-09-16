@@ -2,10 +2,10 @@ import { Listener } from 'discord-akairo';
 // import cron from 'node-cron';
 // import { LavalinkNodeOptions, Manager } from '@lavacord/discord.js';
 import CrimClient from '../lib/CrimClient';
-// import { getLogger } from '@log4js2/core';
-// import config from '../config';
+// import {Logger} from 'tslog';
+// import { LoggerUtil } from '../logger.util';
 
-// const logger = getLogger('Crim');
+// const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 
 class ReadyListener extends Listener {
   declare client: CrimClient;

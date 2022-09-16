@@ -3,13 +3,14 @@ import CrimClient from '../lib/CrimClient';
 import { Manager, Player, SearchResult } from 'erela.js';
 import humanizeDuration from 'humanize-duration';
 import { Status } from '../commands/Voice/status';
-import { getLogger } from '@log4js2/core';
+import {Logger} from 'tslog';
+import { LoggerUtil } from '../logger.util';
 
 const NO_PLAYER_FOUND = 'No music running...';
 const NOT_IN_VOICE = 'Not in a voice channel.';
 const NOT_IN_SAME_VOICE = 'Not in the voice channel with running player.';
 const NO_RUNNING_MUSIC = 'No music running...';
-const logger = getLogger('Crim');
+const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 /**
  * Utilmethods to communicate with Lavalink
  */

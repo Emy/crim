@@ -1,9 +1,10 @@
 import { Listener } from 'discord-akairo';
-import { getLogger } from '@log4js2/core';
+import {Logger} from 'tslog';
 import { MessageReaction } from 'discord.js';
 import { User } from 'discord.js';
+import { LoggerUtil } from '../logger.util';
 
-const logger = getLogger('Crim');
+const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 
 class MessageBlockedListener extends Listener {
   constructor() {
