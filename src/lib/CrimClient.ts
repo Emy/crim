@@ -6,6 +6,9 @@ import { configure, getLogger, LogLevel } from '@log4js2/core';
 import GuildSettingsManager from './managers/GuildSettingsManager';
 import config from '../config';
 import { Manager } from 'erela.js';
+import { Handler, HandlerTyp } from '../framework/handler';
+import { CommandHandler as CH} from '../framework/command/commandHandler';
+import { ComponentHandler } from '../framework/component/componentHandler';
 
 configure({
   layout: '%d [%p] %c %M- %m %ex',
@@ -26,6 +29,7 @@ export default class CrimClient extends AkairoClient {
   inhibitorHandler: InhibitorHandler;
   listenerHandler: ListenerHandler;
   manager: Manager;
+  handler: Map<HandlerTyp, Handler> = new Map();
 
   constructor(options: ClientOptions) {
     super(
@@ -78,8 +82,41 @@ export default class CrimClient extends AkairoClient {
     await mongoose.connect(config.mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      auth: { user: 'root', password: 'example' },
     });
     logger.info('DB connected.');
     return super.login(token);
+  }
+
+  /**
+   * create and register different Handlers
+   */
+  registerHandler() {
+    this.createCommandHandler();
+    this.createComponentHandler();
+    this.on('interactionCreate', async (interaction) => {
+      for (const h of this.handler.values()) {
+        if (h.checkIsResponsible(interaction)) {
+          h.handleInteraction(interaction);
+          break;
+        }
+      }
+    });
+  }
+
+  private createCommandHandler() {
+    this.handler.set(HandlerTyp.COMMAND, new CH(this));
+  }
+
+  private createComponentHandler() {
+    this.handler.set(HandlerTyp.COMPONENT, new ComponentHandler(this));
+  }
+
+  /**
+   * @param typ typ if requested handler
+   * @returns Handler of specific typ
+   */
+  getHandlerByType(typ: HandlerTyp): Handler {
+    return this.handler.get(typ);
   }
 }

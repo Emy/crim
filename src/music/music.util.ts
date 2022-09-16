@@ -1,14 +1,26 @@
-import { CommandInteraction, VoiceBasedChannel } from 'discord.js';
+import {
+  CommandInteraction,
+  Interaction,
+  MessageActionRow,
+  MessageSelectMenu,
+  MessageSelectOptionData,
+  SelectMenuInteraction,
+  VoiceBasedChannel,
+} from 'discord.js';
 import CrimClient from '../lib/CrimClient';
-import { Manager, Player, SearchResult } from 'erela.js';
+import { Manager, Player, SearchResult, Track } from 'erela.js';
 import humanizeDuration from 'humanize-duration';
 import { Status } from '../commands/Voice/status';
 import { getLogger } from '@log4js2/core';
+import { ComponentHandler } from '../framework/component/componentHandler';
+import { HandlerTyp } from '../framework/handler';
+import { TrackSelectMenuComponent } from './trackselectcomponent';
 
 const NO_PLAYER_FOUND = 'No music running...';
 const NOT_IN_VOICE = 'Not in a voice channel.';
 const NOT_IN_SAME_VOICE = 'Not in the voice channel with running player.';
 const NO_RUNNING_MUSIC = 'No music running...';
+const MAX_TRACK_OPTIONS = 5;
 const logger = getLogger('Crim');
 /**
  * Utilmethods to communicate with Lavalink
@@ -50,6 +62,10 @@ export class MusicUtils {
     if (player.state !== 'CONNECTED') player.connect();
     const title: string = interaction.options.getString('title');
     if (!title) return this.createErrorStatus('no title found');
+    return this.playByTitle(player, title, interaction);
+  }
+
+  private static async playByTitle(player: Player, title: string, interaction: Interaction): Promise<Status> {
     let res: SearchResult;
     try {
       res = await player.search(title, interaction.user);
@@ -76,20 +92,62 @@ export class MusicUtils {
         if (!player.playing && !player.paused && player.queue.totalSize === res.tracks.length) player.play();
         return this.createSuccessStatus(`The Playlist: **${res.playlist.name}** has been added to the queue.`);
       case 'SEARCH_RESULT':
-        const tracks = res.tracks.slice(0, res.tracks.length < 10 ? res.tracks.length : 10);
-        player.queue.add(tracks);
+        if (interaction.isCommand()) {
+          await this.createSelectMenuOfTracks(interaction, res.tracks);
+        } else {
+          const tracksSlice: Track[] = res.tracks.slice(0, MAX_TRACK_OPTIONS);
+          player.queue.add(tracksSlice);
+          if (!player.playing && !player.paused && !player.queue.size) player.play();
+        }
 
-        if (!player.playing && !player.paused && player.queue.totalSize === tracks.length) player.play();
-        return this.createSuccessStatus(
-          `To many search results. First ${tracks.length} tracks has been added to the queue.`,
-        );
+        return this.createSuccessStatus('Test');
     }
   }
 
-  private static getManager(interaction: CommandInteraction): Manager {
+  public static async playTracks(interaction: SelectMenuInteraction): Promise<Status> {
+    const manager: Manager = this.getManager(interaction);
+    const player: Player = manager.get(interaction.guild.id);
+    if (!player) return this.createErrorStatus(NO_PLAYER_FOUND);
+    for (const trackUri of interaction.values) {
+      const status: Status = await this.playByTitle(player, trackUri, interaction);
+      if (status.error) {
+        return status;
+      }
+    }
+    return this.createSuccessStatus('All tracks are added to queue');
+  }
+
+  private static async createSelectMenuOfTracks(interaction: CommandInteraction, tracks: Track[]): Promise<void> {
+    const tracksSlice: Track[] = tracks.slice(0, MAX_TRACK_OPTIONS);
+    const options: MessageSelectOptionData[] = [];
+    for (const track of tracksSlice) {
+      options.push({ label: `${track.title} of ${track.author}`, value: track.uri });
+    }
+    const menu = new MessageSelectMenu()
+      .setCustomId(interaction.id + '_select_track')
+      .setMinValues(1)
+      .setMaxValues(MAX_TRACK_OPTIONS)
+      .setPlaceholder('Nothing selected')
+      .addOptions(options);
+    const handler: ComponentHandler = this.getComponentHandler(interaction);
+    handler.registerComponent(new TrackSelectMenuComponent(interaction.id + '_select_track', menu));
+    const row = new MessageActionRow().addComponents(menu);
+    await interaction.reply({
+      content: 'Please select at least one track in list:',
+      components: [row],
+      ephemeral: true,
+    });
+  }
+
+  private static getManager(interaction: Interaction): Manager {
     const client: CrimClient = interaction.client as CrimClient;
     const manager: Manager = client.manager;
     return manager;
+  }
+
+  private static getComponentHandler(interaction: Interaction): ComponentHandler {
+    const client: CrimClient = interaction.client as CrimClient;
+    return client.getHandlerByType(HandlerTyp.COMPONENT) as ComponentHandler;
   }
 
   /**

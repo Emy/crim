@@ -1,6 +1,5 @@
 import config from './config';
 import CrimClient from './lib/CrimClient';
-import { CommandHandler } from './framework/command/commandHandler';
 import { Manager } from 'erela.js';
 import { getLogger } from '@log4js2/core';
 
@@ -24,7 +23,7 @@ async function start() {
     console.log(`Logged in as ${client.user.tag}`);
   });
   client.on('raw', (d) => client.manager.updateVoiceState(d));
-  new CommandHandler(client);
+  client.registerHandler();
   client.login(config.discordToken);
 }
 

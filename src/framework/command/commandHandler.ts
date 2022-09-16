@@ -8,20 +8,24 @@ import CrimClient from '../../lib/CrimClient';
 import { resolve } from 'path';
 import { readdirSync } from 'fs';
 import { REST } from '@discordjs/rest';
-import { CommandInteraction, TextChannel } from 'discord.js';
+import { CacheType, CommandInteraction, Interaction, TextChannel } from 'discord.js';
+import { Handler } from '../handler';
 
 const logger = getLogger('Crim');
 
-export class CommandHandler {
+export class CommandHandler extends Handler {
   commands: Map<string, Command> = new Map();
+  client: CrimClient;
 
   constructor(client: CrimClient) {
-    this.lel(client);
+    super();
+    this.lel();
+    this.client = client;
   }
 
-  async lel(client: CrimClient) {
+  async lel() {
     await this.loadCommands(join(__dirname, '..', '..', 'commands'));
-    this.registerCommands(client);
+    this.registerCommands();
   }
 
   async loadCommands(dir: string) {
@@ -40,7 +44,7 @@ export class CommandHandler {
     }
   }
 
-  async registerCommands(client: CrimClient) {
+  async registerCommands() {
     const rest = new REST({ version: '10' }).setToken(config.discordToken);
     const commands = [];
     await Array.from(this.commands.values()).forEach((value) => {
@@ -73,25 +77,34 @@ export class CommandHandler {
         .then(() => logger.info('Successfully registered application commands.'))
         .catch(logger.error);
     }
-    client.on('interactionCreate', async (interaction) => {
-      if (!interaction.isCommand()) return;
-      const { commandName } = interaction;
-      try {
-        const command: Command = this.commands.get(commandName);
-        if (command.nsfw && !this.isNsfw(interaction)) {
-          await interaction.reply('This command can only be run on a nsfw channel');
-        } else {
-          await command.execute(interaction);
-        }
-      } catch (e) {
-        logger.error('Error ', e);
-      }
-    });
   }
 
-  isNsfw(interaction: CommandInteraction): boolean {
+  private isNsfw(interaction: CommandInteraction): boolean {
     const guild = interaction.client.guilds.cache.get(interaction.guildId);
     const channel = guild.channels.cache.get(interaction.channelId) as TextChannel;
     return channel.nsfw;
+  }
+
+  checkIsResponsible(interaction: Interaction<CacheType>): boolean {
+    return interaction.isCommand() && this.commands.has(interaction.commandName);
+  }
+
+  handleInteraction(interaction: CommandInteraction): Promise<void> {
+    const { commandName } = interaction;
+    if (!this.commands.has(commandName)) {
+      logger.warn('No command found for name {}', commandName);
+      return null;
+    }
+    try {
+      const command: Command = this.commands.get(commandName);
+      if (command.nsfw && !this.isNsfw(interaction)) {
+        return interaction.reply('This command can only be run on a nsfw channel');
+      } else {
+        return command.execute(interaction);
+      }
+    } catch (e) {
+      logger.error('Error in executing {}', commandName, e);
+      return interaction.reply({ content: 'An error has occurred. Please inform someone in charge.', ephemeral: true });
+    }
   }
 }
