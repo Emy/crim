@@ -1,9 +1,9 @@
 // import { Message } from 'discord.js';
 // import { Command } from 'discord-akairo';
 // import CrimClient from '../../lib/CrimClient';
-// import { getLogger } from '@log4js2/core';
+// import {Logger} from 'tslog';
 
-// const logger = getLogger('Crim');
+// const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 
 // class InviteFilterCommand extends Command {
 //   client: CrimClient;

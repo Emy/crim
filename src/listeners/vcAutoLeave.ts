@@ -1,9 +1,9 @@
-// import { getLogger } from '@log4js2/core';
+// import {Logger} from 'tslog';
 import { Listener } from 'discord-akairo';
 import { VoiceState } from 'discord.js';
 import CrimClient from '../lib/CrimClient';
 
-// const logger = getLogger('Crim');
+// const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 
 class VoiceStateUpdateListener extends Listener {
   declare client: CrimClient;

@@ -18,7 +18,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.1.0",
     "@discordjs/rest": "^1.0.1",
-    "@log4js2/core": "^2.0.9",
+    "tslog": "^3.3.4",
     "@typegoose/typegoose": "^8.2.0",
     "anilist-node": "^1.9.1",
     "discord-akairo": "^8.1.0",

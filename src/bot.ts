@@ -2,9 +2,10 @@ import config from './config';
 import CrimClient from './lib/CrimClient';
 import { CommandHandler } from './framework/command/commandHandler';
 import { Manager } from 'erela.js';
-import { getLogger } from '@log4js2/core';
+import { Logger } from 'tslog';
+import { LoggerUtil } from './logger.util';
 
-const logger = getLogger('Crim');
+const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 
 async function start() {
   const client = new CrimClient({ intents: ['DIRECT_MESSAGES', 'GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES'] });
@@ -21,7 +22,7 @@ async function start() {
   client.once('ready', () => {
     // Initiates the manager and connects to all the nodes
     client.manager.init(client.user.id);
-    console.log(`Logged in as ${client.user.tag}`);
+    logger.info(`Logged in as ${client.user.tag}`);
   });
   client.on('raw', (d) => client.manager.updateVoiceState(d));
   new CommandHandler(client);

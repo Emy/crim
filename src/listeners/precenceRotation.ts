@@ -1,7 +1,10 @@
 import { Listener } from 'discord-akairo';
 import cron from 'node-cron';
+import { Logger } from 'tslog';
+import { LoggerUtil } from '../logger.util';
 import CrimClient from '../lib/CrimClient';
 
+const logger: Logger = LoggerUtil.getInstance().createChildLogger();
 class ReadyListener extends Listener {
   declare client: CrimClient;
   constructor() {
@@ -12,7 +15,7 @@ class ReadyListener extends Listener {
   }
 
   exec() {
-    console.log(`${this.client.user.username} is ready to serve all of their ${this.client.users.cache.size} users~`);
+    logger.info(`${this.client.user.username} is ready to serve all of their ${this.client.users.cache.size} users~`);
     let counter = -1;
     cron.schedule('* * * * *', () => {
       const statuses = [
